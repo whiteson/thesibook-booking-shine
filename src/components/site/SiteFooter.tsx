@@ -15,17 +15,19 @@ export function SiteFooter() {
               Η νέα πλατφόρμα κρατήσεων για εκπαιδευτικές επιχειρήσεις στην Ελλάδα.
             </p>
             <a href="mailto:hello@thesibook.gr" className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary-soft">
-              <Mail className="h-4 w-4" /> hello@thesibook.gr
+              <Mail className="h-4 w-4" />hello@thesibook.gr
             </a>
           </div>
           <div>
             <p className="text-sm font-semibold">Πλοήγηση</p>
             <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-              <li><a href="#top" className="hover:text-foreground">Αρχική</a></li>
-              <li><a href="#business" className="hover:text-foreground">Για επιχειρήσεις</a></li>
-              <li><a href="#contact" className="hover:text-foreground">Επικοινωνία</a></li>
+              <li><Link to="/" className="hover:text-foreground">Αρχική</Link></li>
+              <li><Link to="/business" className="hover:text-foreground">Για επιχειρήσεις</Link></li>
+              <li><Link to="/features" className="hover:text-foreground">Λειτουργίες</Link></li>
+              <li><Link to="/contact" className="hover:text-foreground">Επικοινωνία</Link></li>
             </ul>
           </div>
+
           <div>
             <p className="text-sm font-semibold">Νομικά</p>
             <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
