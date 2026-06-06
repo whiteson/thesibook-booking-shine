@@ -1,4 +1,4 @@
-import logoAsset from "@/assets/thesibook-logo.png.asset.json";
+import logoAsset from "@/assets/thesibook-logo.svg.asset.json";
 
 export function Logo({ className = "h-9" }: { className?: string }) {
   return (
