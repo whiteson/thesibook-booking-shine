@@ -1,29 +1,71 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { SiteHeader } from "@/components/site/SiteHeader";
+import { Hero } from "@/components/site/Hero";
+import { Problem } from "@/components/site/Problem";
+import { Solution } from "@/components/site/Solution";
+import { Features } from "@/components/site/Features";
+import { ForBusinesses } from "@/components/site/ForBusinesses";
+import { HowItWorks } from "@/components/site/HowItWorks";
+import { AppPreview } from "@/components/site/AppPreview";
+import { Benefits } from "@/components/site/Benefits";
+import { EarlyAccess } from "@/components/site/EarlyAccess";
+import { FAQ } from "@/components/site/FAQ";
+import { SiteFooter } from "@/components/site/SiteFooter";
+import { Toaster } from "@/components/ui/sonner";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Your App" },
-      { name: "description", content: "Replace this with a one-sentence description of your app." },
-      { property: "og:title", content: "Your App" },
-      { property: "og:description", content: "Replace this with a one-sentence description of your app." },
+      { title: "ThesiBook | Πλατφόρμα κρατήσεων για σεμινάρια και εκπαιδευτικές επιχειρήσεις" },
+      {
+        name: "description",
+        content:
+          "Το ThesiBook βοηθά εκπαιδευτικές επιχειρήσεις, coaches, ακαδημίες και διοργανωτές σεμιναρίων στην Ελλάδα να δέχονται online κρατήσεις και να οργανώνουν διαθέσιμες θέσεις εύκολα.",
+      },
+      { property: "og:title", content: "ThesiBook | Κλείσε τη θέση σου εύκολα" },
+      {
+        property: "og:description",
+        content: "Online κρατήσεις για σεμινάρια, workshops, ακαδημίες και training businesses στην Ελλάδα.",
+      },
+      { property: "og:url", content: "/" },
+    ],
+    links: [{ rel: "canonical", href: "/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "ThesiBook",
+          url: "https://thesibook.gr",
+          email: "hello@thesibook.gr",
+          description:
+            "Πλατφόρμα online κρατήσεων για σεμινάρια, workshops και εκπαιδευτικές επιχειρήσεις στην Ελλάδα.",
+        }),
+      },
     ],
   }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen bg-background">
+      <SiteHeader />
+      <main>
+        <Hero />
+        <Problem />
+        <Solution />
+        <Features />
+        <ForBusinesses />
+        <HowItWorks />
+        <AppPreview />
+        <Benefits />
+        <EarlyAccess />
+        <FAQ />
+      </main>
+      <SiteFooter />
+      <Toaster richColors position="top-center" />
     </div>
   );
 }
