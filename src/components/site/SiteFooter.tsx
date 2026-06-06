@@ -1,5 +1,8 @@
+import { Link } from "@tanstack/react-router";
 import { Logo } from "./Logo";
 import { Mail } from "lucide-react";
+
+
 
 export function SiteFooter() {
   return (
