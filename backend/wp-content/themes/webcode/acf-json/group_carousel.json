@@ -1,0 +1,61 @@
+{
+    "key": "group_carousel",
+    "title": "Carousel Element",
+    "fields": [
+        {
+            "key": "field_carousel_title",
+            "label": "Title",
+            "name": "title",
+            "type": "text"
+        },
+        {
+            "key": "field_carousel_subtitle",
+            "label": "Subtitle",
+            "name": "subtitle",
+            "type": "text"
+        },
+        {
+            "key": "field_carousel_post_type",
+            "label": "Post Type",
+            "name": "post_type",
+            "type": "text",
+            "instructions": "Enter the post type slug (e.g. 'post').",
+            "required": 1
+        },
+        {
+            "key": "field_carousel_number_of_items",
+            "label": "Number of Items",
+            "name": "number_of_items",
+            "type": "number",
+            "default_value": 6,
+            "min": 1,
+            "max": 20,
+            "step": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "!==",
+                "value": "post"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0
+}

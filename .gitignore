@@ -1,3 +1,12 @@
+# Monorepo
+frontend/.env*
+frontend/.next
+frontend/node_modules
+scripts/deploy/.env
+scripts/local.env
+backend/wp-config.php
+backend/wp-content/themes/webcode/node_modules
+
 # Logs
 logs
 *.log

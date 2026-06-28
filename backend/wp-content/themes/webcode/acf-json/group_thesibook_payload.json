@@ -1,0 +1,50 @@
+{
+    "key": "group_thesibook_payload",
+    "title": "ThesiBook Section Payload",
+    "fields": [
+        {
+            "key": "field_thesibook_section_payload",
+            "label": "Section JSON",
+            "name": "section_payload",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Headless: JSON payload for this section (managed by wp webcode seed).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": 4,
+            "placeholder": "",
+            "new_lines": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            },
+            {
+                "param": "post_type",
+                "operator": "!=",
+                "value": "post"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Clone-only group for ThesiBook page builder layouts.",
+    "show_in_rest": 0,
+    "modified": 1749254400
+}

@@ -1,0 +1,145 @@
+@use "sass:math";
+@import "base/fonts";
+@import "abstracts/_variables";
+@import "abstracts/_colors";
+@import "abstracts/_mixins";
+@import "abstracts/_object-fit";
+@import "abstracts/_paths";
+@import "abstracts/_animations";
+@import "base/base";
+
+
+/* TinyMCE Editor Content Styling */
+body.tn-editor-content {
+    font-family: $t_font_body !important;
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+    color: var(--primary) !important;
+    background: #ffffff !important;
+    margin: 8px !important;
+    padding: 8px !important;
+}
+
+body.tn-editor-content p {
+    font-family: $t_font_body !important;
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+    margin: 0 0 1em 0 !important;
+}
+
+body.tn-editor-content ul,
+body.tn-editor-content ol {
+    font-family: $t_font_body !important;
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+}
+
+body.tn-editor-content li {
+    font-family: $t_font_body !important;
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+}
+
+body.tn-editor-content strong,
+body.tn-editor-content em,
+body.tn-editor-content u {
+    font-family: $t_font_body !important;
+    font-weight: 500 !important;
+}
+
+/* Ensure all text elements use the correct font */
+body.tn-editor-content * {
+    font-family: $t_font_body !important;
+}
+
+/* TinyMCE Editor Button Styling */
+.mce-widget.mce-btn,
+.mce-widget.mce-btn button {
+    background: none !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    font-family: $t_font_body !important;
+
+    &.mce-active {
+        background-color: var(--secondary) !important;
+        opacity: 1 !important;
+    }
+}
+
+.mce-widget.mce-btn:hover,
+.mce-widget.mce-btn button:hover {
+    background-color: var(--secondary) !important;
+    opacity: 1 !important;
+    border-radius: 13px !important;
+}
+
+.mce-widget.mce-btn[aria-pressed="true"],
+.mce-widget.mce-btn[aria-pressed="true"] button {
+    background-color: var(--secondary) !important;
+    // background-color: transparent !important;
+    opacity: 1 !important;
+    border-radius: 13px !important;
+}
+
+/* TinyMCE Toolbar */
+.mce-toolbar-grp {
+    background: transparent !important;
+    border: none !important;
+    font-family: $t_font_body !important;
+}
+
+.mce-toolbar {
+    background: transparent !important;
+    border: none !important;
+    font-family: $t_font_body !important;
+}
+
+/* TinyMCE Icons */
+.mce-toolbar .mce-ico {
+    color: var(--primary) !important;
+}
+
+/* TinyMCE Icons - Pseudo Elements */
+.mce-toolbar .mce-ico:before,
+.mce-toolbar .mce-ico:after {
+    color: var(--primary) !important;
+}
+
+/* Specific TinyMCE Icon Classes */
+.mce-i-bold,
+.mce-i-italic,
+.mce-i-underline,
+.mce-i-blockquote,
+.mce-i-strikethrough,
+.mce-i-bullist,
+.mce-i-numlist,
+.mce-i-alignleft,
+.mce-i-aligncenter,
+.mce-i-alignright,
+.mce-i-alignjustify,
+.mce-i-undo,
+.mce-i-redo,
+.mce-i-link,
+.mce-i-unlink {
+    color: var(--primary) !important;
+}
+
+/* TinyMCE Icon Pseudo Elements */
+.mce-i-bold:before,
+.mce-i-italic:before,
+.mce-i-underline:before,
+.mce-i-blockquote:before,
+.mce-i-strikethrough:before,
+.mce-i-bullist:before,
+.mce-i-numlist:before,
+.mce-i-alignleft:before,
+.mce-i-aligncenter:before,
+.mce-i-alignright:before,
+.mce-i-alignjustify:before,
+.mce-i-undo:before,
+.mce-i-redo:before,
+.mce-i-link:before,
+.mce-i-unlink:before {
+    color: var(--primary) !important;
+}

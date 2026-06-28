@@ -1,0 +1,138 @@
+// =============================
+// Menu PDF Element
+// =============================
+
+.menu-pdf-element,
+.menu-pdf-viewer {
+    position: relative;
+    padding: 40px 0;
+    min-height: 95vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    @include bp($b_mobile) {
+        padding: 20px 0;
+        min-height: 95vh;
+        background-attachment: scroll !important; // Disable fixed on mobile
+    }
+    
+    @include bp($b_tablet) {
+        padding: 30px 0;
+    }
+    
+    // Overlay for better readability
+    &__overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.85);
+        z-index: 1;
+        
+        @include bp($b_mobile) {
+            background: rgba(255, 255, 255, 0.9);
+        }
+    }
+    
+    // Ensure content is above overlay
+    .container-fluid {
+        position: relative;
+        z-index: 2;
+    }
+    
+    // 3D Flipbook styles
+    ._df_book {
+        width: 100%;
+        margin: 0 auto;
+        position: relative;
+        z-index: 2;
+        min-height: calc(100vh + 100px);
+        
+       
+        @include bp($b_mobile) {
+            min-height: 1100px;
+        }
+       
+        @include bp($b_tablet) {
+            min-height: calc(100vh + 300px);
+        }
+        
+        
+        // Force two-page spread view on desktop (1200px+)
+        @include bp($b_desktop) {
+            // The plugin should handle two-page mode automatically with singlePageMode="false"
+            // But we ensure proper width for two pages
+            max-width: 1400px;
+            min-height: 1500px;
+        }
+    }
+    
+    &__container {
+        width: 100%;
+        height: 80vh;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        
+        @include bp($b_mobile) {
+            height: 85vh;
+            border-radius: 0;
+            border-left: none;
+            border-right: none;
+        }
+        
+        @include bp($b_tablet) {
+            height: 75vh;
+        }
+    }
+    
+    &__iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        display: block;
+    }
+    
+    &__download {
+        color: var(--primary);
+        text-decoration: underline;
+        
+        &:hover {
+            color: var(--highlight-a);
+        }
+    }
+    
+    &__no-pdf {
+        text-align: center;
+        padding: 60px 20px;
+        color: var(--basic);
+        opacity: 0.7;
+        
+        p {
+            font-family: $t_font_body;
+            font-size: 16px;
+        }
+    }
+}
+
+// Specific styles for full page template
+.menu-pdf-viewer {
+    &__container {
+        height: calc(100vh - 120px);
+        min-height: 1400px;
+        
+        @include bp($b_mobile) {
+            height: calc(100vh - 80px);
+            min-height: 1100px;
+        }
+        
+        @include bp($b_tablet) {
+            height: calc(100vh - 100px);
+            min-height: 1200px;
+        }
+    }
+}
+

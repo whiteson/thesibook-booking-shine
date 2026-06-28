@@ -1,0 +1,14 @@
+<svg width="220" height="48" viewBox="0 0 220 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="1" y="1" width="46" height="46" rx="14" fill="url(#paint0_linear)" />
+  <rect x="1" y="1" width="46" height="46" rx="14" stroke="#E6EAF2" />
+  <path d="M17 16H31" stroke="white" stroke-width="3" stroke-linecap="round" />
+  <path d="M14 24H34" stroke="white" stroke-width="3" stroke-linecap="round" />
+  <path d="M20 32H28" stroke="white" stroke-width="3" stroke-linecap="round" />
+  <text x="60" y="31" fill="#1A2C5A" font-size="24" font-family="Plus Jakarta Sans, Inter, Arial, sans-serif" font-weight="700">ThesiBook</text>
+  <defs>
+    <linearGradient id="paint0_linear" x1="1" y1="1" x2="47" y2="47" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2249B8" />
+      <stop offset="1" stop-color="#4A86F7" />
+    </linearGradient>
+  </defs>
+</svg>

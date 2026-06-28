@@ -1,0 +1,13 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="44px" height="22px" viewBox="0 0 44 22" enable-background="new 0 0 44 22" xml:space="preserve">
+	<g class="burger-open">
+		<path fill="none" stroke="black" stroke-width="2" d="M0,21h42"></path>
+		<path fill="none" stroke="black" stroke-width="2" d="M0,11h42"></path>
+		<path fill="none" stroke="black" stroke-width="2" d="M0,1h42"></path>
+	</g>
+	<g class="burger-close">
+		<g transform="translate(-61.774 -48)">
+			<line x2="41" y1="22" transform="translate(63 48.5)" fill="none" stroke="black" stroke-width="1"></line>
+			<line x2="43.5" y2="22" transform="translate(62 48.5)" fill="none" stroke="black" stroke-width="1"></line>
+		</g>
+	</g>
+</svg>

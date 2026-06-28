@@ -1,0 +1,6 @@
+<svg class="burger-close" width="31" height="31" viewBox="0 0 31 31" fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+     <rect width="31" height="31" fill="#23324E"/>
+    <path d="M2 2L29.1 29.1" stroke="#F4EFE6" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="round"/>
+    <path d="M29.1 2L2 29.1" stroke="#F4EFE6" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="round"/>
+</svg>

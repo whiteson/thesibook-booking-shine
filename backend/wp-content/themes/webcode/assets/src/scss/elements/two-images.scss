@@ -1,0 +1,58 @@
+.two-images-element {
+  position: relative;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  @include bp($b_laptop_max) {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+
+  &__background {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    user-select: none;
+
+    .two-images-element__background-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  &__overlay {
+    position: relative;
+    z-index: 2;
+    padding: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @include bp($b_laptop) {
+      padding: 9rem 3rem;
+    }
+
+    img {
+      @include bp($b_laptop_max) {
+        max-width: 100%;
+        height: auto
+      }
+    }
+  }
+
+  // &__foreground {
+
+
+  //   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+
+  //   display: block;
+  // }
+}

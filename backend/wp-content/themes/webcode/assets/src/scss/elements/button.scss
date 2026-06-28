@@ -1,0 +1,125 @@
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  line-height: 100%;
+  border: 2px solid transparent;
+  overflow: visible;
+  width: auto;
+  // max-width: 0;
+  transition: border 0.3s ease, background-color 0.3s ease;
+  // border-radius: 2em;
+  border: 0px solid $c_blue;
+  color: var(--basic);
+  background-color: var(--secondary);
+  font-family: $t_font_body;
+  font-size: 20px;
+  font-weight: $font-weight-bold;
+  // padding: 18px 24px;
+  padding: 18px 50px;
+  border-radius: 2em;
+  min-width: 163px;
+  line-height: 1;
+  letter-spacing: 2%;
+
+  @include bp($b_desktop) {}
+
+
+
+  &:hover {
+    background-color: var(--highlight-a);
+    color: var(--secondary);
+
+    .button__icon {
+      // border: 2px solid transparent;
+
+      svg {
+        path {
+          // stroke: $c_blue !important;
+        }
+      }
+    }
+
+  }
+
+  .link {
+    display: block;
+    width: 100%;
+    text-align: center;
+    // padding: 0.2em 1em;
+    // text-align: center;
+    // white-space: nowrap;
+    // width: 100%;
+  }
+
+  &__icon {
+    // border: 2px solid $c_blue;
+    // padding: 5px;
+    display: none;
+
+    @include bp($b_desktop) {
+      padding: 10px;
+    }
+
+    svg {}
+  }
+
+  &__link {
+    font-size: 20px;
+    line-height: 100%;
+    padding: 0.2em 1em;
+    text-align: center;
+    white-space: nowrap;
+    width: 100%;
+    display: block;
+  }
+
+  &.primary {
+    color: var(--secondary);
+    background-color: var(--primary);
+
+    &:hover {
+      // background-color: var(--highlight-a);
+      // color: var(--secondary);
+      color: var(--primary);
+      background-color: var(--secondary);
+    }
+  }
+
+  &.secondary {
+    color: var(--secondary);
+    background-color: var(--highlight-a);
+
+    &:hover {
+      color: var(--primary);
+      background-color: var(--secondary);
+    }
+  }
+
+  &.download {
+    margin:auto;
+    padding: 0;
+    display:inline-block;
+    min-width:unset;
+
+    .link {
+
+      display: none;
+    }
+
+    .icon{
+      &:hover{
+        svg{
+          path:nth-child(n+2){
+            stroke: var(--secondary);
+            fill: unset!important;
+          }
+          >path:first-child{
+            fill: var(--highlight-a);
+            stroke: unset;
+          }
+        }
+      }
+    }
+  }
+}

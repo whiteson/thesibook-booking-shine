@@ -1,0 +1,18 @@
+<svg class="burger-open" width="70" height="70" viewBox="0 0 70 70" fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <rect width="70" height="70" fill="#23324E"/>
+    <g clip-path="url(#clip0_0_1)">
+        <path d="M20.2002 21.2H49.0002" stroke="#F4EFE6" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="round"/>
+        <path d="M20.2002 34.6H49.0002" stroke="#F4EFE6" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="round"/>
+        <path d="M20.2002 47.9H49.0002" stroke="#F4EFE6" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="round"/>
+    </g>
+    <defs>
+        <clipPath id="clip0_0_1">
+            <rect width="31.2" height="29.1" fill="white" transform="translate(19 20)"/>
+        </clipPath>
+    </defs>
+    <!-- <g class="close-menu">
+        <path d="M2 2L29.1 29.1" stroke="#F4EFE6" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="round"/>
+        <path d="M29.1 2L2 29.1" stroke="#F4EFE6" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="round"/>
+    </g> -->
+</svg>

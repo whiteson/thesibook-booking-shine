@@ -1,0 +1,9 @@
+<svg data-name="Layer 1"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30.73 30.73" width="50px" height="50px">
+    <defs>
+        <style>.cls-1plusbutton{fill:#f4efe6;}.cls-2plusbutton{fill:none;stroke:#23324E;stroke-linecap:round;stroke-miterlimit:10;stroke-width:2px;}</style>
+    </defs>
+    <circle class="cls-1plusbutton" cx="15.36" cy="15.36" r="15.36"/>
+    <line class="cls-2plusbutton" x1="15.36" y1="22.95" x2="15.36" y2="7.78"/>
+    <line class="cls-2plusbutton" x1="7.78" y1="15.36" x2="22.95" y2="15.36"/>
+</svg>

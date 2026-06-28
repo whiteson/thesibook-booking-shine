@@ -1,0 +1,86 @@
+
+/**
+ * Colors
+ *
+ */
+
+// here the colors
+
+/**
+ * Bootstrap customised
+ *
+ * @see https://github.com/twbs/bootstrap/blob/main/scss/_variables.scss
+ */
+$font-size-root:62.5%; // 1rem = 10px
+$font-size-base:1.4rem;
+$font-weight-base:400;
+$font-family-sans-serif: $t_font_display;
+// $font-family-sans-serif: MonHelvetica, Arial, sans-serif;
+// $btn-transition: color .3s ease-in-out, background-color .3s ease-in-out, border-color .3s ease-in-out, box-shadow .3s ease-in-out;
+$border-radius:0rem;
+$primary:black;
+$btn-box-shadow:none;
+$btn-active-box-shadow:none;
+$btn-focus-box-shadow:none;
+$input-btn-focus-box-shadow:none;
+$input-border-radius:0;
+$grid-columns:12;
+$grid-gutter-width:3rem;
+$body-color:black;
+
+$c_white: white;
+$c_black: #1a2531;
+
+$grid-breakpoints: (
+	xs: 0,
+	sm: 450px,
+	md: 600px,
+	lg: 900px,
+	xl: 1200px,
+	xxl: 1400px,
+	xxxl: 1600px,
+);
+
+$container-max-widths: (
+    sm: 450px,
+	md: 560px,
+	lg: 860px,
+    xl: 1100px,
+	xxl: 1280px,
+	xxxl: 1460px,
+);
+
+$spacers : (
+    0: 0,
+    1: 1rem,
+    2: 2rem,
+    3: 3rem,
+    4: 4rem,
+    5: 5rem,
+    6: 6rem,
+    7: 7rem,
+    8: 8rem,
+    9: 9rem,
+    10: 10rem
+);
+
+
+// @mixin bp($query, $context: all) {
+// 	@media #{$context} and #{$query} {
+// 		@content;
+// 	}
+// }
+
+
+$b_mobile: "(min-width: 450px)";
+$b_tablet: "(min-width: 600px)";
+$b_tablet_max: "(max-width: 599px)";
+$b_laptop: "(min-width: 900px)";
+$b_laptop_max: "(max-width: 899px)";
+$b_desktop: "(min-width: 1200px)";
+$b_desktop_max: "(max-width: 1199px)";
+$b_large: "(min-width: 1400px)";
+$b_large_max: "(max-width: 1399px)";
+$b_xlarge: "(min-width: 1600px)";
+$b_xlarge_max: "(max-width: 1599px)";
+$b_menubreakpoint: "(min-width: 1550px)";

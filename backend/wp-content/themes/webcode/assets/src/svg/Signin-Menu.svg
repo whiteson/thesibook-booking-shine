@@ -1,0 +1,9 @@
+<svg id="Layer_1" data-name="Layer 1"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 24.9">
+    <defs>
+        <style>.cls-1signin{fill:none;stroke:#23324E;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.5px;}</style>
+    </defs>
+    <title>Signin-Menu</title>
+    <circle class="cls-1signin" cx="9.95" cy="7.55" r="6.3"/>
+    <path class="cls-1signin" d="M695.4,395.5a10.66,10.66,0,0,0-17.4,0" transform="translate(-676.75 -371.85)"/>
+</svg>

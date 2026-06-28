@@ -1,0 +1,353 @@
+// =============================
+// Carousel Element
+// =============================
+
+.carousel-element {
+    padding: 3rem 0;
+    background: var(--secondary);
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    // background: #f7f7e8;
+    // max-width: 1400px
+
+    padding: 80px 0 80px 0px;
+
+    @include bp($b_laptop) {
+        padding: 100px 0 110px 9.7vw;
+    }
+
+    &__title {
+        font-family: $t_font_body;
+        color: var(--basic);
+        margin-bottom: 38px !important;
+        text-align: center;
+        padding: 0 30px;
+
+
+        @include bp($b_laptop) {
+            margin-bottom: 23px !important;
+            text-align: left;
+            padding: unset;
+        }
+    }
+
+    &__subtitle {
+        font-family: $t_font_body;
+        // font-family: $t_font_body;
+        // font-size: 1.125rem;
+        color: var(--basic);
+        margin-bottom: 60px;
+        text-align: center;
+        padding: 0 30px;
+
+        @include bp($b_laptop) {
+            margin-bottom: 51px;
+            max-width: 63%;
+            text-align: left;
+            padding: unset;
+        }
+    }
+
+    &__swiper {
+        width: 100%;
+        padding-bottom: 2rem;
+        // padding-left: 20px;
+
+        @include bp($b_laptop) {
+            padding-left: 0;
+        }
+    }
+
+
+
+    &__card {
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        padding: 0 0 1.5rem 0;
+        margin: 0 0.5rem;
+        width: 355px;
+        paddin-bottom: 0;
+
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        overflow: hidden;
+
+        @include bp($b_laptop) {
+
+            width: 470px;
+        }
+    }
+
+    &__image {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1228/850;
+        // object-fit: cover;
+        // overflow: hidden;
+        margin-bottom: 0.5rem;
+
+        @include bp($b_desktop) {
+            aspect-ratio: 1228/737;
+
+        }
+
+        // img {
+        //     width: 100%;
+        //     height: 100%;
+        //     // object-fit: cover;
+        // }
+    }
+
+    &__taxonomy {
+        font-weight: $font-weight-medium;
+        color: var(--highlight-a);
+        font-family: $t_font_body;
+        font-size: 17px;
+        letter-spacing: 0;
+        margin: 0.5rem 0 0.25rem 30px;
+
+        @include bp($b_laptop) {
+            font-size: 20px;
+        }
+    }
+
+    &__post-title {
+        font-family: $t_font_bold;
+        color: var(--basic);
+        font-weight: $font-weight-bold;
+        font-size: 21px;
+        line-height: 22px;
+        margin: 0.5rem 30px 0.5rem 30px;
+        min-height: 48px;
+        min-height: 2.35em;
+
+        @include bp($b_laptop) {
+            font-size: 25px;
+            line-height: 30px;
+        }
+    }
+
+    &__link {
+        font-family: $t_font_body;
+        color: var(--basic);
+        margin-left: 30px;
+        margin-top: 0.5rem;
+        margin-bottom: 15px;
+        text-decoration: underline;
+        font-size: 20px;
+        font-family: $t_font_body;
+
+        &:hover {
+            color: var(--highlight-a);
+
+            span {
+                svg {
+                    path {
+                        stroke: var(--highlight-a);
+                    }
+                }
+            }
+        }
+
+
+        span {
+            svg {
+                width: 11px;
+                height: 11px;
+                margin-left: 0px;
+                position: relative;
+                top: 2px;
+                left: 8px;
+            }
+        }
+    }
+
+    &__navigation {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        pointer-events: none;
+        z-index: 2;
+
+        .swiper-button-prev,
+        .swiper-button-next {
+            pointer-events: all;
+            // background: #fff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--basic);
+            font-size: 1.5rem;
+
+
+
+            // &:hover {
+            //     background: var(--highlight-a);
+            //     color: #fff;
+            // }
+        }
+
+    }
+
+
+
+    &__navigation {
+        position: absolute;
+        bottom: 64px;
+        left: calc(50% - 100px);
+        z-index: 1;
+        width: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: auto;
+        // pointer-events: none;
+        // padding: 0 10%;
+        height: 0;
+        overflow: visible;
+
+        @include bp($b_laptop) {
+            width: 90%;
+            top: 50%;
+            width: calc(100% - 60px);
+            top: calc(50% - 20px);
+            right: 2.8%;
+            left: unset;
+            bottom: unset;
+        }
+
+        >div {
+            cursor: pointer;
+        }
+
+        svg {
+            //     position: absolute;
+            // top: 0;
+            display: none;
+            // pointer-events: unset;
+            border: 0px solid $c_white;
+            border-radius: 100%;
+            position: relative;
+            // transform: scale(4);
+            // padding: 20px;
+            width: 54px;
+            height: auto;
+            fill: $c_white;
+            transition: all 0.2s ease-in;
+
+            circle {
+                transition: all 0.2s ease-in;
+            }
+
+            @include bp($b_laptop) {
+                display: block;
+            }
+
+            &:hover {
+                circle {
+                    fill: var(--highlight-a);
+                }
+
+                // fill: var(--highlight-a);
+            }
+
+
+        }
+
+        .swiper-button-prev {
+            // pointer-events: unset;
+            cursor: pointer;
+            display: block;
+
+            &:after {
+                content: unset;
+            }
+
+            &.swiper-button-disabled {
+                opacity: 0.5;
+                display: none;
+
+                // &:hover {
+                //     svg {
+                //         fill: #fff;
+                //         border: 2px solid #fff;
+                //     }
+                // }
+            }
+
+            &:hover {
+                svg {}
+            }
+
+        }
+
+        .swiper-button-next {
+            cursor: pointer;
+            display: block;
+
+            &:after {
+                content: unset;
+            }
+
+            &.swiper-button-disabled {
+                opacity: 0.5;
+
+                // &:hover {
+                //     svg {}
+                // }
+            }
+
+            &:hover {
+                svg {}
+            }
+        }
+    }
+
+
+    &__pagination {
+
+        bottom: 0;
+        top: unset;
+        padding: 0;
+
+        .swiper-pagination-bullet {
+            background: var(--basic);
+            opacity: 0.3;
+            width: 32px;
+            height: 4px;
+            border-radius: 2px;
+            margin: 0 4px !important;
+
+            &-active {
+                opacity: 1;
+                background: var(--highlight-a);
+                width: 64px;
+            }
+        }
+    }
+}
+
+.swiper-horizontal>.swiper-pagination-progressbar,
+.swiper-pagination-progressbar.swiper-pagination-horizontal,
+.swiper-pagination-progressbar.swiper-pagination-vertical.swiper-pagination-progressbar-opposite,
+.swiper-vertical>.swiper-pagination-progressbar.swiper-pagination-progressbar-opposite {
+    width: 100%;
+    height: var(--swiper-pagination-progressbar-size, 4px);
+    left: 0;
+    bottom: 0;
+    top: unset;
+    background: transparent;
+}
+
+.swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
+    @extend .carousel-progressbar;
+    position: absolute;
+}

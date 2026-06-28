@@ -1,0 +1,909 @@
+.page-template-traveler {
+    background-color: var(--secondary);
+}
+
+// Traveler Component - BEM Structure
+.traveler {
+    max-width: 800px;
+    margin: 0 auto;
+    // margin: 40px auto;
+    // padding: 20px;
+
+    // Section styling
+    &__section {
+        // margin-bottom: 60px;
+        padding: 30px;
+        background: transparent !important;
+        border-radius: 12px;
+        box-shadow: none !important;
+        text-align: left;
+
+        // Section modifiers
+        &--welcome {
+            // Welcome section specific styles
+            padding-top: 60px;
+        }
+
+        &--login {
+            // Login section specific styles
+        }
+
+        &--register {
+            // Register section specific styles
+        }
+
+        &--dashboard {
+            // Dashboard section specific styles
+        }
+
+        &--notes {
+            // Notes section specific styles
+        }
+    }
+
+    // Title styling
+    &__title {
+        color: var(--primary);
+        margin-bottom: 20px;
+        text-align: center;
+        font-size: 40px;
+        line-height: 48px;
+        font-family: $t_font_body;
+        font-weight: 400;
+    }
+
+    &__subtitle {
+        font-family: $t_font_body;
+        color: var(--primary);
+        margin-bottom: 20px;
+        text-align: center;
+        font-size: 22px;
+        line-height: 30px;
+        font-family: $t_font_body;
+        font-weight: 400;
+
+        strong {
+            font-weight: 500
+        }
+
+        .highlight-text {
+            color: var(--highlight-a);
+            font-weight: 500
+        }
+    }
+
+    // Description styling
+    &__description {
+        color: var(--primary);
+        margin-bottom: 20px;
+        text-align: center;
+        font-size: 22px;
+        line-height: 30px;
+        // line-height: 1.6;
+    }
+
+    // Form container styling
+    &__form {
+        // Forms inherit plugin styles
+    }
+
+    // Radio button styling
+    &__radio-group {
+        display: flex;
+        justify-content: flex-start;
+        gap: 8px;
+        margin: 16px 0;
+    }
+
+    &__radio-option {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        justify-content: center;
+    }
+
+    &__radio-input {
+        appearance: none;
+        width: 28px;
+        height: 28px;
+        border: 1px solid var(--primary) !important;
+        border-radius: 50%;
+        background: var(--primary);
+
+        cursor: pointer;
+        position: relative;
+        transition: all 0.2s ease;
+        height: 28px !important;
+        width: 28px !important;
+        margin-bottom: 0 !important;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--primary);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        &:checked {
+            background: var(--secondary);
+            border-color: var(--secondary);
+        }
+
+        &:checked::before {
+            background: var(--primary);
+            opacity: 1 !important;
+        }
+
+        &:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(70, 109, 115, 0.2);
+        }
+    }
+
+    &__radio-label {
+        color: var(--primary);
+        font-size: 14px;
+        font-family: $t_font_body;
+        text-align: center;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+}
+
+// Traveler Notebook Section Title
+.tn-section-title {
+    color: var(--primary);
+    font-family: $t_font_body;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.4;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: left;
+
+    // Content container styling
+    &__content {
+        // Content inherits plugin styles
+    }
+
+    // Logout button styling
+    &__logout-btn {
+        display: inline-block;
+        background: var(--primary);
+        color: var(--secondary);
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 2em;
+        margin-top: 10px;
+        transition: all 0.3s ease;
+        font-size: 16px;
+        line-height: 1.2;
+
+        &:hover {
+            background: var(--primary-dark, var(--primary));
+            color: var(--secondary);
+            text-decoration: none;
+            transform: translateY(-1px);
+        }
+    }
+}
+
+// Make both login and register forms identical styling
+.tn-login-form,
+.tn-register-form {
+    max-width: 415px;
+    margin: 0 auto;
+    background: transparent !important; // No background
+    border-radius: 16px;
+    box-shadow: none !important; // No shadow
+    padding: 32px 24px;
+
+    .g-recaptcha {
+        text-align: center;
+
+        div {
+            display: inline-block;
+            margin: 0 auto;
+            text-align: center;
+        }
+    }
+}
+
+// Identical input styling for both forms
+.tn-login-form input,
+.tn-register-form input {
+    text-align: center;
+    width: 100%;
+    height: 48px; // Same height for both
+    border-radius: 2em; // Same radius
+    border: 1px solid var(--secondary);
+    padding: 8px 12px;
+    margin-bottom: 16px;
+    font-size: 16px !important; // Consistent font size
+    background: rgba(255, 255, 255, 0.8); // Same background
+    color: var(--primary); // Same text color
+    font-family: $t_font_body;
+    font-weight: 400;
+
+    &::-webkit-autofill,
+    &::-webkit-autofill:hover,
+    &::-webkit-autofill:focus,
+    &::-webkit-autofill:active {
+        background-color: var(--primary);
+    }
+
+    &::placeholder {
+        color: var(--gray); // Same placeholder color
+    }
+}
+
+// Identical label styling
+.tn-login-form label,
+.tn-register-form label {
+    text-align: center;
+    font-weight: 500;
+    margin-bottom: 4px;
+    display: block;
+    color: var(--primary); // Same label color
+    font-size: 16px; // Consistent font size
+    font-family: $t_font_body;
+    font-weight: 400;
+}
+
+.tn-form-fields-wrapper-inner {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    flex-wrap: wrap;
+
+    label {
+        width: 100%;
+        text-align: left;
+    }
+}
+
+// UNIVERSAL BUTTON STYLING - All buttons identical
+.tn-add-button,
+.tn-save-button,
+.tn-cancel-button,
+.tn-login-form button,
+.tn-register-form button {
+    background: var(--primary) !important; // Primary color background
+    color: var(--secondary) !important; // Secondary color text
+    border: none;
+    border-radius: 2em; // Consistent radius
+    padding: 10px 32px; // Consistent padding
+    font-size: 16px !important; // Consistent font size
+    font-weight: 500; // Consistent weight
+    font-family: $t_font_body; // Consistent font family
+    cursor: pointer;
+    width: auto; // Auto width
+    height: 48px; // Consistent height
+    line-height: 1.2; // Consistent line height
+    transition: all 0.3s ease; // Smooth transitions
+    text-align: center;
+    display: inline-block;
+    margin-top: 20px;
+    // width: 100%;
+    // margin:auto;
+
+    &:hover {
+        background: var(--primary-dark, var(--primary)) !important;
+        color: var(--secondary) !important;
+        transform: translateY(-1px);
+        text-decoration: none;
+    }
+
+    &:focus {
+        outline: none;
+        background: var(--primary-dark, var(--primary)) !important;
+        color: var(--secondary) !important;
+    }
+}
+
+.tn-login-form button,
+.tn-register-form button {
+    width: 100%;
+}
+
+// Cancel button - secondary styling but same dimensions
+.tn-cancel-edit {
+    background: #ccc !important; // Gray background for cancel
+    color: #222 !important; // Dark text for cancel
+    border: none;
+    border-radius: 2em; // Same radius
+    padding: 10px 32px; // Same padding
+    font-size: 16px !important; // Same font size
+    font-weight: 500; // Same weight
+    font-family: $t_font_body; // Same font family
+    cursor: pointer;
+    width: auto; // Same width
+    height: 48px; // Same height
+    line-height: 1.2; // Same line height
+    transition: all 0.3s ease; // Same transitions
+    text-align: center;
+    display: inline-block;
+    margin-left: 8px; // Space from main button
+
+    &:hover {
+        background: #bbb !important; // Darker gray on hover
+        color: #222 !important;
+        transform: translateY(-1px);
+        text-decoration: none;
+    }
+
+    &:focus {
+        outline: none;
+        background: #bbb !important;
+        color: #222 !important;
+    }
+}
+
+// Success and error messages - same styling
+.tn-success {
+    color: var(--highlight-a);
+    margin-bottom: 12px;
+    text-align: center;
+    font-size: 14px;
+    font-family: $t_font_body;
+    font-weight: 400;
+    line-height: 1.3em;
+    margin-top: 23px;
+}
+
+.tn-error {
+    // color: var(--error);
+    color: var(--highlight-a);
+    margin-bottom: 12px;
+    text-align: center;
+    font-size: 16px;
+    font-family: $t_font_body;
+    font-weight: 400;
+}
+
+// Same spacing for both forms
+.tn-login-form,
+.tn-register-form {
+    >* {
+        margin-bottom: 16px; // Consistent spacing
+    }
+
+    >*:last-child {
+        margin-bottom: 0; // No margin on last element
+    }
+}
+
+// Notebooks dashboard styling
+.tn-notebooks-dashboard {
+    max-width: 700px;
+    margin: 0 auto;
+    font-family: inherit;
+}
+
+.tn-notebook-list {
+    list-style: none;
+    padding: 0;
+}
+
+.tn-notebook-card {
+    background: white !important;
+    border-radius: 24px;
+    box-shadow: none !important;
+    margin-bottom: 24px;
+    padding: 32px 32px;
+    position: relative;
+    text-align: left;
+    font-family: $t_font_body;
+    font-weight: 400;
+}
+
+.tn-notebook-title {
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1.2;
+    color: var(--primary);
+    display: flex;
+    max-width: calc(100% - 40px);
+
+    svg {
+        margin-right: 15px
+    }
+}
+
+.tn-notebook-date {
+    color: var(--primary);
+    font-size: 20px;
+    line-height: 48px;
+    display: flex;
+    align-items: center;
+    gap: 0px;
+
+    svg {
+        margin-right: 15px
+    }
+
+    // margin-bottom: 8px;
+}
+
+.tn-notebook-status {
+    font-weight: bold;
+    color: var(--secondary);
+    margin-right: 8px;
+
+    &.tn-status-future {
+        color: var(--support-b);
+        font-weight: 400;
+    }
+
+    &.tn-status-visited {
+        color: var(--support-a);
+        font-weight: 400;
+    }
+}
+
+.tn-notebook-actions {
+    // Position the container
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 8px;
+    height: calc(100% - 40px);
+    z-index: 2;
+
+    .tn-edit-button {
+        // Style edit button specifically
+        // background: var(--primary);
+        border: none;
+        padding: 5px;
+        cursor: pointer;
+        background: transparent;
+        width: 30px;
+        height: 30px;
+
+        svg {
+            width: 27px;
+            height: auto;
+        }
+    }
+
+    .tn-delete-button {
+        // Style delete button specifically
+        // background: #ff4444;
+        border: none;
+        padding: 5px;
+        cursor: pointer;
+        position: absolute;
+        bottom: 20px;
+        right: 10px;
+        background: transparent;
+        width: 30px;
+        height: 30px;
+
+        svg {
+            width: 27px;
+            height: auto;
+        }
+
+    }
+}
+
+.tn-notebook-content {
+    margin: 0px 0 0 0;
+    color: var(--primary);
+    max-height: 60px;
+    overflow: hidden;
+    position: relative;
+    font-size: 18px;
+    line-height: 24px;
+    font-family: $t_font_body;
+    font-weight: 400;
+    padding-left: 40px;
+}
+
+.tn-notebook-content.tn-expanded {
+    max-height: none;
+}
+
+.tn-more-link {
+    color: var(--highlight-a);
+    text-decoration: underline;
+    font-size: 20px;
+    line-height: 30px;
+    cursor: pointer;
+    // margin-top: 10px;
+    padding-left: 40px;
+    position: relative;
+    top: 10px;
+
+}
+
+.tn-add-form,
+.tn-edit-form {
+    background: transparent !important;
+    border-radius: 24px;
+    box-shadow: none !important;
+    padding: 24px 0px;
+    margin-bottom: 32px;
+}
+
+.tn-add-form input,
+.tn-add-form textarea,
+.tn-edit-form input,
+.tn-edit-form textarea {
+    width: 100%;
+    height: 48px;
+    border-radius: 2em;
+    border: 1px solid var(--secondary);
+    padding: 8px 12px;
+    margin-bottom: 16px;
+    font-size: 16px !important; // Consistent font size
+    background: rgba(255, 255, 255, 0.8);
+    color: var(--primary);
+    font-family: $t_font_body;
+    font-weight: 400;
+}
+
+.tn-add-form textarea,
+.tn-edit-form textarea {
+    height: auto;
+    min-height: 100px;
+    border-radius: 16px;
+}
+
+.tn-add-form label,
+.tn-edit-form label {
+    margin-right: 16px;
+    color: var(--primary);
+    font-weight: 500;
+    font-size: 16px; // Consistent font size
+    font-family: $t_font_body;
+    font-weight: 400;
+}
+
+// Note: Button styling is already handled by the universal button styling above
+
+@media (max-width: 600px) {
+
+    .tn-notebooks-dashboard,
+    .tn-add-form,
+    .tn-edit-form,
+    .tn-notebook-card {
+        // padding: 12px !important;
+    }
+}
+
+// Media queries for responsive design
+@media (max-width: 768px) {
+    .traveler {
+        margin: 20px auto;
+        padding: 15px;
+    }
+
+    .traveler__section {
+        padding: 0px;
+        margin-bottom: 40px;
+    }
+}
+
+/* Google Autocomplete Styling */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px rgba(255, 255, 255, 0.8) inset !important;
+    -webkit-text-fill-color: var(--primary) !important;
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    color: var(--primary) !important;
+    font-size: 16px !important;
+    font-family: $t_font_body;
+    font-weight: 400;
+}
+
+/* Input font size and styling */
+.traveler input[type="email"],
+.traveler input[type="password"],
+.traveler input[type="text"],
+.traveler input[type="date"] {
+    font-size: 16px !important;
+    color: var(--primary);
+    background-color: rgba(255, 255, 255, 0.8);
+    font-family: $t_font_body;
+    font-weight: 400;
+}
+
+/* Google autocomplete dropdown styling */
+.pac-container {
+    background-color: #ffffff;
+    border: 1px solid #cfd8dc;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    font-family: $t_font_body;
+    font-weight: 400;
+}
+
+.pac-item {
+    background-color: #ffffff;
+    color: var(--primary);
+    padding: 10px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.pac-item:hover,
+.pac-item-selected {
+    background-color: #f9f9f9 !important;
+    color: var(--primary) !important;
+}
+
+.pac-item-query {
+    color: var(--primary);
+    font-weight: bold;
+    font-family: $t_font_body;
+    font-weight: 400;
+}
+
+.tn-notes-editor-wrapper {
+
+    // Style the entire editor wrapper
+    >label {
+        min-width: 87%;
+    }
+
+    .mce-toolbar {
+        // Style toolbar within this context
+    }
+
+    .mce-edit-area {
+        // Style content area within this context
+    }
+}
+
+.traveler__logout-btn {
+    color: var(--highlight-a) !important;
+}
+
+// GDPR Account Deletion Section
+.tn-account-deletion {
+
+    @extend .tn-notebooks-dashboard;
+    margin-top: 60px;
+    // padding: 30px;
+    background: transparent;
+    // border: 2px solid var(--highlight-a); // Red border for warning
+    // border-radius: 12px;
+    position: relative;
+
+    // Warning indicator
+    // &::before {
+    //     content: "⚠️";
+    //     position: absolute;
+    //     top: -15px;
+    //     left: 20px;
+    //     background: var(--secondary);
+    //     padding: 5px 10px;
+    //     font-size: 18px;
+    //     border-radius: 4px;
+    // }
+
+    // Section title
+    .tn-section-title {
+        color: var(--highlight-a) !important; // Red color for danger
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        font-family: $t_font_body;
+
+        &::before {
+            content: "• ";
+            color: var(--highlight-a);
+        }
+    }
+
+    // Notice text
+    .tn-deletion-notice {
+        color: var(--primary);
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 15px;
+        font-family: $t_font_body;
+        background: rgba(220, 53, 69, 0.05);
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid var(--highlight-a);
+    }
+
+    // Warning text
+    .tn-deletion-warning {
+        margin-bottom: 25px;
+
+        strong {
+            color: var(--highlight-a);
+            font-size: 16px;
+            font-weight: 700;
+            font-family: $t_font_body;
+            display: block;
+            text-align: center;
+            background: rgba(220, 53, 69, 0.1);
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid rgba(220, 53, 69, 0.3);
+        }
+    }
+
+    // Delete account form
+    .tn-delete-account-form {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    // Delete account button
+    .tn-delete-account-button {
+        @extend .tn-add-button;
+        background: var(--highlight-a) !important;
+
+        // Hover effects
+        &:hover {
+            background: linear-gradient(135deg, #c82333 0%, #bd2130 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(var(--highlight-a), 0.4);
+        }
+
+        // Active state
+        &:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(var(--highlight-a), 0.3);
+        }
+
+        // Focus state for accessibility
+        &:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(var(--highlight-a), 0.3);
+        }
+    }
+
+    // Responsive design
+    @include bp($b_tablet_max) {
+        margin-top: 40px;
+        padding: 20px;
+
+        .tn-section-title {
+            font-size: 16px;
+        }
+
+        .tn-deletion-notice {
+            font-size: 14px;
+            padding: 12px;
+        }
+
+        .tn-deletion-warning strong {
+            font-size: 14px;
+            padding: 8px;
+        }
+
+        .tn-delete-account-button,
+        .tn-delete-account-toggle {
+            padding: 12px 25px;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        .tn-delete-account-confirm,
+        .tn-delete-account-cancel {
+            padding: 8px 16px;
+            font-size: 13px;
+            width: auto;
+            min-width: 120px;
+        }
+    }
+
+    // Toggle button (always visible)
+    .tn-delete-account-toggle {
+        @extend .tn-add-button;
+        background: var(--highlight-a) !important;
+        margin-bottom: 0;
+        transition: all 0.3s ease;
+
+        &:hover {
+            box-shadow: 0 6px 20px rgba(var(--highlight-a), 0.4);
+        }
+
+        &:active {
+            box-shadow: 0 2px 10px rgba(var(--highlight-a), 0.3);
+        }
+
+        &:focus {
+            box-shadow: 0 0 0 3px rgba(var(--highlight-a), 0.3);
+        }
+    }
+
+    // Hidden content container
+    .tn-deletion-content {
+        margin-top: 20px;
+        padding: 20px;
+        background: rgba(var(--highlight-a), 0.05);
+        border: 1px solid var(--highlight-a);
+        border-radius: 8px;
+        animation: slideDown 0.3s ease-out;
+    }
+
+    // Actions container for confirm/cancel buttons
+    .tn-deletion-actions {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        margin-top: 20px;
+        flex-wrap: wrap;
+
+        @include bp($b_tablet_max) {
+            flex-direction: column;
+            gap: 8px;
+        }
+    }
+
+    // Confirm deletion button (red/danger)
+    .tn-delete-account-confirm {
+        @extend .tn-add-button;
+        background: #d32f2f !important; // Stronger red for final confirmation
+        color: white !important;
+        font-weight: 600;
+        min-width: 160px;
+
+        &:hover {
+            background: #b71c1c !important;
+            box-shadow: 0 6px 20px rgba(211, 47, 47, 0.4);
+        }
+
+        &:active {
+            box-shadow: 0 2px 10px rgba(211, 47, 47, 0.3);
+        }
+
+        &:focus {
+            box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.3);
+        }
+    }
+
+    // Cancel button (gray/neutral)
+    .tn-delete-account-cancel {
+        @extend .tn-add-button;
+        background: #757575 !important;
+        color: white !important;
+        font-weight: 500;
+        min-width: 120px;
+
+        &:hover {
+            background: #616161 !important;
+            box-shadow: 0 6px 20px rgba(117, 117, 117, 0.4);
+        }
+
+        &:active {
+            box-shadow: 0 2px 10px rgba(117, 117, 117, 0.3);
+        }
+
+        &:focus {
+            box-shadow: 0 0 0 3px rgba(117, 117, 117, 0.3);
+        }
+    }
+
+    // Slide down animation
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}

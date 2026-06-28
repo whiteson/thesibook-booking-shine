@@ -1,0 +1,73 @@
+{
+    "key": "group_services_grid",
+    "title": "Services Grid",
+    "fields": [
+        {
+            "key": "field_services_grid_eyebrow",
+            "label": "Eyebrow",
+            "name": "eyebrow",
+            "type": "text",
+            "default_value": "Our Services"
+        },
+        {
+            "key": "field_services_grid_title",
+            "label": "Title",
+            "name": "title",
+            "type": "text",
+            "default_value": "Complete Maritime Support Solutions"
+        },
+        {
+            "key": "field_services_grid_intro",
+            "label": "Intro",
+            "name": "intro",
+            "type": "textarea",
+            "default_value": "From port agency and logistics to shore transport, technical assistance, and laboratory testing, our team provides reliable support for every stage of your vessel operation.",
+            "rows": 3
+        },
+        {
+            "key": "field_services_grid_category",
+            "label": "Category Slug",
+            "name": "category",
+            "type": "text",
+            "instructions": "Posts from this category will be shown as service cards.",
+            "default_value": "services",
+            "required": 1
+        },
+        {
+            "key": "field_services_grid_number_of_items",
+            "label": "Number of Items",
+            "name": "number_of_items",
+            "type": "number",
+            "instructions": "Use -1 to show all posts in the category.",
+            "default_value": -1,
+            "min": -1,
+            "max": 20,
+            "step": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "!==",
+                "value": "post"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0
+}

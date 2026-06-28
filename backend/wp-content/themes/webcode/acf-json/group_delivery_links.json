@@ -1,0 +1,223 @@
+{
+    "key": "group_delivery_links",
+    "title": "Delivery Links Element",
+    "fields": [
+        {
+            "key": "field_delivery_links_title",
+            "label": "Title",
+            "name": "title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Title for the delivery links section",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Order Online",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_delivery_links_description",
+            "label": "Description",
+            "name": "description",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Description text for the delivery links section",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Order your favorite dishes from our restaurant through your preferred delivery platform",
+            "maxlength": "",
+            "rows": 3,
+            "allow_in_bindings": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_delivery_links_bg_image",
+            "label": "Background Image",
+            "name": "background_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Background image for the delivery links section (optional - will use random image from uploads if not set)",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_delivery_links_efood_logo",
+            "label": "eFood Logo",
+            "name": "efood_logo",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Upload the eFood logo",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_delivery_links_efood_url",
+            "label": "eFood URL",
+            "name": "efood_url",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "URL to your eFood ordering page",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "https://www.e-food.gr",
+            "placeholder": "https://www.e-food.gr"
+        },
+        {
+            "key": "field_delivery_links_efood_text",
+            "label": "eFood Link Text",
+            "name": "efood_text",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Text to display below eFood logo",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Order from eFood",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_delivery_links_wolt_logo",
+            "label": "Wolt Logo",
+            "name": "wolt_logo",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Upload the Wolt logo",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_delivery_links_wolt_url",
+            "label": "Wolt URL",
+            "name": "wolt_url",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "URL to your Wolt ordering page",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "https://wolt.com",
+            "placeholder": "https://wolt.com"
+        },
+        {
+            "key": "field_delivery_links_wolt_text",
+            "label": "Wolt Link Text",
+            "name": "wolt_text",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Text to display below Wolt logo",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Order from Wolt",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            },
+            {
+                "param": "post_type",
+                "operator": "!=",
+                "value": "post"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1734480000
+}
+

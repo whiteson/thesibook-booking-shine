@@ -1,0 +1,34 @@
+{
+  "key": "group_gallery_element",
+  "title": "Gallery Element",
+  "fields": [
+    {
+      "key": "field_gallery_title",
+      "label": "Title",
+      "name": "{key}_title",
+      "type": "text"
+    },
+    {
+      "key": "field_gallery_description",
+      "label": "Description",
+      "name": "{key}_description",
+      "type": "textarea"
+    },
+    {
+      "key": "field_gallery_images",
+      "label": "Gallery Images",
+      "name": "{key}_gallery",
+      "type": "gallery",
+      "return_format": "array"
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "page"
+      }
+    ]
+  ]
+} 

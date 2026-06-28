@@ -1,0 +1,87 @@
+.wines-and-varieties {
+  padding: 80px 30px;
+
+
+  @include bp($b_laptop) {
+    padding: 100px 0
+  }
+
+  hr {
+    @extend .line-separator;
+    margin: 0;
+    margin-bottom: 40px;
+  }
+
+  &__title {
+    font-family: $t_font_body;
+    font-weight: $font-weight-medium;
+    font-style: normal;
+    font-size: 46px;
+    line-height: 48px;
+    color: var(--basic);
+    margin-bottom: 56px;
+  }
+
+  &__section-title {
+    font-family: $t_font_body;
+    font-weight: $font-weight-regular;
+    font-style: normal;
+    font-size: 40px;
+    line-height: 46px;
+    color: var(--basic);
+    margin-bottom: 35px;
+  }
+
+  &__items {}
+
+  &__item {
+
+    &-title {
+      font-family: $t_font_body;
+      font-weight: $font-weight-bold;
+      font-style: normal;
+      font-size: 30px;
+      line-height: 38px;
+
+      &.highlight-a {
+        color: var(--highlight-a)!important;
+      }
+
+    }
+
+    &-text,
+    &-text p {
+      font-family: $t_font_body;
+      font-weight: $font-weight-regular;
+      font-style: normal;
+      font-size: 22px;
+      line-height: 30px;
+
+    }
+
+    &-text p {
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+
+    &-more-content,
+    &-more-content p {
+      font-family: $t_font_body;
+      font-weight: $font-weight-regular;
+      font-style: normal;
+      font-size: 22px;
+      line-height: 30px;
+      // display:none;
+    }
+  }
+
+  .wines-and-varieties__item-more-toggle {
+    @extend .carousel-element__link;
+    color: var(--highlight-a);
+    margin-left: 0;
+  }
+
+
+  //   text-align: center;
+  //   background-color: var(--secondary);
+}

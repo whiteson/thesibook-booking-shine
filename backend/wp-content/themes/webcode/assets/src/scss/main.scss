@@ -1,0 +1,60 @@
+@use "sass:math";
+@import "node_modules/normalize.css/normalize";
+//node modules
+// import Swiper and modules styles
+// @import 'node_modules/swiper/swiper';
+@import "node_modules/swiper/swiper-bundle.min";
+// @import 'node_modules/swiper/css/navigation';
+// @import 'node_modules/swiper/css/pagination';
+@import "vendors/fancybox";
+
+
+// abstracts
+@import "base/fonts";
+@import "abstracts/_variables";
+@import "abstracts/_colors";
+@import "abstracts/_mixins";
+@import "abstracts/_object-fit";
+@import "abstracts/_paths";
+@import "abstracts/_animations";
+
+// vendors
+@import "node_modules/bootstrap/scss/bootstrap";
+@import "node_modules/plyr/src/sass/plyr";
+@import "vendors/select2"; // Custom Select2 styling
+// @import "vendors/easepick"; // Custom Easepick styling
+
+// base
+@import "base/base";
+@import "base/breakpoints";
+
+@import "layout/header";
+@import "layout/footer";
+
+//partials
+@import "elements/button";
+@import "elements/main-content";
+@import "elements/zigzag";
+@import "elements/hero-slider";
+@import "elements/simple-text";
+@import "elements/banner";
+@import "elements/carousel";
+@import "elements/gallery";
+@import "elements/two-images";
+@import "elements/line-separator";
+@import "elements/wines-and-varieties";
+@import "elements/delivery-links";
+@import "elements/menu-pdf";
+@import "elements/contact-form";
+@import "elements/video-background";
+@import "elements/services-grid";
+@import "elements/single-post";
+// @import "elements/component-template";
+
+//components
+@import "components/back-to-top";
+@import "components/video-modal";
+
+//page template traveler
+@import "vendors/traveller";
+@import "vendors/notebook-transitions";

@@ -1,0 +1,162 @@
+// =============================
+// FONT PATHS & CONFIGURATION
+// =============================
+$p_assets: "../";
+$p_fonts: $p_assets + "fonts/";
+
+// @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Didact+Gothic&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Didact+Gothic&family=GFS+Neohellenic:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+// =============================
+// FONT FACE DECLARATIONS
+// =============================
+
+// Bague Round Pro - Regular (400)
+// @font-face {
+//     font-family: "Bague Round Pro";
+//     font-display: swap;
+//     font-weight: 400;
+//     font-style: normal;
+//     src: url($p_fonts + "Bague-Round-Pro-Reg.woff2") format("woff2"),
+//         url($p_fonts + "Bague-Round-Pro-Reg.woff") format("woff");
+// }
+
+// Bague Round Pro - Medium (500)
+// @font-face {
+//     font-family: "Bague Round Pro";
+//     font-display: swap;
+//     font-weight: 500;
+//     font-style: normal;
+//     src: url($p_fonts + "Bague-Round-Pro-Med.woff2") format("woff2"),
+//         url($p_fonts + "Bague-Round-Pro-Med.woff") format("woff");
+// }
+
+// Bague Round Pro - Bold (700)
+// @font-face {
+//     font-family: "Bague Round Pro";
+//     font-display: swap;
+//     font-weight: 700;
+//     font-style: normal;
+//     src: url($p_fonts + "Bague-Round-Pro-Bold.woff2") format("woff2"),
+//         url($p_fonts + "Bague-Round-Pro-Bold.woff") format("woff");
+// }
+
+// =============================
+// FONT VARIABLES
+// =============================
+
+// Primary Font Family (Bague Round Pro)
+// $font-primary:  "Dancing Script", cursive;
+$font-primary: "Dancing Script", cursive;
+$font-primary: "GFS Neohellenic", sans-serif;
+// $font-primary:  "Didact Gothic", sans-serif;
+
+// Font Variables with Weights
+$t_font_body: $font-primary;
+$t_font_display: $font-primary;
+
+// =============================
+$t_font_medium: $t_font_display;
+$t_font_bold: $t_font_display;
+
+// Font Weight Variables
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+
+// =============================
+// FONT MIXINS FOR EASY USAGE
+// =============================
+
+// Body text mixin
+@mixin font-body($weight: 400) {
+    font-family: $t_font_body;
+    font-weight: $weight;
+}
+
+// Display text mixin
+@mixin font-display($weight: 500) {
+    font-family: $t_font_display;
+    font-weight: $weight;
+}
+
+// Quick font weight mixins
+@mixin font-regular {
+    font-weight: $font-weight-regular;
+}
+
+@mixin font-medium {
+    font-weight: $font-weight-medium;
+}
+
+@mixin font-bold {
+    font-weight: $font-weight-bold;
+}
+
+// =============================
+// FONT UTILITY CLASSES
+// =============================
+
+.font-body {
+    @include font-body();
+
+    &--regular {
+        @include font-regular();
+    }
+
+    &--medium {
+        @include font-medium();
+    }
+
+    &--bold {
+        @include font-bold();
+    }
+}
+
+.font-display {
+    @include font-display();
+
+    &--regular {
+        @include font-regular();
+    }
+
+    &--medium {
+        @include font-medium();
+    }
+
+    &--bold {
+        @include font-bold();
+    }
+}
+
+// =============================
+// LEGACY SUPPORT (for existing code)
+
+
+// =============================
+// USAGE EXAMPLES
+// =============================
+/*
+// In your SCSS files, you can now use:
+
+// Method 1: Direct variables
+.title {
+    font-family: $t_font_display;
+    font-weight: $font-weight-bold;
+}
+
+// Method 2: Mixins
+.title {
+    @include font-display($font-weight-bold);
+}
+
+// Method 3: Utility classes in HTML
+<h1 class="font-display font-display--bold">Title</h1>
+<p class="font-body font-body--regular">Body text</p>
+
+// Method 4: Quick weight mixins
+.important-text {
+    @include font-body();
+    @include font-bold();
+}
+*/

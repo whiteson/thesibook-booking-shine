@@ -1,0 +1,326 @@
+// .tn-login-form {
+//     max-width: 415px;
+//     margin: 0 auto;
+//     // background: #fff;
+//     border-radius: 16px;
+//     box-shadow: 0 2px 8px var(--c-primary);
+//     padding: 32px 24px;
+
+//     .g-recaptcha {
+//         text-align: center;
+
+
+//         div {
+//             display: inline-block;
+//             margin: 0 auto;
+//             text-align: center;
+//         }
+//     }
+// }
+
+// .tn-login-form input {
+//     text-align: center;
+
+//     &::-internal-autofill-selected {
+//         background-color: var(--c-primary);
+//     }
+
+
+
+// }
+
+// .tn-login-form input {
+//     text-align: center;
+//     width: 100%;
+//     border-radius: 2em;
+//     border: 1px solid var(--c-secondary);
+//     padding: 8px 12px;
+//     margin-bottom: 16px;
+//     font-size: 1em;
+// }
+
+// .tn-login-form label {
+//     text-align: center;
+//     font-weight: 500;
+//     margin-bottom: 4px;
+//     display: block;
+// }
+
+// .tn-login-form button {
+//     background: var(--c-primary);
+//     // color: #fff;
+//     border: none;
+//     border-radius: 2em;
+//     padding: 10px 32px;
+//     font-size: 1em;
+//     cursor: pointer;
+//     @extend .button
+// }
+
+// .tn-success {
+//     color: var(--c-primary);
+//     margin-bottom: 12px;
+// }
+
+// .tn-error {
+//     color: var(--c-error);
+//     margin-bottom: 12px;
+// }
+
+
+// // ... existing code ...
+// @media (max-width: 768px) {
+//     .traveler-content {
+//         margin: 20px auto;
+//         padding: 15px;
+//     }
+
+//     .traveler-section {
+//         padding: 20px;
+//         margin-bottom: 40px;
+//     }
+// }
+
+// /* Google Autocomplete Styling */
+// input:-webkit-autofill,
+// input:-webkit-autofill:hover,
+// input:-webkit-autofill:focus,
+// input:-webkit-autofill:active {
+//     -webkit-box-shadow: 0 0 0 30px #ffffff inset !important;
+//     -webkit-text-fill-color: var(--c-primary) !important;
+//     background-color: #ffffff !important;
+//     color: var(--c-primary) !important;
+//     font-size: 16px !important;
+// }
+
+// /* Input font size and styling */
+// .traveler-section input[type="email"],
+// .traveler-section input[type="password"],
+// .traveler-section input[type="text"],
+// .traveler-section input[type="date"] {
+//     font-size: 16px !important;
+//     color: var(--c-primary);
+//     background-color: #ffffff;
+// }
+
+// /* Google autocomplete dropdown styling */
+// .pac-container {
+//     background-color: #ffffff;
+//     border: 1px solid #cfd8dc;
+//     border-radius: 8px;
+//     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+//     font-size: 16px;
+// }
+
+// .pac-item {
+//     background-color: #ffffff;
+//     color: var(--c-primary);
+//     padding: 10px;
+//     border-bottom: 1px solid #f0f0f0;
+// }
+
+// .pac-item:hover,
+// .pac-item-selected {
+//     background-color: #f9f9f9 !important;
+//     color: var(--c-primary) !important;
+// }
+
+// .pac-item-query {
+//     color: var(--c-primary);
+//     font-weight: bold;
+// }
+
+// .tn-logout-link {
+//     background: var(--c-primary);
+//     color: var(--c-secondary);
+//     // color: #fff;
+//     border: none;
+//     border-radius: 2em;
+//     padding: 10px 32px;
+//     font-size: 20px;
+//     line-height: 48px;
+// }
+
+// // ... existing code ...
+
+
+
+
+// .tn-notebooks-dashboard {
+//     max-width: 700px;
+//     margin: 0 auto;
+//     font-family: inherit;
+// }
+
+// .tn-notebook-list {
+//     list-style: none;
+//     padding: 0;
+// }
+
+// .tn-notebook-card {
+//     background: #fff;
+//     border-radius: 24px;
+//     box-shadow: 0 2px 8px #0001;
+//     margin-bottom: 24px;
+//     padding: 24px 32px;
+//     position: relative;
+// }
+
+// .tn-notebook-title {
+//     font-weight: bold;
+//     font-size: 1.15em;
+//     color: var(--c-primary);
+// }
+
+// .tn-notebook-date {
+//     color: #6a7a7a;
+//     font-size: 0.98em;
+//     margin-bottom: 8px;
+// }
+
+// .tn-notebook-status {
+//     font-weight: bold;
+//     color: var(--c-secondary);
+//     margin-right: 8px;
+// }
+
+// .tn-notebook-actions {
+//     position: absolute;
+//     top: 18px;
+//     right: 24px;
+// }
+
+// .tn-notebook-actions form {
+//     display: inline;
+// }
+
+// .tn-notebook-actions button {
+//     background: none;
+//     border: none;
+//     cursor: pointer;
+//     margin-left: 8px;
+//     font-size: 1.1em;
+//     color: #2a4b4b;
+// }
+
+// .tn-notebook-content {
+//     margin: 12px 0 0 0;
+//     color: #2a4b4b;
+//     max-height: 60px;
+//     overflow: hidden;
+//     position: relative;
+// }
+
+// .tn-notebook-content.tn-expanded {
+//     max-height: none;
+// }
+
+// .tn-more-link {
+//     color: var(--c-secondary);
+//     text-decoration: underline;
+//     font-size: 0.98em;
+//     cursor: pointer;
+// }
+
+// .tn-add-form,
+// .tn-edit-form {
+//     background: #fff;
+//     border-radius: 24px;
+//     box-shadow: 0 2px 8px #0001;
+//     padding: 24px 32px;
+//     margin-bottom: 32px;
+// }
+
+// .tn-add-form input,
+// .tn-add-form textarea,
+// .tn-edit-form input,
+// .tn-edit-form textarea {
+//     width: 100%;
+//     border-radius: 8px;
+//     border: 1px solid #cfd8dc;
+//     padding: 8px 12px;
+//     margin-bottom: 16px;
+//     font-size: 1em;
+// }
+
+// .tn-add-form label,
+// .tn-edit-form label {
+//     margin-right: 16px;
+// }
+
+// .tn-add-form button,
+// .tn-edit-form button {
+//     background: var(--c-primary);
+//     color: #fff;
+//     border: none;
+//     border-radius: 8px;
+//     padding: 10px 32px;
+//     font-size: 1em;
+//     cursor: pointer;
+// }
+
+// .tn-success {
+//     color: var(--c-primary);
+//     margin-bottom: 12px;
+// }
+
+// .tn-error {
+//     color: var(--c-error);
+//     margin-bottom: 12px;
+//     text-align: center
+// }
+
+// @media (max-width: 600px) {
+
+//     .tn-notebooks-dashboard,
+//     .tn-add-form,
+//     .tn-edit-form,
+//     .tn-notebook-card {
+//         padding: 12px !important;
+//     }
+// }
+
+
+// .tn-register-form {
+//     max-width: 400px;
+//     margin: 0 auto;
+//     background: #fff;
+//     border-radius: 16px;
+//     box-shadow: 0 2px 8px #0001;
+//     padding: 32px 24px;
+// }
+
+// .tn-register-form input {
+//     width: 100%;
+//     border-radius: 8px;
+//     border: 1px solid #cfd8dc;
+//     padding: 8px 12px;
+//     margin-bottom: 16px;
+//     font-size: 1em;
+// }
+
+// .tn-register-form label {
+//     font-weight: 500;
+//     margin-bottom: 4px;
+//     display: block;
+// }
+
+// .tn-register-form button {
+//     background: #2a4b4b;
+//     color: #fff;
+//     border: none;
+//     border-radius: 8px;
+//     padding: 10px 32px;
+//     font-size: 1em;
+//     cursor: pointer;
+// }
+
+// .tn-success {
+//     color: #388e3c;
+//     margin-bottom: 12px;
+// }
+
+// .tn-error {
+//     color: #d32f2f;
+//     margin-bottom: 12px;
+// }

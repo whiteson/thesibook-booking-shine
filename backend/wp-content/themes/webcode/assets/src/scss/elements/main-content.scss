@@ -1,0 +1,239 @@
+.main-content {
+    // @extend .paddingtop;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    padding: 80px 20px;
+
+    @include bp($b_laptop) {
+        padding: 100px 0;
+    }
+
+    &__wrapper {
+
+        @include bp($b_laptop) {
+            padding: 10px;
+            padding-right: 4em;
+        }
+
+        &__title {
+            width: 100%;
+            font-weight: $font-weight-medium;
+            text-align: center;
+            font-size: 38px;
+            line-height: 41px;
+            color: $c_blue;
+
+            @include bp($b_desktop) {
+                // width: 80%;
+                max-width: 500px;
+                text-align: left;
+            }
+        }
+
+        &__content,
+        &__content p {
+            color: $c_blue;
+            line-height: 36px;
+            text-align: center;
+
+            @include bp($b_desktop) {
+                text-align: left;
+            }
+        }
+
+
+        &__content p strong,
+        &__content2 p strong {
+            line-height: 30px;
+            text-align: center;
+
+            @include bp($b_desktop) {
+                text-align: left;
+            }
+        }
+
+        &__link {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            flex-direction: column;
+            gap: 24px;
+
+            @include bp($b_desktop) {
+                justify-content: flex-start;
+                flex-direction: row;
+
+            }
+
+            .button {
+                // margin-top: 20px;
+            }
+
+
+
+        }
+
+        &__image {
+            // padding: 40px 0;
+            // @include bp($b_laptop) {
+            //   padding: 50px;
+            // }
+            padding-bottom: 50px;
+            aspect-ratio: 1 / 1.2;
+
+            @include bp($b_laptop) {
+                padding-bottom: unset;
+                aspect-ratio: unset;
+            }
+        }
+
+
+        .video {
+            //   padding-bottom: 30px;
+            // width: 100%;
+            // display: block;
+
+            @include bp($b_laptop) {}
+
+            &__wrapper {
+                cursor: pointer;
+                width: auto;
+
+                // height: 100vh;
+                .plyr__video-wrapper {
+                    //   height: 100vh;
+                    width: auto;
+                    // height: 100%;
+                    // margin: auto;
+                    // overflow: hidden;
+                    // position: relative;
+                    // width: 100%;
+
+                    // height: 150vh;
+                    // margin: auto;
+                    // overflow: hidden;
+                    // position: relative;
+                    // width: 200vw;
+                    // top: -100px;
+                    // bottom: -100px;
+                    // left: -70vw;
+
+                    @include bp($b_laptop) {
+                        //         height: 150vh;
+                        //         margin: auto;
+                        //         overflow: hidden;
+                        //         position: relative;
+                        //         width: 200vw;
+                        //         top: -100px;
+                        //         bottom: -100px;
+                        //         left: -70vw;
+                        // 
+                        //         top: -250px;
+                    }
+
+                    @include bp($b_desktop) {
+                        // height: 150vh;
+                        // margin: auto;
+                        // overflow: hidden;
+                        // position: relative;
+                        // width: 200vw;
+                        // top: -100px;
+                        // bottom: -100px;
+                        // left: -70vw;
+                    }
+                }
+
+                .plyr.plyr--paused:hover::after {
+                    transform: scale(1.1);
+                }
+
+                .plyr__captions,
+                .plyr__controls,
+                .plyr__control {
+                    opacity: 0 !important;
+
+
+                    // display:none!important;
+                    @include bp($b_laptop) {
+                        opacity: 0 !important;
+                    }
+                }
+
+                #player {
+                    --plyr-color-main: $c_white;
+                    //   height: 100vh;
+                    width: 100%;
+                    height: auto;
+                    // aspect-ratio: 809/555;
+                    //   opacity: 0;
+                    //   transition: opacity 0.7s 0.3s ease;
+
+
+                    // border: 0;
+                    // height: 100vh;
+                    // left: 0;
+                    // position: absolute;
+                    // top: 0;
+                    // width: 157%;
+                }
+            }
+        }
+
+        // USe custom colors
+        :root {
+            --plyr-color-main: $c_white;
+
+        }
+
+        .plyr {
+            position: relative;
+
+            &.plyr {
+                &--paused {
+
+                    &::before {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        z-index: 2;
+                        display: block;
+                        width: 100%;
+                        height: 100%;
+                        background-color: rgba(7, 7, 7, 0.066);
+                        pointer-events: pointer;
+                        background-image: url($p_svg + "/play.svg");
+                        background-repeat: no-repeat;
+                        background-position: center center;
+                        background-size: 26px;
+                        // background-size:
+                    }
+
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        top: calc(50% - 30px);
+                        left: calc(50% - 33px);
+                        z-index: 1;
+                        display: block;
+                        width: 60px;
+                        height: 60px;
+                        background-color: rgba(0, 0, 0, 0.891);
+                        border-radius: 100%;
+
+                        pointer-events: pointer;
+                        // background-size:
+                    }
+                }
+            }
+        }
+
+
+    }
+}

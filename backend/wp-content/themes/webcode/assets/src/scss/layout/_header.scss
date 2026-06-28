@@ -1,0 +1,540 @@
+/* Block: Site Header */
+.site-header {
+  display: flex;
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background-color: var(--secondary);
+
+  position: relative;
+  // border-bottom: 1px solid $c_blue;
+  z-index: 9;
+  height: 155px;
+  padding: 42px 30px;
+
+
+  @include bp('(min-width: 1000px)') {
+    padding: 42px 30px;
+  }
+
+  @include bp($b_desktop) {
+    // padding: 42px 65px;
+  }
+
+  @include bp('(min-width: 1500px)') {
+    padding: 42px 65px;
+  }
+
+  &__helper {
+    background-color: $c_blue;
+    color: $c_white;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+
+    .left,
+    .right {
+      color: $c_white;
+    }
+  }
+
+  &__wrapper {
+    /* Your header wrapper styles here */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    // padding: 1rem;
+
+    @include bp($b_laptop) {
+      gap: 30px;
+      justify-content: space-between;
+      padding: 1rem;
+    }
+
+    @include bp($b_desktop_max) {
+      width: 100%;
+    }
+
+    &__logo {
+
+      /* Your logo styles here */
+      a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        // color: #000;
+        /* Adjust the color as needed */
+      }
+
+      svg {
+        display: block;
+        width: auto;
+        height: 140px;
+
+      }
+
+      img {
+        display: block;
+        width: auto;
+        height: 70px;
+        // object-fit: contain;
+        // max-width: 100%;
+
+        @include bp($b_mobile) {
+          height: 70px;
+        }
+
+        @include bp($b_laptop) {
+          height: 100px;
+        }
+      }
+    }
+
+
+    &__line-diagonal {
+      display: none;
+
+      @include bp($b_desktop) {
+
+        // display: block;
+        position: relative;
+        width: 46px;
+        height: 77px;
+        left: 10px;
+        display: none;
+
+      }
+
+      // top: 39px;
+      // left: 312px;
+    }
+
+    &__menu-btn {
+      display: flex;
+      // align-items: center;
+
+      @include bp($b_desktop) {
+        display: none;
+      }
+
+      &--open {
+
+        /* Your menu button styles here */
+        body.menu-open & {
+          display: none;
+        }
+
+        cursor: pointer;
+
+        @include bp($b_desktop) {
+          display: none;
+        }
+
+        .burger-open {}
+
+        .burger-close {
+          opacity: 0;
+        }
+
+        &.menu-open {
+          .burger-open {
+            opacity: 0;
+          }
+
+          .burger-close {
+            opacity: 1;
+          }
+        }
+      }
+
+      &--close {
+        display: none;
+        background-color: $c_white;
+
+
+        body.menu-open & {
+          display: block;
+        }
+      }
+
+      &--open--helper {
+        /* Helper styles for open state, adjust as needed */
+      }
+    }
+  }
+
+  &__navigation {
+
+    display: flex;
+    flex-direction: column;
+
+    @include bp($b_desktop) {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    @include bp($b_desktop_max) {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 150px;
+      left: 0px;
+      background: var(--secondary);
+      display: none;
+    }
+
+    @include bp($b_laptop) {
+      padding-left: 40px;
+    }
+
+    &.open {
+      // height: 100vh;
+      // height: calc(100vh - 100px);
+      height: calc(100vh - 150px);
+      z-index: 3;
+      padding-top: 40px;
+
+
+      @include bp($b_desktop_max) {
+        display: block;
+      }
+    }
+
+    /* Your navigation styles here */
+
+    &__nav {
+      /* Your navigation container styles here */
+      // background-color: $c_white;
+      /* Adjust the background color as needed */
+
+      /* Block: Navbar */
+      .navbar-nav {
+        /* Your navbar styles here */
+        display: flex;
+        flex-direction: column;
+
+        @include bp($b_desktop) {
+          flex-direction: row;
+        }
+
+        /* Element: Navbar Item */
+        &__item {
+          /* Your navbar item styles here */
+          display: inline-block;
+          margin-right: 10px;
+          padding-left: 0 15px;
+          line-height: 1.3em;
+          padding: 14px 20px;
+
+          @include bp($b_desktop) {
+            // line-height: 1.3em;
+            // margin-right: 30px;
+            margin-right: 0px;
+            padding: 14px 0px;
+          }
+
+          &:hover {
+            cursor: pointer;
+          }
+
+          &.signin-icon {
+            position: relative;
+
+            &::after {
+              content: '';
+              position: absolute;
+              top: 15px;
+              right: -10px;
+              width: 24px;
+              height: 30px;
+              background-image: url($p_svg + 'Signin-Menu.svg');
+              background-size: contain;
+              background-repeat: no-repeat;
+              background-position: center;
+
+              @include bp($b_desktop) {
+                top: 15px;
+                height: 22.4px;
+                width: 17.4px;
+              }
+            }
+          }
+
+          &__wrapper {
+            display: flex;
+
+            /////formobile 
+            &.submenu-open {
+              position: fixed;
+              z-index: 3;
+              top: calc(150px + 40px);
+              flex-direction: row-reverse;
+              background-color: var(--secondary);
+              width: 100%;
+
+              span {
+                transform: rotate(180deg);
+              }
+            }
+
+            @include bp($b_desktop) {
+              padding: 0px 10px;
+            }
+
+            span {
+              padding-left: 5px;
+              display: flex;
+
+              @include bp($b_desktop) {
+                display: flex;
+                display: none;
+              }
+
+              svg {
+                width: 20px;
+                // transform: rotate(-90deg);
+              }
+            }
+          }
+
+          >div {
+            a:hover {
+              // font-weight: 700;
+              color: var(--highlight-a);
+            }
+          }
+
+          /* Modifier: Current or Active Navbar Item */
+          &--current {
+            >div {
+
+              /* Your styles for the current/active item */
+              a {
+                // text-decoration: underline;
+                // text-decoration-thickness: 1px;
+                /* Adjust the thickness as needed */
+                // text-underline-offset: 4px;
+                color: var(--highlight-a);
+                // font-weight: 700
+              }
+            }
+          }
+
+          &.noactiveclass {
+            >div {
+              a {
+                color: $c_white;
+              }
+            }
+          }
+
+          &--ancestor {
+            // line-height: 99px;
+          }
+
+          /* Modifier: Navbar Item with Children */
+          &--has-children {
+            /* Your styles for items with dropdown/submenu */
+            position: relative;
+            background-color: var(--secondary);
+
+            &:hover {
+              .navbar-nav__list--submenu {
+
+
+                // background-color: red;
+                @include bp($b_desktop) {
+                  display: flex;
+                  cursor: pointer;
+                  padding-left: 0;
+                  background-color: var(--secondary);
+
+                }
+              }
+            }
+
+            .navbar-nav__list--submenu {
+              display: none;
+              // display: flex;
+              flex-direction: column;
+
+              @include bp($b_desktop) {
+                position: absolute;
+                min-width: 240px;
+                padding: 10px;
+                z-index: 9;
+                // top: 100px;
+                // left: 0px;
+              }
+
+              .navbar-nav__item {
+                // background-color: red;
+                line-height: 100%;
+                padding: 10px 0 0;
+              }
+
+              &.open {
+                display: flex !important;
+                padding-left: 10px;
+
+                position: fixed;
+                // top: 178px;
+                top: calc(150px + 40px + 40px);
+                left: 0px;
+                width: 100%;
+                height: 100%;
+                background: var(--secondary);
+                padding: 20px 50px;
+                z-index: 2;
+              }
+            }
+
+            /* Element: Submenu List */
+            &__list {
+              /* Your styles for the submenu list */
+              display: none;
+              position: absolute;
+              top: 100%;
+              left: 0;
+              background-color: var(--secondary);
+              /* Adjust the background color as needed */
+              padding: 10px;
+
+              /* Modifier: Visible Submenu */
+              &--visible {
+                display: block;
+              }
+
+              /* Element: Submenu Item */
+              &__item {
+                /* Your styles for submenu items */
+                margin: 0;
+                padding: 5px 0;
+
+                /* Modifier: Current or Active Submenu Item */
+                &--current {
+                  /* Your styles for the current/active submenu item */
+                  font-weight: $t_font_medium;
+                }
+              }
+            }
+          }
+        }
+
+        /* Element: Navbar Link */
+        &__link {
+          /* Your navbar link styles here */
+          color: $c_white;
+          /* Adjust the link color as needed */
+          font-size: 31px;
+          text-decoration: none;
+          font-weight: 500;
+          font-family: $t_font_medium;
+          line-height: 100%;
+          padding: 5px;
+          width: 100%;
+          white-space: nowrap;
+
+          /* Modifier: Hovered Navbar Link */
+          &:hover {
+            // color: $c_blue_light;
+            /* Adjust the hover color as needed */
+          }
+
+          @include bp($b_desktop) {
+            width: auto;
+            font-size: 27px;
+          }
+        }
+      }
+    }
+
+    &--right {
+      position: absolute;
+      bottom: 100px;
+
+      @include bp($b_desktop) {
+        position: unset;
+        bottom: unset;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .navbar-nav__link {
+        @include bp($b_desktop) {
+          font-size: 18px;
+        }
+      }
+
+      a {
+
+        font-family: $t_font_bold;
+        font-size: 21px;
+        font-weight: 700;
+        line-height: 100%;
+        padding: 5px;
+        width: 100%;
+        white-space: nowrap;
+
+        @include bp($b_desktop) {
+          font-family: $t_font_bold;
+          font-size: 21px;
+          font-weight: 700;
+          line-height: 100%;
+          padding: 5px;
+          width: 100%;
+          white-space: nowrap;
+        }
+      }
+
+
+
+      .languages-switcher {
+        display: flex;
+        align-items: center;
+        gap: 0px;
+        display:none;
+
+        &__separator {
+          @include bp($b_desktop) {
+            margin: 0 21px;
+            position: relative;
+            width: 4px;
+            height: 25px;
+            position: relative;
+            background-color: $c_white;
+            // &::before {
+            //   content: '';
+            //   position: absolute;
+            //   top: 0;
+            //   left: 0;
+            //   width: 100%;
+            //   width: 2px;
+
+            // }
+          }
+        }
+
+        a {
+          font-size: 25px;
+          padding: 14px 26px;
+
+          @include bp($b_desktop) {
+            font-size: 21px;
+            padding: unset
+          }
+        }
+
+      }
+
+    }
+
+
+  }
+}

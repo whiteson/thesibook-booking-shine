@@ -1,0 +1,31 @@
+.line-separator {
+  margin: 0em auto;
+  width: 270px;
+  max-width: 100%;
+  height: 0px;
+  // background: var(--basic);
+  border-radius: 2em;
+  border:1px solid var(--basic);
+
+  @include bp($b_laptop){
+    width: 350px;
+    margin: 2em auto;
+    margin: 0em auto;
+  }
+
+  .highlight-a{
+    background-color: var(--highlight-a);
+  }
+  .highlight-b{
+    background-color: var(--highlight-b);
+  }
+  .secondary{
+    background-color: var(--secondary);
+  } 
+  .primary{
+    background-color: var(--primary);
+  }
+  .basic{
+    background-color: var(--basic);
+  }
+} 

@@ -1,0 +1,490 @@
+.video-background {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background-color: #000;
+
+    // Height variations
+    &--fullscreen {
+        height: 100vh;
+        height: auto;
+        min-height: 100vh;
+    }
+
+    &--large {
+        height: 80vh;
+        min-height: 80vh;
+        height: auto;
+        min-height: 500px;
+
+        @include bp($b_mobile) {
+            height: 60vh;
+            min-height: 60vh;
+            height: auto;
+            min-height: 400px;
+        }
+    }
+
+    &--medium {
+        height: 60vh;
+        min-height: 400px;
+
+        @include bp($b_mobile) {
+            height: 50vh;
+            min-height: 300px;
+        }
+    }
+
+    &--small {
+        height: 40vh;
+        min-height: 300px;
+
+        @include bp($b_mobile) {
+            height: 35vh;
+            min-height: 250px;
+        }
+    }
+
+    &--auto {
+        min-height: 400px;
+        padding: 80px 0;
+
+        @include bp($b_mobile) {
+            padding: 60px 0;
+            min-height: 300px;
+        }
+    }
+
+    &__wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height:100vh;
+    }
+
+    &__video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: cover;
+        z-index: 1;
+
+        // Ensure video covers entire container
+        @media (min-aspect-ratio: 16/9) {
+            width: 100%;
+            height: auto;
+        }
+
+        @media (max-aspect-ratio: 16/9) {
+            width: auto;
+            height: 100%;
+        }
+    }
+
+    &__overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    &__content {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        height: 100%;
+        padding: 40px 20px;
+        color: #fff;
+
+        @include bp($b_laptop) {
+            padding: 60px 20px;
+        }
+
+        .container {
+            height: 100%;
+        }
+
+        .row {
+            @include bp($b_laptop) {
+                align-items: center;
+            }
+        }
+    }
+
+    &__content-wrapper {
+        text-align: center;
+
+        @include bp($b_laptop) {
+            text-align: left;
+        }
+    }
+
+
+    &__title {
+        color: #fff;
+        margin-bottom: 20px;
+        font-weight: $font-weight-medium;
+
+        @include bp($b_mobile) {
+            font-size: 32px;
+            line-height: 36px;
+        }
+
+        @include bp($b_laptop) {
+            font-size: 48px;
+            line-height: 52px;
+        }
+    }
+
+    &__subtitle {
+        color: #fff;
+        margin-bottom: 20px;
+        font-weight: $font-weight-regular;
+        opacity: 0.9;
+
+        @include bp($b_mobile) {
+            font-size: 18px;
+            line-height: 24px;
+        }
+
+        @include bp($b_laptop) {
+            font-size: 24px;
+            line-height: 30px;
+        }
+    }
+
+    &__text {
+        color: #fff;
+        max-width: 800px;
+        margin: 0 auto;
+        opacity: 0.95;
+        line-height: 1.6;
+
+        @include bp($b_mobile) {
+            font-size: 16px;
+        }
+
+        @include bp($b_laptop) {
+            font-size: 18px;
+        }
+
+        p {
+            color: #fff;
+            margin-bottom: 8px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        a {
+            color: #fff;
+            text-decoration: underline;
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+
+        // Style SVG icons - small and inline
+        svg {
+            display: inline-block;
+            width: 20px;
+            height: 38px;
+            vertical-align: middle;
+            margin: 0 5px;
+            fill: currentColor;
+        }
+
+        i {
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
+
+    &__button {
+        margin-top: 30px;
+
+        @include bp($b_laptop) {
+            margin-top: 40px;
+        }
+    }
+
+    &__contact-form {
+        margin-top: 40px;
+        width: 100%;
+
+        @include bp($b_laptop) {
+            margin-top: 0;
+            padding-left: 30px;
+        }
+
+        // Override contact form element styles when inside video background
+        .contact-form-element {
+            background: none;
+            padding: 0;
+
+            .container {
+                padding: 0;
+            }
+
+            .row {
+                margin: 0;
+            }
+
+            .col-12,
+            .col-lg-8 {
+                padding: 0;
+                max-width: 100%;
+            }
+
+            &__title,
+            &__description {
+                color: #fff;
+                text-align: center;
+
+                @include bp($b_laptop) {
+                    text-align: left;
+                }
+            }
+
+            &__form {
+                // Keep the form wrapper styling for readability
+            }
+        }
+
+        &-title {
+            color: #fff;
+            margin-bottom: 15px;
+            font-weight: $font-weight-medium;
+
+            @include bp($b_mobile) {
+                font-size: 28px;
+                line-height: 32px;
+            }
+
+            @include bp($b_laptop) {
+                font-size: 36px;
+                line-height: 40px;
+            }
+        }
+
+        &-description {
+            color: #fff;
+            margin-bottom: 25px;
+            opacity: 0.95;
+            line-height: 1.6;
+
+            @include bp($b_mobile) {
+                font-size: 16px;
+            }
+
+            @include bp($b_laptop) {
+                font-size: 18px;
+            }
+        }
+
+        &-wrapper {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 8px;
+
+            @include bp($b_mobile) {
+                padding: 20px;
+            }
+
+            @include bp($b_laptop) {
+                padding: 40px;
+            }
+
+            // Contact Form 7 styling
+            .wpcf7-form {
+
+                input[type="text"],
+                input[type="email"],
+                input[type="tel"],
+                input[type="url"],
+                textarea,
+                select {
+                    width: 100%;
+                    padding: 12px 15px;
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                    font-size: 16px;
+                    margin-bottom: 15px;
+                    background-color: #fff;
+                    color: #333;
+
+                    &:focus {
+                        outline: none;
+                        border-color: var(--highlight-a);
+                    }
+                }
+
+                textarea {
+                    min-height: 120px;
+                    resize: vertical;
+                }
+
+                input[type="submit"] {
+                    background-color: var(--highlight-a);
+                    color: #fff;
+                    padding: 12px 30px;
+                    border: none;
+                    border-radius: 4px;
+                    font-size: 16px;
+                    font-weight: 500;
+                    cursor: pointer;
+                    transition: opacity 0.3s ease, transform 0.2s ease;
+
+                    &:hover {
+                        opacity: 0.9;
+                        transform: translateY(-1px);
+                    }
+                }
+
+                .wpcf7-response-output {
+                    margin-top: 15px;
+                    padding: 10px;
+                    border-radius: 4px;
+                }
+
+                .wpcf7-mail-sent-ok {
+                    background-color: #d4edda;
+                    color: white;
+                    border: 1px solid #c3e6cb;
+                }
+
+                .wpcf7-mail-sent-ng,
+                .wpcf7-aborted,
+                .wpcf7-spam {
+                    background-color: #f8d7da;
+                    color: #721c24;
+                    border: 1px solid #f5c6cb;
+                }
+
+                .wpcf7-validation-errors {
+                    background-color: #fff3cd;
+                    color: #856404;
+                    border: 1px solid #ffeaa7;
+                }
+            }
+        }
+    }
+
+    // Plyr customization
+    .plyr {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+
+        &__video-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        &__video-embed,
+        video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: cover;
+        }
+
+        // Hide controls if needed
+        &__controls {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+
+            .video-background:hover & {
+                opacity: 1;
+            }
+        }
+
+        // Custom styling for muted/autoplay videos
+        &.plyr--paused {
+            .plyr__poster {
+                background-size: cover;
+                background-position: center;
+            }
+        }
+    }
+
+    // Content positioning variations
+    &__content {
+
+        .video-background__text {
+            overflow-y: scroll;
+            webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: var(--highlight-a) transparent;
+
+            &::-webkit-scrollbar {
+                width: 4px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background-color: var(--highlight-a);
+                border-radius: 2px;
+            }
+
+            &::-webkit-scrollbar-track {
+                background-color: transparent;
+            }
+        }
+
+        &.justify-content-start {
+            text-align: left;
+
+            .video-background__text {
+                margin-left: 0;
+            }
+        }
+
+        &.justify-content-end {
+            text-align: right;
+
+            .video-background__text {
+                margin-right: 0;
+            }
+        }
+
+        &.align-items-start {
+            padding-top: 60px;
+
+            @include bp($b_mobile) {
+                padding-top: 40px;
+            }
+        }
+
+        &.align-items-end {
+            padding-bottom: 60px;
+
+            @include bp($b_mobile) {
+                padding-bottom: 40px;
+            }
+        }
+    }
+}

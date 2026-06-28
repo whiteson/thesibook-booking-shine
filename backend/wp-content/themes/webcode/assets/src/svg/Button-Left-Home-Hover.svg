@@ -1,0 +1,10 @@
+<svg id="Layer_1" data-name="Layer 1"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65.32 65.32">
+    <defs>
+        <style>.cls-1lefthome{fill:#f4efe6;}.cls-2lefthome2{fill:none;stroke:#23324E;stroke-linecap:round;stroke-miterlimit:10;stroke-width:2.5px;}</style>
+    </defs>
+    <title>Button-Left-Home-Hover</title>
+    <circle class="cls-1lefthome" cx="32.66" cy="32.66" r="32.66"/>
+    <polyline class="cls-2lefthome2" points="34.91 50.01 17.56 32.66 34.91 15.3"/>
+    <line class="cls-2lefthome2" x1="18.7" y1="32.66" x2="47.75" y2="32.66"/>
+</svg>

@@ -1,0 +1,57 @@
+---
+description: WCProject v2 — Lovable to headless WordPress + Next.js monorepo migration
+globs:
+  - "**/*.{ts,tsx,js,jsx,php,md,mdx,json,css,scss,sh,yml,yaml}"
+alwaysApply: false
+---
+
+# WCProject Lovable → Headless WordPress + Next.js (v2)
+
+Use when migrating a Lovable project to the webcode monorepo pattern.
+
+## Monorepo layout
+
+- `src/` — Lovable reference (do not deploy)
+- `backend/` — WordPress CMS only
+- `frontend/` — Next.js public site
+- `scripts/deploy/` — deployment automation
+
+## Behavior
+
+- Analyze before rewriting (`agents/reports/codebase-map.md` first).
+- Preserve visual intent; improve architecture.
+- Every section type needs ACF + normalizer + TS type + React component + renderer case.
+- Server components by default; client for interactivity/GSAP/Swiper/nav.
+- CMS fetches in `frontend/src/lib/wordpress/` and `frontend/src/lib/cms.ts` only.
+- Menus/logos/footer from `/wp-json/webcode/v1/settings`, not hardcoded in layout.
+- Render mode via `NEXT_RENDER_MODE` (`isr` | `ssr` | `static`).
+
+## Architecture
+
+```txt
+Pages fetch data.
+Adapters normalize data.
+Components render data.
+```
+
+## Required outputs (full migration)
+
+```txt
+agents/reports/codebase-map.md
+backend/wp-content/plugins/webcode-headless-api/
+backend/wp-content/themes/webcode/acf-json/
+frontend/src/lib/wordpress/
+frontend/src/lib/render-mode.ts
+frontend/src/components/sections/
+frontend/src/app/
+scripts/deploy/
+agents/reports/qa-report.md
+```
+
+## Do not
+
+- Deploy from `src/` (Vite/Lovable).
+- Hardcode nav links or site copy in components.
+- Add a section component without ACF layout + normalizer.
+- Invent CMS fields; document proposed schema in `agents/knowledge/cms-schema.md`.
+- Mark complete unless lint, typecheck, and build pass (or state why not run).

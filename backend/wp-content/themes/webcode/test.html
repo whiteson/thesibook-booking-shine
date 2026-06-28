@@ -1,0 +1,1069 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="profile" href="http://gmpg.org/xfn/11">
+  <title>Openweb</title>
+  <meta name='robots' content='noindex, nofollow' />
+  <link rel='stylesheet' id='wp-block-library-css'
+    href='http://l.l/openweb/wp-includes/css/dist/block-library/style.min.css?ver=6.4.3' media='all' />
+  <style id='classic-theme-styles-inline-css'>
+    /*! This file is auto-generated */
+    .wp-block-button__link {
+      color: #fff;
+      background-color: #32373c;
+      border-radius: 9999px;
+      box-shadow: none;
+      text-decoration: none;
+      padding: calc(.667em + 2px) calc(1.333em + 2px);
+      font-size: 1.125em
+    }
+
+    .wp-block-file__button {
+      background: #32373c;
+      color: #fff;
+      text-decoration: none
+    }
+  </style>
+  <style id='global-styles-inline-css'>
+    body {
+      --wp--preset--color--black: #000000;
+      --wp--preset--color--cyan-bluish-gray: #abb8c3;
+      --wp--preset--color--white: #ffffff;
+      --wp--preset--color--pale-pink: #f78da7;
+      --wp--preset--color--vivid-red: #cf2e2e;
+      --wp--preset--color--luminous-vivid-orange: #ff6900;
+      --wp--preset--color--luminous-vivid-amber: #fcb900;
+      --wp--preset--color--light-green-cyan: #7bdcb5;
+      --wp--preset--color--vivid-green-cyan: #00d084;
+      --wp--preset--color--pale-cyan-blue: #8ed1fc;
+      --wp--preset--color--vivid-cyan-blue: #0693e3;
+      --wp--preset--color--vivid-purple: #9b51e0;
+      --wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg, rgba(6, 147, 227, 1) 0%, rgb(155, 81, 224) 100%);
+      --wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg, rgb(122, 220, 180) 0%, rgb(0, 208, 130) 100%);
+      --wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg, rgba(252, 185, 0, 1) 0%, rgba(255, 105, 0, 1) 100%);
+      --wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg, rgba(255, 105, 0, 1) 0%, rgb(207, 46, 46) 100%);
+      --wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg, rgb(238, 238, 238) 0%, rgb(169, 184, 195) 100%);
+      --wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg, rgb(74, 234, 220) 0%, rgb(151, 120, 209) 20%, rgb(207, 42, 186) 40%, rgb(238, 44, 130) 60%, rgb(251, 105, 98) 80%, rgb(254, 248, 76) 100%);
+      --wp--preset--gradient--blush-light-purple: linear-gradient(135deg, rgb(255, 206, 236) 0%, rgb(152, 150, 240) 100%);
+      --wp--preset--gradient--blush-bordeaux: linear-gradient(135deg, rgb(254, 205, 165) 0%, rgb(254, 45, 45) 50%, rgb(107, 0, 62) 100%);
+      --wp--preset--gradient--luminous-dusk: linear-gradient(135deg, rgb(255, 203, 112) 0%, rgb(199, 81, 192) 50%, rgb(65, 88, 208) 100%);
+      --wp--preset--gradient--pale-ocean: linear-gradient(135deg, rgb(255, 245, 203) 0%, rgb(182, 227, 212) 50%, rgb(51, 167, 181) 100%);
+      --wp--preset--gradient--electric-grass: linear-gradient(135deg, rgb(202, 248, 128) 0%, rgb(113, 206, 126) 100%);
+      --wp--preset--gradient--midnight: linear-gradient(135deg, rgb(2, 3, 129) 0%, rgb(40, 116, 252) 100%);
+      --wp--preset--font-size--small: 13px;
+      --wp--preset--font-size--medium: 20px;
+      --wp--preset--font-size--large: 36px;
+      --wp--preset--font-size--x-large: 42px;
+      --wp--preset--spacing--20: 0.44rem;
+      --wp--preset--spacing--30: 0.67rem;
+      --wp--preset--spacing--40: 1rem;
+      --wp--preset--spacing--50: 1.5rem;
+      --wp--preset--spacing--60: 2.25rem;
+      --wp--preset--spacing--70: 3.38rem;
+      --wp--preset--spacing--80: 5.06rem;
+      --wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);
+      --wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);
+      --wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);
+      --wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);
+      --wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);
+    }
+
+    :where(.is-layout-flex) {
+      gap: 0.5em;
+    }
+
+    :where(.is-layout-grid) {
+      gap: 0.5em;
+    }
+
+    body .is-layout-flow>.alignleft {
+      float: left;
+      margin-inline-start: 0;
+      margin-inline-end: 2em;
+    }
+
+    body .is-layout-flow>.alignright {
+      float: right;
+      margin-inline-start: 2em;
+      margin-inline-end: 0;
+    }
+
+    body .is-layout-flow>.aligncenter {
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body .is-layout-constrained>.alignleft {
+      float: left;
+      margin-inline-start: 0;
+      margin-inline-end: 2em;
+    }
+
+    body .is-layout-constrained>.alignright {
+      float: right;
+      margin-inline-start: 2em;
+      margin-inline-end: 0;
+    }
+
+    body .is-layout-constrained>.aligncenter {
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body .is-layout-constrained> :where(:not(.alignleft):not(.alignright):not(.alignfull)) {
+      max-width: var(--wp--style--global--content-size);
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body .is-layout-constrained>.alignwide {
+      max-width: var(--wp--style--global--wide-size);
+    }
+
+    body .is-layout-flex {
+      display: flex;
+    }
+
+    body .is-layout-flex {
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    body .is-layout-flex>* {
+      margin: 0;
+    }
+
+    body .is-layout-grid {
+      display: grid;
+    }
+
+    body .is-layout-grid>* {
+      margin: 0;
+    }
+
+    :where(.wp-block-columns.is-layout-flex) {
+      gap: 2em;
+    }
+
+    :where(.wp-block-columns.is-layout-grid) {
+      gap: 2em;
+    }
+
+    :where(.wp-block-post-template.is-layout-flex) {
+      gap: 1.25em;
+    }
+
+    :where(.wp-block-post-template.is-layout-grid) {
+      gap: 1.25em;
+    }
+
+    .has-black-color {
+      color: var(--wp--preset--color--black) !important;
+    }
+
+    .has-cyan-bluish-gray-color {
+      color: var(--wp--preset--color--cyan-bluish-gray) !important;
+    }
+
+    .has-white-color {
+      color: var(--wp--preset--color--white) !important;
+    }
+
+    .has-pale-pink-color {
+      color: var(--wp--preset--color--pale-pink) !important;
+    }
+
+    .has-vivid-red-color {
+      color: var(--wp--preset--color--vivid-red) !important;
+    }
+
+    .has-luminous-vivid-orange-color {
+      color: var(--wp--preset--color--luminous-vivid-orange) !important;
+    }
+
+    .has-luminous-vivid-amber-color {
+      color: var(--wp--preset--color--luminous-vivid-amber) !important;
+    }
+
+    .has-light-green-cyan-color {
+      color: var(--wp--preset--color--light-green-cyan) !important;
+    }
+
+    .has-vivid-green-cyan-color {
+      color: var(--wp--preset--color--vivid-green-cyan) !important;
+    }
+
+    .has-pale-cyan-blue-color {
+      color: var(--wp--preset--color--pale-cyan-blue) !important;
+    }
+
+    .has-vivid-cyan-blue-color {
+      color: var(--wp--preset--color--vivid-cyan-blue) !important;
+    }
+
+    .has-vivid-purple-color {
+      color: var(--wp--preset--color--vivid-purple) !important;
+    }
+
+    .has-black-background-color {
+      background-color: var(--wp--preset--color--black) !important;
+    }
+
+    .has-cyan-bluish-gray-background-color {
+      background-color: var(--wp--preset--color--cyan-bluish-gray) !important;
+    }
+
+    .has-white-background-color {
+      background-color: var(--wp--preset--color--white) !important;
+    }
+
+    .has-pale-pink-background-color {
+      background-color: var(--wp--preset--color--pale-pink) !important;
+    }
+
+    .has-vivid-red-background-color {
+      background-color: var(--wp--preset--color--vivid-red) !important;
+    }
+
+    .has-luminous-vivid-orange-background-color {
+      background-color: var(--wp--preset--color--luminous-vivid-orange) !important;
+    }
+
+    .has-luminous-vivid-amber-background-color {
+      background-color: var(--wp--preset--color--luminous-vivid-amber) !important;
+    }
+
+    .has-light-green-cyan-background-color {
+      background-color: var(--wp--preset--color--light-green-cyan) !important;
+    }
+
+    .has-vivid-green-cyan-background-color {
+      background-color: var(--wp--preset--color--vivid-green-cyan) !important;
+    }
+
+    .has-pale-cyan-blue-background-color {
+      background-color: var(--wp--preset--color--pale-cyan-blue) !important;
+    }
+
+    .has-vivid-cyan-blue-background-color {
+      background-color: var(--wp--preset--color--vivid-cyan-blue) !important;
+    }
+
+    .has-vivid-purple-background-color {
+      background-color: var(--wp--preset--color--vivid-purple) !important;
+    }
+
+    .has-black-border-color {
+      border-color: var(--wp--preset--color--black) !important;
+    }
+
+    .has-cyan-bluish-gray-border-color {
+      border-color: var(--wp--preset--color--cyan-bluish-gray) !important;
+    }
+
+    .has-white-border-color {
+      border-color: var(--wp--preset--color--white) !important;
+    }
+
+    .has-pale-pink-border-color {
+      border-color: var(--wp--preset--color--pale-pink) !important;
+    }
+
+    .has-vivid-red-border-color {
+      border-color: var(--wp--preset--color--vivid-red) !important;
+    }
+
+    .has-luminous-vivid-orange-border-color {
+      border-color: var(--wp--preset--color--luminous-vivid-orange) !important;
+    }
+
+    .has-luminous-vivid-amber-border-color {
+      border-color: var(--wp--preset--color--luminous-vivid-amber) !important;
+    }
+
+    .has-light-green-cyan-border-color {
+      border-color: var(--wp--preset--color--light-green-cyan) !important;
+    }
+
+    .has-vivid-green-cyan-border-color {
+      border-color: var(--wp--preset--color--vivid-green-cyan) !important;
+    }
+
+    .has-pale-cyan-blue-border-color {
+      border-color: var(--wp--preset--color--pale-cyan-blue) !important;
+    }
+
+    .has-vivid-cyan-blue-border-color {
+      border-color: var(--wp--preset--color--vivid-cyan-blue) !important;
+    }
+
+    .has-vivid-purple-border-color {
+      border-color: var(--wp--preset--color--vivid-purple) !important;
+    }
+
+    .has-vivid-cyan-blue-to-vivid-purple-gradient-background {
+      background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;
+    }
+
+    .has-light-green-cyan-to-vivid-green-cyan-gradient-background {
+      background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;
+    }
+
+    .has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background {
+      background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;
+    }
+
+    .has-luminous-vivid-orange-to-vivid-red-gradient-background {
+      background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;
+    }
+
+    .has-very-light-gray-to-cyan-bluish-gray-gradient-background {
+      background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;
+    }
+
+    .has-cool-to-warm-spectrum-gradient-background {
+      background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;
+    }
+
+    .has-blush-light-purple-gradient-background {
+      background: var(--wp--preset--gradient--blush-light-purple) !important;
+    }
+
+    .has-blush-bordeaux-gradient-background {
+      background: var(--wp--preset--gradient--blush-bordeaux) !important;
+    }
+
+    .has-luminous-dusk-gradient-background {
+      background: var(--wp--preset--gradient--luminous-dusk) !important;
+    }
+
+    .has-pale-ocean-gradient-background {
+      background: var(--wp--preset--gradient--pale-ocean) !important;
+    }
+
+    .has-electric-grass-gradient-background {
+      background: var(--wp--preset--gradient--electric-grass) !important;
+    }
+
+    .has-midnight-gradient-background {
+      background: var(--wp--preset--gradient--midnight) !important;
+    }
+
+    .has-small-font-size {
+      font-size: var(--wp--preset--font-size--small) !important;
+    }
+
+    .has-medium-font-size {
+      font-size: var(--wp--preset--font-size--medium) !important;
+    }
+
+    .has-large-font-size {
+      font-size: var(--wp--preset--font-size--large) !important;
+    }
+
+    .has-x-large-font-size {
+      font-size: var(--wp--preset--font-size--x-large) !important;
+    }
+
+    .wp-block-navigation a:where(:not(.wp-element-button)) {
+      color: inherit;
+    }
+
+    :where(.wp-block-post-template.is-layout-flex) {
+      gap: 1.25em;
+    }
+
+    :where(.wp-block-post-template.is-layout-grid) {
+      gap: 1.25em;
+    }
+
+    :where(.wp-block-columns.is-layout-flex) {
+      gap: 2em;
+    }
+
+    :where(.wp-block-columns.is-layout-grid) {
+      gap: 2em;
+    }
+
+    .wp-block-pullquote {
+      font-size: 1.5em;
+      line-height: 1.6;
+    }
+  </style>
+  <link rel='stylesheet' id='contact-form-7-css'
+    href='http://l.l/openweb/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=5.7.4' media='all' />
+  <link rel='stylesheet' id='theme-css'
+    href='http://l.l/openweb/wp-content/themes/webcode/assets/dist/css/main.css?ver=1707285593' media='all' />
+  <link rel="https://api.w.org/" href="http://l.l/openweb/wp-json/" />
+  <link rel="alternate" type="application/json" href="http://l.l/openweb/wp-json/wp/v2/pages/537" />
+  <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://l.l/openweb/xmlrpc.php?rsd" />
+  <meta name="generator" content="WordPress 6.4.3" />
+  <link rel="canonical" href="http://l.l/openweb/" />
+  <link rel='shortlink' href='http://l.l/openweb/' />
+  <link rel="alternate" type="application/json+oembed"
+    href="http://l.l/openweb/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fl.l%2Fopenweb%2F" />
+  <link rel="alternate" type="text/xml+oembed"
+    href="http://l.l/openweb/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fl.l%2Fopenweb%2F&#038;format=xml" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+</head>
+
+<body
+  class="home page-template page-template-templates page-template-builder page-template-templatesbuilder-php page page-id-537 logged-in">
+  <div id="page" class="site">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <header id="masthead" class="site-header" data-isvisibleeeee>
+            <div class="site-header__wrapper">
+              <div class="site-header__wrapper__logo">
+                <a href="http://l.l/openweb">
+                  <svg width="236" height="34" viewBox="0 0 236 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_105_484)">
+                      <path
+                        d="M40.9963 29.0063C40.4005 29.0063 39.8361 28.8856 39.2968 28.6504C38.7637 28.4089 38.2055 28.0148 37.6348 27.4618C37.5282 27.3602 37.4216 27.2457 37.3087 27.1313C37.547 27.0551 37.7916 26.9724 38.0237 26.8771C39.7546 26.2097 41.2597 25.2563 42.5579 24.0233C43.8498 22.7902 44.8533 21.3347 45.5619 19.6568C46.2706 17.9788 46.6281 16.161 46.6281 14.197C46.6281 12.233 46.2706 10.3771 45.5619 8.7182C44.8533 7.05295 43.8498 5.6038 42.5579 4.37075C41.266 3.1377 39.7546 2.18431 38.0237 1.51693C36.2928 0.84956 34.3988 0.512695 32.3355 0.512695C30.2722 0.512695 28.3782 0.855916 26.6473 1.536C24.9164 2.21609 23.405 3.17583 22.1131 4.40888C20.8211 5.64193 19.8177 7.08473 19.109 8.73727C18.4004 10.3898 18.0429 12.2076 18.0429 14.197C18.0429 16.1864 18.4004 17.9788 19.109 19.6441C19.8177 21.3093 20.8211 22.7585 22.1131 23.9915C23.405 25.2246 24.9227 26.1843 26.6661 26.8644C27.7887 27.3029 28.9803 27.6017 30.2283 27.7542C31.0687 28.625 31.8463 29.3813 32.555 30.0169C33.502 30.8623 34.4113 31.536 35.2956 32.0381C36.1799 32.5402 37.0704 32.9152 37.9798 33.1504C38.8891 33.3919 39.8487 33.5127 40.8709 33.5127C43.8059 33.5127 46.1577 32.4258 47.92 30.2585L45.2358 27.0042C43.9941 28.339 42.5767 29.0063 40.9838 29.0063H40.9963ZM32.3418 22.6949C31.1753 22.6949 30.0903 22.4852 29.0994 22.072C28.1023 21.6589 27.2431 21.0678 26.5093 20.3114C25.7756 19.5551 25.2049 18.6525 24.791 17.6102C24.3833 16.5678 24.1764 15.4237 24.1764 14.1907C24.1764 12.9576 24.3833 11.7818 24.791 10.7521C25.1986 9.71608 25.7756 8.82625 26.5093 8.0699C27.2431 7.31354 28.1085 6.7288 29.0994 6.30931C30.0966 5.89617 31.1753 5.68642 32.3418 5.68642C33.5082 5.68642 34.5869 5.89617 35.5653 6.30931C36.5499 6.72244 37.4091 7.31354 38.1554 8.0699C38.9017 8.82625 39.4786 9.72244 39.8926 10.7521C40.3002 11.7881 40.5072 12.9322 40.5072 14.1907C40.5072 15.4491 40.3002 16.5678 39.8926 17.6102C39.4849 18.6589 38.9017 19.5551 38.1554 20.3114C37.4091 21.0678 36.5436 21.6525 35.5653 22.072C34.5807 22.4852 33.5082 22.6949 32.3418 22.6949Z"
+                        fill="#1a2531" />
+                      <path
+                        d="M91.4311 17.3814L81.654 0.951294H76.6556V27.4174H82.2874V11.8072L89.9699 24.5827H92.654L100.349 11.6356L100.412 27.4174H106.044V0.951294H101.008L91.4311 17.3814Z"
+                        fill="#1a2531" />
+                      <path
+                        d="M125.704 16.3771H137.827V11.5784H125.704V5.87079H139.433V0.951294H119.696V27.4174H139.915V22.5043H125.704V16.3771Z"
+                        fill="#1a2531" />
+                      <path
+                        d="M171.549 2.59748C169.385 1.4979 166.889 0.951294 164.048 0.951294H152.189V27.411H164.048C166.883 27.411 169.385 26.8644 171.549 25.7649C173.712 24.6716 175.405 23.1335 176.622 21.1504C177.839 19.1738 178.447 16.8475 178.447 14.178C178.447 11.5085 177.839 9.18223 176.622 7.20553C175.405 5.22884 173.712 3.6907 171.549 2.59112V2.59748ZM171.266 18.5509C170.558 19.7966 169.56 20.7564 168.281 21.4238C167.002 22.0911 165.49 22.428 163.747 22.428H158.266V5.9407H163.747C165.49 5.9407 166.995 6.27757 168.281 6.94494C169.56 7.61231 170.558 8.5657 171.266 9.79875C171.975 11.0318 172.332 12.4937 172.332 14.1843C172.332 15.875 171.975 17.3051 171.266 18.5509Z"
+                        fill="#1a2531" />
+                      <path
+                        d="M224.291 0.951294H218.321L206.719 27.411H212.909L215.235 21.7415H227.333L229.66 27.411H236L224.291 0.951294ZM217.148 17.0954L221.287 7.0085L225.426 17.0954H217.148Z"
+                        fill="#1a2531" />
+                      <path d="M0 27.4174H6.07701V0.951294L0 5.71189V27.4174Z" fill="#1a2531" />
+                      <path d="M189.541 21.3284L195.625 17.5847V0.5H189.541V21.3284Z" fill="#1a2531" />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_105_484">
+                        <rect width="236" height="33" fill="white" transform="translate(0 0.5)" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </a>
+              </div>
+
+              <div class="site-header__wrapper__menu-btn">
+                <div class="site-header__wrapper__menu-btn--open">
+                  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    x="0px" y="0px" width="44px" height="22px" viewBox="0 0 44 22" enable-background="new 0 0 44 22"
+                    xml:space="preserve">
+                    <g class="burger-open">
+                      <path fill="none" stroke="black" stroke-width="2" d="M0,21h42"></path>
+                      <path fill="none" stroke="black" stroke-width="2" d="M0,11h42"></path>
+                      <path fill="none" stroke="black" stroke-width="2" d="M0,1h42"></path>
+                    </g>
+                    <g class="burger-close">
+                      <g transform="translate(-61.774 -48)">
+                        <line x2="41" y1="22" transform="translate(63 48.5)" fill="none" stroke="black"
+                          stroke-width="1"></line>
+                        <line x2="43.5" y2="22" transform="translate(62 48.5)" fill="none" stroke="black"
+                          stroke-width="1"></line>
+                      </g>
+                    </g>
+                  </svg>
+                  <div class="site-header__wrapper__menu-btn--open--helper">
+                  </div>
+                </div>
+                <!-- <div class="site-header__wrapper__menu-btn--close">
+																	</div> -->
+              </div>
+            </div>
+
+            <div class="site-header__navigation">
+              <nav id="site-navigation" class="site-header__navigation__nav">
+                <div class="container-fluid">
+                  <ul id="menu-main" class="navbar-nav">
+                    <li class="navbar-nav__item navbar-nav__item--current">
+                      <div class="navbar-nav__item__wrapper"><a href="http://l.l/openweb/" class="navbar-nav__link"
+                          data-menu-id="836">IQ MEDIA</a></div>
+                    </li>
+                    <li class="navbar-nav__item">
+                      <div class="navbar-nav__item__wrapper"><a href="http://l.l/openweb/academy/"
+                          class="navbar-nav__link" data-menu-id="935">Academy</a></div>
+                    </li>
+                    <li class="navbar-nav__item">
+                      <div class="navbar-nav__item__wrapper"><a href="http://l.l/openweb/collaboration/"
+                          class="navbar-nav__link" data-menu-id="934">Collaboration</a></div>
+                    </li>
+                    <li class="navbar-nav__item">
+                      <div class="navbar-nav__item__wrapper"><a href="http://l.l/openweb/rd/" class="navbar-nav__link"
+                          data-menu-id="933">R&#038;D</a></div>
+                    </li>
+                    <li class="navbar-nav__item">
+                      <div class="navbar-nav__item__wrapper"><a href="http://l.l/openweb/events/"
+                          class="navbar-nav__link" data-menu-id="932">Events</a></div>
+                    </li>
+                    <li class="navbar-nav__item">
+                      <div class="navbar-nav__item__wrapper"><a href="http://l.l/openweb/blog/" class="navbar-nav__link"
+                          data-menu-id="931">Blog</a></div>
+                    </li>
+                    <li class="navbar-nav__item">
+                      <div class="navbar-nav__item__wrapper"><a href="http://l.l/openweb/about-us-2/"
+                          class="navbar-nav__link" data-menu-id="930">About Us</a></div>
+                    </li>
+                  </ul>
+                </div>
+              </nav>
+            </div>
+          </header>
+        </div>
+      </div>
+    </div>
+
+    <div id="content" class="site-content">
+
+
+      <div class="hero-index">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <div class="col-12 col-lg-12   ">
+              <div class="hero-index__main-image object-fit-cover">
+                <img width="552" height="566" src="http://l.l/openweb/wp-content/uploads/2024/01/iqmedia.png"
+                  class="attachment-full size-full" alt="" decoding="async" fetchpriority="high"
+                  srcset="http://l.l/openweb/wp-content/uploads/2024/01/iqmedia.png 552w, http://l.l/openweb/wp-content/uploads/2024/01/iqmedia-293x300.png 293w"
+                  sizes="(max-width: 552px) 100vw, 552px" />
+              </div>
+
+              <div class="hero-index__wrapper">
+                <h1 class="hero-index__wrapper__title title--h1 text-center my-5">
+                  Embrace<br>Digital Transformation </h1>
+
+                <div class="hero-index__wrapper__subtitle title--h2 py-1 text-center">
+                  Digital disruption keeps challenging companies and businesses. </div>
+
+                <div class="hero-index__wrapper__content title--h2 py-1   text-center">
+                  <p>Media organizations need to embrace these digital disruptions, adapt and transform their strategies
+                    for survival and success.</p>
+                </div>
+
+                <!-- object-fit-cover--square -->
+              </div>
+
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <div class="banner ">
+
+            <div class="banner__wrapper">
+              <h2 class="banner__wrapper__title title--h1">
+                The Three Pillars of IQ Media Hub </h2>
+              <div class="banner__wrapper__subtitle title--h3 text-center">
+              </div>
+              <div class="banner__items">
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="banner__items__item">
+                        <div class="banner__items__item__number ">
+                          1 </div>
+                        <div class="banner__items__item__title title--h2 pink">
+                          The Academy </div>
+                        <div class="banner__items__item__content title--h2">
+                          <p>The Academy hosts different online courses, workshops and talks every month</p>
+                        </div>
+                        <div class="banner__items__item__link">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="banner__items__item">
+                        <div class="banner__items__item__number ">
+                          2 </div>
+                        <div class="banner__items__item__title title--h2 orange">
+                          Collaborations </div>
+                        <div class="banner__items__item__content title--h2">
+                          <p>Media professionals collaborate and innovate to enhance their businesses.</p>
+                        </div>
+                        <div class="banner__items__item__link">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="banner__items__item">
+                        <div class="banner__items__item__number ">
+                          3 </div>
+                        <div class="banner__items__item__title title--h2 blue">
+                          R&D Lab </div>
+                        <div class="banner__items__item__content title--h2">
+                          <p>In response to a reality full of financial difficulties, the R&amp;D Labshares Digital
+                            Business Transformation strategies and best practices.</p>
+                        </div>
+                        <div class="banner__items__item__link">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-lg-10 offset-lg-1 p-lg-0">
+                <div class="card-slider__title text-center title--h1 my-5">
+                  Lab News </div>
+
+                <div class="card-slider__content  text-center title--h3 my-3">
+                  <p>The latest and greatest news from our lab and our partners about digital transformation.</p>
+                </div>
+
+                <div class="section dynamic-posts-section mb-2">
+                  <div class="dynamic-posts-loader"></div>
+                  <div class="dynamic-posts" data-posts="post" data-taxonomy="category"></div>
+                </div>
+              </div>
+
+              <div class="card-slider__link  text-center title--h3 my-1">
+                <a href="http://l.l/openweb/">View all</a>
+              </div>
+
+
+            </div>
+          </div>
+
+
+
+
+
+
+          <div class="main-content-image">
+            <div class="container-fluid">
+              <div class="row align-items-center justify-content-center py-5">
+                <div class="col-md-5">
+                  <div class="main-content-image__wrapper pr-5">
+                    <div class="main-content-image__wrapper__title title--h2  my-2">
+                      Our Vision </div>
+                    <div class="main-content-image__wrapper__title title--h3   my-1">
+                      Maybe a subtitle </div>
+                    <div class="main-content-image__wrapper__content title--h2  ">
+                      <p>Create the future Market Leaders and contribute to the shift of the news industry towards
+                        having a digital core in which most of the journalistic routines, news products, business
+                        models, and value chains will be digitised to the maximum extent. Εnsure your future success</p>
+                    </div>
+                    <div class="main-content-image__wrapper__link my-5">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <div class="main-content-image__image object-fit-cover">
+                    <img width="390" height="336"
+                      src="http://l.l/openweb/wp-content/uploads/2024/01/Screen-Shot-2024-01-02-at-8.25.35-PM.png"
+                      class="attachment-full size-full" alt="" decoding="async"
+                      srcset="http://l.l/openweb/wp-content/uploads/2024/01/Screen-Shot-2024-01-02-at-8.25.35-PM.png 390w, http://l.l/openweb/wp-content/uploads/2024/01/Screen-Shot-2024-01-02-at-8.25.35-PM-300x258.png 300w"
+                      sizes="(max-width: 390px) 100vw, 390px" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col">
+                <div class="video">
+                  <div class="video__wrapper">
+                    <video playsinline autoplay muted loop id="player"
+                      data-poster="http://l.l/openweb/wp-content/uploads/2024/01/3_30-blog-1024x413-1.png ">
+                      <source src="http://l.l/openweb/wp-content/uploads/2024/01/New-Product-Video-1.mp4"
+                        type="video/mp4" />
+                      <!-- <source src="/path/to/video.webm" type="video/webm" /> -->
+                    </video>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+          <div class="contact-form paddingtop">
+            <!-- <div class="contact-form__background">
+      </div> -->
+
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-lg-6">
+                  <h2 class="contact-form__title title--h1 mb-2">
+                    Join Us. </h2>
+                  <div class="contact-form__description title--h4">
+                    Ready to embark on a journey of media excellence and innovation? Join IQ Media Hub and become part
+                    of a vibrant community dedicated to transforming the digital landscape. </div>
+                </div>
+                <div class="col-lg-5 offset-lg-1">
+
+                  <div class="wpcf7 no-js" id="wpcf7-f195-o1" lang="en-US" dir="ltr">
+                    <div class="screen-reader-response">
+                      <p role="status" aria-live="polite" aria-atomic="true"></p>
+                      <ul></ul>
+                    </div>
+                    <form action="/openweb/#wpcf7-f195-o1" method="post" class="wpcf7-form init"
+                      aria-label="Contact form" novalidate="novalidate" data-status="init">
+                      <div style="display: none;">
+                        <input type="hidden" name="_wpcf7" value="195" />
+                        <input type="hidden" name="_wpcf7_version" value="5.7.4" />
+                        <input type="hidden" name="_wpcf7_locale" value="en_US" />
+                        <input type="hidden" name="_wpcf7_unit_tag" value="wpcf7-f195-o1" />
+                        <input type="hidden" name="_wpcf7_container_post" value="0" />
+                        <input type="hidden" name="_wpcf7_posted_data_hash" value="" />
+                      </div>
+
+                      <div class="container-fluid">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="contact-form__item">
+                              <label class="contact-form__item__label" for="firstname">Name*</label>
+                              <span class="wpcf7-form-control-wrap" data-name="name"><input size="40"
+                                  class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required" aria-required="true"
+                                  aria-invalid="false" placeholder="Name*" value="" type="text" name="name" /></span>
+                            </div>
+                            <div class="contact-form__item">
+                              <label class="contact-form__item__label" for="lastname">Surname*</label>
+                              <span class="wpcf7-form-control-wrap" data-name="surname"><input size="40"
+                                  class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required" aria-required="true"
+                                  aria-invalid="false" placeholder="Surname*" value="" type="text"
+                                  name="surname" /></span>
+                            </div>
+                            <div class="contact-form__item">
+                              <label class="contact-form__item__label" for="email">Email*</label>
+                              <span class="wpcf7-form-control-wrap" data-name="email"><input size="40"
+                                  class="wpcf7-form-control wpcf7-text wpcf7-email wpcf7-validates-as-required wpcf7-validates-as-email"
+                                  aria-required="true" aria-invalid="false" placeholder="Email*" value="" type="email"
+                                  name="email" /></span>
+                            </div>
+
+                          </div>
+                          <div class="col-md-12">
+                            <div class="contact-form__item">
+                              <label class="contact-form__item__label" for="message">Job Title*</label>
+                              <span class="wpcf7-form-control-wrap" data-name="jobtitle"><input size="40"
+                                  class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required" aria-required="true"
+                                  aria-invalid="false" placeholder="Journalist" value="" type="text"
+                                  name="jobtitle" /></span>
+                            </div>
+
+
+
+                            <div class="contact-form__item contact-form__disclaimer">
+                              <label class="contact-form__item__label" for="yourcompany"></label>
+                              <span class="wpcf7-form-control-wrap" data-name="image-consent"><span
+                                  class="wpcf7-form-control wpcf7-acceptance"><span
+                                    class="wpcf7-list-item"><label><input type="checkbox" name="image-consent" value="1"
+                                        aria-invalid="false" /><span class="wpcf7-list-item-label">By submitting this
+                                        form, you agree to the IQ Media Hub Privacy Policy and Terms of
+                                        Use.</span></label></span></span></span>
+                            </div>
+
+
+                            <div class="contact-form__item contact-form__disclaimer">
+                              <label class="contact-form__item__label" for="yourcompany"></label>
+                              <span class="wpcf7-form-control-wrap" data-name="marketingacceptance"><span
+                                  class="wpcf7-form-control wpcf7-acceptance"><span
+                                    class="wpcf7-list-item"><label><input type="checkbox" name="marketingacceptance"
+                                        value="1" aria-invalid="false" /><span class="wpcf7-list-item-label">Keep me
+                                        informed on upcoming events and services</span></label></span></span></span>
+                            </div>
+
+
+
+                            <div class="contact-form__item relative">
+                              <div class="button contact-form__button-fix" href="#">
+                                <span class="button__icon">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="24" viewBox="0 0 28 24">
+                                    <g>
+                                      <g>
+                                        <g>
+                                          <path fill="none" stroke="#000" stroke-miterlimit="20" stroke-width="3"
+                                            d="M15.06 1.887v0l10.113 10.114v0L15.06 22.111v0"></path>
+                                        </g>
+                                        <g>
+                                          <path fill="none" stroke="#000" stroke-miterlimit="20" stroke-width="3"
+                                            d="M15.06 12H.827"></path>
+                                        </g>
+                                      </g>
+                                    </g>
+                                  </svg> </span>
+                                <span class="button__link">
+
+                                  Join our lab</span>
+                                <div class="contact-form__submit">
+                                  <input class="wpcf7-form-control has-spinner wpcf7-submit" type="submit"
+                                    value="Join our lab" />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="wpcf7-response-output" aria-hidden="true"></div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div><!-- #content -->
+      </div><!-- #page -->
+
+      <footer class="site-footer">
+        <div class="container-fluid site">
+          <div class="row">
+            <div class="col-lg-3">
+              <div class="site-footer__logo">
+                <svg width="124" height="128" viewBox="0 0 124 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M107.478 45.1463C105.227 28.5309 95.5957 16.6614 80.4413 9.3212C78.8036 8.52749 77.0308 8.006 75.3635 7.37628C74.3123 9.80333 73.36 12.0073 72.3451 14.3557C72.7669 14.5361 73.1689 14.7394 73.5907 14.8804C81.1069 17.3895 87.1766 21.9189 92.0403 28.0816C96.6667 33.9426 99.4972 40.5841 100.196 48.0161C100.749 53.9001 99.9454 59.6299 97.8167 65.2022C95.1707 72.1357 91.1572 78.0656 85.2127 82.5458C70.513 93.6216 51.6845 93.1001 37.8218 81.575C26.9181 72.5129 22.2851 60.4794 24.2622 46.4091C26.124 33.162 33.4722 23.4702 45.2392 17.1074C47.2756 16.0054 49.4965 15.2379 51.6285 14.313C50.6597 12.0926 49.681 9.85252 48.5739 7.31396C46.2244 8.3307 43.7498 9.20968 41.4563 10.4232C30.2297 16.3596 22.4202 25.2839 18.354 37.3011C15.5795 45.5006 15.3093 53.8542 17.2996 62.2964C22.0611 82.49 39.4463 97.0654 59.9685 98.092C69.4256 98.5643 78.2599 96.4357 86.1057 91.293C102.763 80.3778 110.127 64.6939 107.481 45.1431L107.478 45.1463Z"
+                    fill="#1a2531" />
+                  <path
+                    d="M80.1382 67.8065C81.8484 69.6333 83.5157 71.4142 85.1863 73.1984C94.4787 63.7789 97.843 45.4908 86.0892 31.4336C75.1328 18.3276 56.9831 16.1662 43.618 26.0679C29.0797 36.8387 26.292 56.6224 36.8036 70.7451C46.577 83.8774 64.4335 86.58 75.4063 80.1122C73.8708 78.4691 72.3847 76.944 70.9842 75.3467C70.3614 74.635 69.7782 74.4513 68.8556 74.7301C65.4648 75.7632 62.0082 75.9239 58.4923 75.4516C48.3366 74.0905 39.4957 65.2941 38.3325 55.1957C36.4213 38.5868 50.8047 25.5037 66.3578 28.426C82.9984 31.5549 91.8656 50.991 81.7923 65.4417C81.2618 66.2059 80.728 66.9668 80.1415 67.8065H80.1382Z"
+                    fill="#1a2531" />
+                  <path
+                    d="M70.681 56.8423C72.2528 58.6593 73.8773 60.4304 75.5019 62.2343C80.125 56.6455 80.6588 47.2916 74.8132 40.6631C69.4223 34.5496 59.7214 33.2246 52.673 37.7244C45.0414 42.5982 43.4565 52.0538 46.5869 59.0431C50.1193 66.9375 59.8433 69.9156 64.8948 68.3905C64.6081 68.0494 64.3675 67.7345 64.0973 67.4492C61.0328 64.1923 57.9486 60.9519 54.8973 57.6852C52.9465 55.5993 52.449 53.0312 52.9531 50.3582C53.6484 46.7012 55.8232 44.1167 59.4874 43.0902C63.3427 42.0078 66.6676 43.1098 69.2312 46.1404C71.696 49.0561 72.1177 52.3523 70.6613 55.8912C70.5492 56.1667 70.5229 56.6488 70.6843 56.8358L70.681 56.8423Z"
+                    fill="#1a2531" />
+                  <path
+                    d="M61.9621 12.2764C65.3627 12.2928 68.1306 9.61325 68.1603 6.2777C68.1899 2.82081 65.4154 0.0297058 61.9258 0.000187652C58.6801 -0.0260507 55.9254 2.70273 55.8562 6.01532C55.787 9.37383 58.5977 12.26 61.9588 12.2764H61.9621Z"
+                    fill="#1a2531" />
+                  <path
+                    d="M21.5404 124.862C21.2274 124.862 20.9308 124.8 20.6474 124.679C20.3674 124.554 20.0741 124.351 19.7742 124.065C19.7182 124.013 19.6622 123.954 19.6029 123.895C19.7281 123.856 19.8566 123.813 19.9785 123.764C20.888 123.419 21.6788 122.927 22.3609 122.291C23.0397 121.655 23.567 120.904 23.9393 120.038C24.3117 119.172 24.4995 118.234 24.4995 117.221C24.4995 116.207 24.3117 115.249 23.9393 114.393C23.567 113.534 23.0397 112.786 22.3609 112.15C21.6821 111.514 20.888 111.022 19.9785 110.677C19.0691 110.333 18.0739 110.159 16.9898 110.159C15.9057 110.159 14.9106 110.336 14.0011 110.687C13.0917 111.038 12.2975 111.533 11.6187 112.17C10.9399 112.806 10.4127 113.55 10.0403 114.403C9.66799 115.256 9.48016 116.194 9.48016 117.221C9.48016 118.247 9.66799 119.172 10.0403 120.031C10.4127 120.891 10.9399 121.638 11.6187 122.275C12.2975 122.911 13.0949 123.406 14.011 123.757C14.6008 123.983 15.2269 124.138 15.8827 124.216C16.3242 124.666 16.7328 125.056 17.1052 125.384C17.6027 125.82 18.0805 126.168 18.5451 126.427C19.0098 126.686 19.4777 126.88 19.9555 127.001C20.4333 127.126 20.9374 127.188 21.4745 127.188C23.0167 127.188 24.2523 126.627 25.1783 125.509L23.768 123.829C23.1155 124.518 22.3708 124.862 21.5338 124.862H21.5404ZM16.9931 121.606C16.3802 121.606 15.8102 121.497 15.2895 121.284C14.7656 121.071 14.3142 120.766 13.9286 120.376C13.5431 119.985 13.2432 119.52 13.0258 118.982C12.8116 118.444 12.7028 117.854 12.7028 117.217C12.7028 116.581 12.8116 115.974 13.0258 115.443C13.2399 114.908 13.5431 114.449 13.9286 114.059C14.3142 113.669 14.7689 113.367 15.2895 113.15C15.8135 112.937 16.3802 112.829 16.9931 112.829C17.606 112.829 18.1728 112.937 18.6868 113.15C19.2042 113.364 19.6556 113.669 20.0477 114.059C20.4399 114.449 20.743 114.912 20.9605 115.443C21.1747 115.978 21.2834 116.568 21.2834 117.217C21.2834 117.867 21.1747 118.444 20.9605 118.982C20.7463 119.523 20.4399 119.985 20.0477 120.376C19.6556 120.766 19.2009 121.068 18.6868 121.284C18.1695 121.497 17.606 121.606 16.9931 121.606Z"
+                    fill="#1a2531" />
+                  <path
+                    d="M48.0401 118.867L42.9029 110.389H40.2767V124.042H43.2357V115.991L47.2723 122.58H48.6826L52.7258 115.899L52.7587 124.042H55.7178V110.389H53.0718L48.0401 118.867Z"
+                    fill="#1a2531" />
+                  <path
+                    d="M66.0481 118.349H72.4177V115.869H66.0481V112.924H73.2612V110.389H62.8914V124.042H73.5149V121.507H66.0481V118.349Z"
+                    fill="#1a2531" />
+                  <path
+                    d="M90.1356 111.238C88.9988 110.671 87.6873 110.389 86.1946 110.389H79.9635V124.042H86.1946C87.684 124.042 88.9988 123.76 90.1356 123.193C91.2725 122.629 92.1622 121.835 92.8014 120.812C93.4407 119.792 93.7603 118.591 93.7603 117.214C93.7603 115.836 93.4407 114.636 92.8014 113.616C92.1622 112.596 91.2725 111.802 90.1356 111.235V111.238ZM89.9874 119.47C89.615 120.113 89.0911 120.608 88.4189 120.953C87.7467 121.297 86.9525 121.471 86.0365 121.471H83.1565V112.967H86.0365C86.9525 112.967 87.7434 113.14 88.4189 113.485C89.0911 113.829 89.615 114.321 89.9874 114.957C90.3597 115.594 90.5475 116.348 90.5475 117.22C90.5475 118.093 90.3597 118.831 89.9874 119.474V119.47Z"
+                    fill="#1a2531" />
+                  <path
+                    d="M117.848 110.389H114.711L108.615 124.042H111.867L113.09 121.117H119.446L120.669 124.042H124L117.845 110.389H117.848ZM114.095 118.719L116.27 113.514L118.444 118.719H114.095Z"
+                    fill="#1a2531" />
+                  <path d="M0 124.042H3.19301V110.389L0 112.845V124.042Z" fill="#1a2531" />
+                  <path d="M99.5895 120.904L102.786 118.972V110.156H99.5895V120.904Z" fill="#1a2531" />
+                </svg>
+              </div>
+            </div>
+
+            <div class="col-lg-9">
+              <div class="site-footer__menu">
+
+                <div class=" ">
+                  <ul id="menu-footer" class="navbar-nav">
+                    <li class="navbar-nav__item navbar-nav__item--current">
+                      <div class="navbar-nav__item__wrapper"><a href="http://l.l/openweb/" class="navbar-nav__link"
+                          data-menu-id="836">IQ MEDIA</a></div>
+                    </li>
+                    <li class="navbar-nav__item">
+                      <div class="navbar-nav__item__wrapper"><a href="http://l.l/openweb/academy/"
+                          class="navbar-nav__link" data-menu-id="935">Academy</a></div>
+                    </li>
+                    <li class="navbar-nav__item">
+                      <div class="navbar-nav__item__wrapper"><a href="http://l.l/openweb/collaboration/"
+                          class="navbar-nav__link" data-menu-id="934">Collaboration</a></div>
+                    </li>
+                    <li class="navbar-nav__item">
+                      <div class="navbar-nav__item__wrapper"><a href="http://l.l/openweb/rd/" class="navbar-nav__link"
+                          data-menu-id="933">R&#038;D</a></div>
+                    </li>
+                    <li class="navbar-nav__item">
+                      <div class="navbar-nav__item__wrapper"><a href="http://l.l/openweb/events/"
+                          class="navbar-nav__link" data-menu-id="932">Events</a></div>
+                    </li>
+                    <li class="navbar-nav__item">
+                      <div class="navbar-nav__item__wrapper"><a href="http://l.l/openweb/blog/" class="navbar-nav__link"
+                          data-menu-id="931">Blog</a></div>
+                    </li>
+                    <li class="navbar-nav__item">
+                      <div class="navbar-nav__item__wrapper"><a href="http://l.l/openweb/about-us-2/"
+                          class="navbar-nav__link" data-menu-id="930">About Us</a></div>
+                    </li>
+                  </ul>
+                </div>
+                </nav>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+
+            <div class="col-md-4">
+              <div class="site-footer__social">
+                <div class="site-footer__social__label">
+                  FOLLOW US </div>
+                <a class="site-footer__social__icons" href="https://www.facebook.com" target="_blank">
+                  <svg width="10" height="24" viewBox="0 0 10 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <rect width="10" height="24" fill="url(#pattern0)" />
+                    <defs>
+                      <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
+                        <use xlink:href="#image0_128_73" transform="matrix(0.0046875 0 0 0.00195312 -0.7 0)" />
+                      </pattern>
+                      <image id="image0_128_73" width="512" height="512"
+                        xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAA/iSURBVHic7d1/zO51Xcfx1+05xwMM6OBRgTxQaELNP/hlzhajHxpmLftBK2stWkW6afMv+yO2zJX902bUmqOaf5VZlk1bbmmt2kz5I7SxwJEYbhUY0BocfgQczzn9cd3MdCI31/29vu/v9Xk/Hts1Gczx0pvv9/u8P9d13yQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOzaqR4A8CwOJTk3ydclOW/3zx1OclbZos05meThJPcl+a/iLQxOAABVdpJclOTlSb4pydfvvi7c/c8Lsnroj/ig34v7knw8ye8l+fviLQxIAABzuCjJFbuvy5NcmtWD/4zKUVvkY0l+KsmD1UMYhwAApnZmklcluTbJtyd5ZZKjpYvGcHeSb83qLQIAKHcwyTVJ3pXkE0meTHLaayOv9+3xawLPygkAsI4XJvmBJN+b5HvypQ/nsVmnsnr75N+qhwDQx9EkP5/V+9EnUv/dcNfXO5/tCwV7cbB6ALBoh5L8YJKfS/LauGcswaurBzAGbwEAX82xJDfuvi4s3sKXeyDJ+dUj2H4CAHjaTpLXJPmFJD+U1Xf/LM/JrL42p6uHALDdDid5U5LPpv79ba+9vc75ql9JeA68nwd9nZXVEf/bk7ykeAvPzeEkj1SPYLsJAOjnYJKfTfKOrH7lLtCQAIBefiTJbyS5rHoIUEsAQA+XJbk5q1/cA5DnVQ8ANursJL+V5I54+AP/jxMAGNe1Sd6b1b9qF+DLOAGA8Zyb1YP/H+LhDzwDJwAwlldl9W+M8+AHviYnADCGA1n9WN8n4uEP7IETANh+R5P8cZLrqocA20MAwHa7IslfJLmkegiwXbwFANvr+iSfjIc/sAYBANvpbUk+kOTM6iHAdvIWAGyXA0l+N8mbq4cA200AwPY4mNXP9/909RBg+wkA2A6Hk7w/yQ9XDwHGIABg+Q4n+XCS11UPAcbhQ4CwbIey+rCfhz8wKQEAy3Ugq2P/N1QPAcYjAGC5bs7qZ/0BJicAYJl+Oclbq0cA4xIAsDw/meTXq0cAYxMAsCxXJvmDJDvVQ4CxCQBYjvOT/GWSs6qHAOMTALAMB5P8eZJj1UOAHgQALMOvJbmmegTQh/cZod53JvnbrH7uH/biRUn+u3oE280JANR6UVa/7MfDH5iVAIBa70lyQfUIoB8BAHV+IsmPVo8AevIZAKhxfpI7kryweghbyWcA2DcnAFDj3fHwBwoJAJjftVkd/wOUEQAwr+cnuSXefgOKCQCY19uSfEv1CADfhcB8zkvyuSQvqB7C1vMhQPbNCQDM51fi4Q8shBMAmMc3JrkryeHiHYzBCQD75gQA5nFTPPyBBXECAJt3cZK7s/oJAJiCEwD2zQkAbN5N8fAHFsYJAGzWi5P8exz/My0nAOybEwDYrDfFwx9YICcAsDkHk3w+ybHqIQzHCQD75gQANuf6ePgDCyUAYHPeWj0A4JkIANiMK5JcUz0C4JkIANiMX6weAPC1+BAgTO+sJPcnObt6CMPyIUD2zQkATO/74+EPLJwAgOn9ePUAgGfjLQCY1tlJHkhyZvUQhuYtAPbNCQBM6w3x8Ae2gACAaTn+B7aCAIDpnJvkuuoRAHshAGA6r0tyRvUIgL0QADCd11QPANgrAQDT+e7qAQB7JQBgGhcleXn1CNr4YvUAtp8AgGk4/mcup5Mcrx7B9hMAMA3H/8zleJJT1SPYfgIApvFd1QNo4zPVAxiDAID9e2mSY9UjaOO26gGMQQDA/l1VPYBWPlA9gDEIANi/K6oH0MZtSf6xegRjEACwf1dXD6CFx5LcUD2CcQgA2L/LqwcwvC8k+b74ACAT2qkeAFvugqxuzrAJDyT5/SS/k+TB4i0M5mD1ANhyV1YP4Dk7neSh3T9+JKvfqvdEkv/9ir/2tCeTPP4Vf+7p/94Ujic5ufvHJ3f//vcl+XSSf42f+WdDBADsjw8ALsPjSW5NcntWx+T37r4e2309tft6rGogLI0AgP15afWAxh5J8mdJ3p/k41l9pw7skQCA/bmkekBDDyV5d5Kbs4oAAJjdPVm9b+w1z+sjSV6yp68MAGzIgazeV65+KHZ4nUryq3v6qgDAhn1D6h+MXV5v3uPXBNgjvwgI1uf9/3m8K8kt1SNgNAIA1icANu/WJO+oHgEjEgCwvgurBwzuZJIb86VfkgNMSADA+l5QPWBwf5TkzuoRMCoBAOs7Wj1gcL9dPQBGJgBgfU4ANudTSf65egSMTADA+pwAbM6HqgfA6AQArM8JwOZ8tHoAjG6negBssfuTvLh6xICeTHJOkhPVQ2BkTgBgfUeqBwzqM/Hwh40TALCenSTPrx4xqM9WD4AOBACsx8N/c+6tHgAdCABYz6HqAQO7v3oAdCAAYD2HqwcM7PHqAdCBAID1OAHYnCeqB0AHAgDW4zMAm/NU9QDoQADAegTA5ggAmIEAgPUcqB4wsC9WD4AOBACwNE4AYAYCAFgavwUQZiAAgKURADADAQAsjc8AwAwEALA0TgBgBgIAWBoBADMQAMDSCACYgQAAlkYAwAwEALA0PgQIMxAAANCQAACAhgQAsDQ71QOgAwEAAA0JAGBpnADADAQAADQkAIClcQIAMxAAANCQAACWxgkAzEAAAEBDAgBYGvclmIELDVgabwHADAQAsDTuSzADFxqwNO5LMAMXGrA07kswAxcasDTuSzADFxqwNO5LMAMXGrA0B6oHQAcCAFga9yWYgQsNWBr3JZiBCw1YGvclmIELDVga9yWYgQsNWBr3JZiBCw1YGj8FADMQAMDSuC/BDFxowNK4L8EMXGjA0rgvwQxcaMDSuC/BDFxowNK4L8EMXGjA0rgvwQxcaMDS+DFAmIEAAJbGfQlm4EIDlsZ9CWbgQgOWxn0JZrBTPQC21GVJ7qoeMagHkzxSPWJGx5M8luThJHck+XSSv0nyP5WjGJ8AYFOOJHl9ksuTvCLJOUnOLl00rTOy+t8Fm/BEkj9NclOSe4u3MCgBwNSOJvnNJG9McmbxFth2D2Z1Lf1d9RDGIwCY0iuS/HWSY9VDYCAPJbk6yT3VQxiLD9swlXOTfDAe/jC1I0neUz2C8QgApvKWrD4YB0zvuiSXVo9gLAKAKewkubF6BAxsJ8n11SMYiwBgCi9Lckn1CBjcVdUDGIsAYApXVg+ABi6vHsBYBABTeFn1AGjgaPUAxiIAmMI51QOgAdcZkxIATMGNCTbvUJLD1SMYhwBgCoeqB0ATfnkbkxEAANCQAACAhgQAADQkAACgIQEAAA0JAABoSAAAQEMCAAAaEgAA0JAAAICGBAAANCQAAKAhAQAADQkAAGhIAABAQwIAABoSAADQkAAAgIYEAAA0JAAAoCEBAAANCQAAaEgAAEBDAgAAGhIAANCQAACAhgQAADQkAACgIQEAAA0JAABoSAAAQEMCAAAaEgAA0JAAAICGBAAANCQAAKAhAQAADQkAAGhIAABAQwIAABoSAADQkAAAgIYEAAA0JAAAoCEBAAANCQAAaEgAAEBDAgAAGhIAANCQAACAhgQAADQkAACgIQEAAA0JAABoSAAAQEMCAAAaEgAA0JAAAICGBAAANCQAAKAhAQCwPU5WD2AcAoApPFk9ABp4KsmJ6hGMQwAwhUerB0ADrjMmJQCYwkPVA6CB+6sHMBYBwBTuqh4ADfxL9QDGIgCYwu3VA6CBT1UPYCw71QMYxj8leWX1CBjUySSXJPmP6iGMwwkAU7mlegAM7A/j4c/EnAAwlecl+WiS11YPgcHcmeTV8VMATMwJAFM5leSNST5WPQQGcSrJe5N8Wzz82QAnAEztQJIbkrwlyVXFW2CbnEry+ay+4/9kkvcl+c/SRQxNALBJF2UVAd+c5LwkRzLOP3NHkvxY9YhB/VKSD1aPmNFDSZ5I8nj1EACe3WVJTntt5PUze/8yAOvyGQAAaEgAAEBDAgAAGhIAANCQAACAhgQAADQkAACgIQEAAA0JAABoSAAAQEMCAAAaEgAA0JAAAICGBAAANCQAAKAhAQAADQkAAGhIAABAQwIAABoSAADQkAAAgIYEAAA0JAAAoCEBAAANCQAAaEgAAEBDAgAAGhIAANCQAACAhgQAADQkAACgIQEAAA0JAABoSAAAQEMCAAAaEgAA0JAAAICGBAAANCQAAKAhAQAADQkAAGhIAABAQwIAABoSAADQkAAAgIYEAAA0JAAAoCEBAAANCQAAaEgAAEBDAgAAGhIAANCQAACAhgQAADQkAACgIQEAAA0JAABoSAAAQEMCAAAaEgAA0JAAAICGBAAANCQAAKAhAQAADQkAAGhIAABAQwIAABoSAADQkAAAgIYEAAA0JAAAoCEBAAANCQAAaEgAAEBDAgAAGhIAANCQAACAhgQAADQkAACgIQEAAA0JAABoSAAAQEMCAAAaEgAA0JAAAICGBAAANCQAAKAhAQAADQkAAGhIAABAQwIAABoSAADQkAAAgIYEAAA0JAAAoCEBAAANCQAAaEgAAEBDAgAAGhIAANCQAACAhgQAADQkAACgIQEAAA0JAABoSAAAQEMCAAAaEgAA0JAAAICGBAAANCQAAKAhAQAADQkAAGhIAABAQwIAABoSAADQkAAAgIYEAAA0JAAAoCEBAAANCQAAaEgAAEBDAgAAGhIAANCQAACAhgQAADQkAACgIQEAAA0JAABoSAAAQEMCAAAaEgAA0JAAAICGBAAANCQAAKAhAQAADQkAAGhIAABAQwIAABoSAADQkAAAgIYEAAA0JAAAoCEBAAANCQAAaEgAAEBDAgAAGhIAANCQAACAhgQAADQkAACgIQEAAA0JAABoSAAAQEMCAAAaEgAA0JAAAICGBAAANCQAAKAhAQAADQkAAGhIAABAQwIAABoSAADQkAAAgIYEALA0T1UPgA4EAKzHQ2pzHqseAB0IAFjP8eoBA3u0egB0IABgPceTnKoeMagvVA+ADgQArOdEks9VjxjQiSR3V4+ADgQArO+26gEDujOrCAA2TADA+j5UPWBAf1I9ALrYqR4AW+xQknuSHKseMojHk1ya5N7qIdCBEwBY34kkNyQ5WT1kEG+Phz8AW+TGJE8kOe211utkknfGiSQAW+jqJH+V1cOs+oG6La+TST6S5DvW+P8b2CfFDdO6OMm1WQXBxUnOTXJe6aJleDSr9/gfzurHJ29Pcmsc+QMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPX+D450K1vH8jQrAAAAAElFTkSuQmCC" />
+                    </defs>
+                  </svg>
+                </a>
+                <a class="site-footer__social__icons" href="https://www.instagram.com" target="_blank">
+                  <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 47.64 47.68">
+                    <defs>
+                      <style>
+                        .clsinsta-1 {
+                          fill: none;
+                        }
+
+                        .clsinsta-2 {
+                          fill: #1a2531;
+                          fill-rule: evenodd;
+                        }
+                      </style>
+                    </defs>
+                    <g id="Social_Instagram">
+                      <path id="Path_34" class="clsinsta-2"
+                        d="m42.9,7.56c-1.58-2.18-3.86-3.75-6.46-4.46-.85-.27-1.81-.26-2.74-.47-.43-.1-.93,0-1.33-.09l-2.48-.04c-.45-.06-.91-.07-1.37-.04h-10.79c-.32.2-1.04-.05-1.46.04-.56.13-1.24-.04-1.85.09-.84.18-1.73.13-2.53.34-4.62,1.23-7.29,3.57-8.73,7.96-.31.94-.33,1.99-.56,3.04-.01.44-.03.88-.04,1.33-.16.73.08,1.73-.09,2.48-.06.48-.07.97-.04,1.45v8.9c-.04.6-.03,1.2.04,1.8.1.46-.04,1.05.04,1.45.01.61.03,1.23.04,1.84.24,1.11.19,2.25.51,3.25,1.14,3.54,3.09,6.09,6.34,7.49,1.11.41,2.26.73,3.42.94l1.58.17,3.3.09c.87.1,1.74.11,2.61.04h5.27c4.93,0,10.41.2,13.48-1.67,2.03-1.12,3.65-2.84,4.67-4.92,1.45-3.31,1.41-7.6,1.41-12.37,0-6.9.59-14.59-2.27-18.67m-2.48,29.02c-.64,1.47-1.74,2.7-3.12,3.51-2.41,1.46-7.75,1.24-11.65,1.24h-4.45c-.76.05-1.52.04-2.27-.04l-3.21-.04c-.81-.17-1.7-.03-2.48-.21-1.28-.23-2.5-.69-3.6-1.37-1.39-1.06-2.38-2.55-2.83-4.24-.26-.8-.19-1.73-.39-2.61v-.9c-.12-.89-.15-1.8-.09-2.7,0-1.26-.04-2.65-.04-3.98v-4.15c-.05-.71-.04-1.43.04-2.14v-2.14c.13-.6-.06-1.32.09-1.97.12-1.16.34-2.3.64-3.43.81-2.18,2.61-3.85,4.84-4.5.73-.24,1.55-.25,2.35-.43l3.25-.13c.47.07.95.05,1.41-.04h6.55c1.07-.08,2.14-.07,3.21.04h.98l3.12.09c.82.18,1.68.13,2.44.34,1.76.41,3.32,1.43,4.41,2.87.68,1.1,1.14,2.32,1.37,3.6.19.78.04,1.68.21,2.48.01,1.07.03,2.14.04,3.21.08.74.1,1.48.04,2.23v4.37c0,3.68.2,8.43-.9,11.05m-4.53-26.67c-.37-.06-.74-.08-1.11-.04-.25.16-.61.15-.86.3-.53.34-.93.83-1.16,1.41-.42,1.26.19,2.64,1.41,3.17.39.22.84.31,1.29.26.93-.12,1.73-.7,2.14-1.54.55-1.36-.1-2.92-1.47-3.47-.08-.03-.16-.06-.25-.09m-9.33,3.25c-1.21-.28-2.45-.38-3.68-.3l-1.2.17c-.76.17-1.5.4-2.23.68-2.81,1.26-4.99,3.61-6.04,6.51-.23.73-.4,1.47-.51,2.23v.43c-.17,1.43-.01,2.88.47,4.24.96,3.17,3.33,5.71,6.42,6.89,1.16.51,2.41.77,3.68.77h1.29c.9-.12,1.78-.3,2.65-.56,2.9-1.04,5.25-3.22,6.51-6.04.31-.79.55-1.61.73-2.44.31-1.75.18-3.54-.39-5.22-1.11-3.63-4.03-6.41-7.71-7.36m4.28,11.95c-.14.63-.34,1.25-.6,1.84-.81,1.63-2.2,2.9-3.9,3.55-.63.2-1.27.34-1.93.43-1.21.11-2.42-.11-3.51-.64-1.94-.87-3.39-2.57-3.94-4.62-.29-.91-.36-1.88-.21-2.83.09-.52.22-1.04.39-1.54.72-1.83,2.14-3.29,3.94-4.07.47-.18.96-.32,1.46-.43.23-.06.51.02.68-.09,3.66,0,5.91,1.6,7.02,4.11.64,1.33.85,2.83.6,4.28" />
+                    </g>
+                    <rect class="clsinsta-1" width="47.68" height="47.68" />
+                  </svg> </a>
+                <a class="site-footer__social__icons" href="https://www.twitter.com/" target="_blank">
+                  <svg viewBox="0 0 1200 1227" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z"
+                      fill="#1a2531" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            <div class="col-md-4" style="display:none">
+              <div class="site-footer__contact">
+                <div class="site-footer__contact__label">
+                  CONTACT INFO </div>
+                <div class="site-footer__contact__item">
+                  <div class="site-footer__contact__item__label">A.</div>
+                  <div class="site-footer__contact__item__value">
+                    Address Street 234, Athens Greece </div>
+                </div>
+
+                <div class="site-footer__contact__item">
+                  <div class="site-footer__contact__item__label">T.</div>
+                  <div class="site-footer__contact__item__value">
+                    <a class="email" href="tel:+3021000010000">
+                      +3021000010000 </a>
+                  </div>
+                </div>
+
+                <div class="site-footer__contact__item">
+                  <div class="site-footer__contact__item__label">E.</div>
+                  <div class="site-footer__contact__item__value">
+                    <a class="email" href="mailto:info@iqmedia.com">info@iqmedia.com </a>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+
+
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="site-footer__wrapper mt-5">
+                <div class="site-footer__copyright gray">
+                  &copy;
+                  2024 IQ Media Lab. All Rights reserved </div>
+                <div class="designedby gray"><span class="gray">Designed by IQ Media Lab</span></div>
+                <div class="site-footer__menu site-footer__menu--helper gray">
+
+                  <div class=" ">
+                    <ul id="menu-footer-helper" class="navbar-nav">
+                      <li class="navbar-nav__item">
+                        <div class="navbar-nav__item__wrapper"><a href="http://l.l/openweb/contact-us/"
+                            class="navbar-nav__link" data-menu-id="901">Contact</a></div>
+                      </li>
+                    </ul>
+                  </div>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      <script src="http://l.l/openweb/wp-content/plugins/contact-form-7/includes/swv/js/index.js?ver=5.7.4"
+        id="swv-js"></script>
+      <script id="contact-form-7-js-extra">
+        var wpcf7 = { "api": { "root": "http:\/\/l.l\/openweb\/wp-json\/", "namespace": "contact-form-7\/v1" } };
+      </script>
+      <script src="http://l.l/openweb/wp-content/plugins/contact-form-7/includes/js/index.js?ver=5.7.4"
+        id="contact-form-7-js"></script>
+      <script id="theme-js-extra">
+        var urls = { "home": "http:\/\/l.l\/openweb", "ajax": "http:\/\/l.l\/openweb\/wp-admin\/admin-ajax.php" };
+      </script>
+      <script src="http://l.l/openweb/wp-content/themes/webcode/assets/dist/js/main.js?ver=1707285593"
+        id="theme-js"></script>
+      <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+      <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+      <script>
+        let table = new DataTable('#allevents', {
+          // options
+        });
+      </script>
+      <script id="__bs_script__">
+        //<![CDATA[
+        document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.27.5'><\/script>".replace("HOST", location.hostname));
+        //]]>
+      </script>
+</body>
+
+</html>

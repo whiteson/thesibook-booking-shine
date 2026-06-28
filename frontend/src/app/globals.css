@@ -1,0 +1,149 @@
+@import "tailwindcss";
+@source "..";
+
+:root {
+  --radius: 0.875rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.21 0.08 260);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.21 0.08 260);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.21 0.08 260);
+  --primary: oklch(0.36 0.18 260);
+  --primary-foreground: oklch(0.99 0.01 250);
+  --primary-soft: oklch(0.62 0.2 255);
+  --secondary: oklch(0.96 0.02 250);
+  --secondary-foreground: oklch(0.3 0.12 260);
+  --muted: oklch(0.97 0.012 250);
+  --muted-foreground: oklch(0.52 0.04 255);
+  --accent: oklch(0.94 0.04 250);
+  --accent-foreground: oklch(0.3 0.12 260);
+  --coral: oklch(0.72 0.18 35);
+  --coral-foreground: oklch(0.99 0.01 250);
+  --destructive: oklch(0.6 0.22 27);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.92 0.015 255);
+  --input: oklch(0.92 0.015 255);
+  --ring: oklch(0.62 0.2 255);
+  --gradient-brand: linear-gradient(135deg, oklch(0.36 0.18 260) 0%, oklch(0.62 0.2 255) 100%);
+  --gradient-soft: linear-gradient(180deg, oklch(0.985 0.01 250) 0%, oklch(0.97 0.025 255) 100%);
+  --gradient-hero: radial-gradient(60% 60% at 50% 0%, oklch(0.93 0.05 255 / 0.7) 0%, transparent 70%);
+  --shadow-soft: 0 1px 2px oklch(0.36 0.18 260 / 0.04), 0 8px 24px oklch(0.36 0.18 260 / 0.06);
+  --shadow-elegant: 0 10px 40px -10px oklch(0.36 0.18 260 / 0.25);
+  --shadow-glow: 0 0 60px oklch(0.62 0.2 255 / 0.35);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-soft: var(--primary-soft);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-coral: var(--coral);
+  --color-coral-foreground: var(--coral-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --font-sans: var(--font-plus-jakarta);
+  --font-display: var(--font-plus-jakarta);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans), "Inter", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display), "Inter", system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+@utility bg-gradient-brand {
+  background-image: var(--gradient-brand);
+}
+
+@utility bg-gradient-soft {
+  background-image: var(--gradient-soft);
+}
+
+@utility bg-hero-glow {
+  background-image: var(--gradient-hero);
+}
+
+@utility shadow-soft {
+  box-shadow: var(--shadow-soft);
+}
+
+@utility shadow-elegant {
+  box-shadow: var(--shadow-elegant);
+}
+
+@utility shadow-glow {
+  box-shadow: var(--shadow-glow);
+}
+
+@utility text-gradient-brand {
+  background-image: var(--gradient-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@utility animate-fade-in-up {
+  animation: fade-in-up 0.7s ease-out both;
+}

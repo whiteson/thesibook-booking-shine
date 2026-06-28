@@ -1,0 +1,58 @@
+import type { LucideIcon } from "lucide-react";
+import {
+  Bell,
+  Bookmark,
+  Building2,
+  Calendar,
+  CalendarCheck,
+  CalendarDays,
+  CalendarX,
+  CheckCircle2,
+  ChevronLeft,
+  FileText,
+  Globe,
+  Heart,
+  Layers,
+  Mail,
+  MapPin,
+  Megaphone,
+  MessageCircle,
+  PhoneOff,
+  Search,
+  Smartphone,
+  Sparkles,
+  TrendingUp,
+  Users,
+  Wallet,
+} from "lucide-react";
+
+const ICONS: Record<string, LucideIcon> = {
+  Bell,
+  Bookmark,
+  Building2,
+  Calendar,
+  CalendarCheck,
+  CalendarDays,
+  CalendarX,
+  CheckCircle2,
+  ChevronLeft,
+  FileText,
+  Globe,
+  Heart,
+  Layers,
+  Mail,
+  MapPin,
+  Megaphone,
+  MessageCircle,
+  PhoneOff,
+  Search,
+  Smartphone,
+  Sparkles,
+  TrendingUp,
+  Users,
+  Wallet,
+};
+
+export function getLucideIcon(name: string): LucideIcon {
+  return ICONS[name] ?? Sparkles;
+}

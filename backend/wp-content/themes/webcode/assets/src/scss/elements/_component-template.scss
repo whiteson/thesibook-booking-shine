@@ -1,0 +1,283 @@
+// =============================
+// Component Template SCSS
+// =============================
+// 
+// Usage:
+// 1. Copy this file and rename it for your component
+// 2. Update the component name in the class
+// 3. Customize the styles based on your Figma design
+// 4. Import it in main.scss
+//
+// Example: _component-hero.scss, _component-card.scss, etc.
+
+.component {
+    // Base component styles
+    position: relative;
+    
+    // Content area
+    &__content {
+        position: relative;
+        z-index: 2;
+        
+        // Subtitle styling
+        .component__subtitle {
+            color: var(--highlight-a);
+            letter-spacing: 1px;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+        
+        // Title styling
+        .component__title {
+            font-family: var(--h1-font-family);
+            font-weight: var(--h1-font-weight);
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            
+            @media (max-width: 768px) {
+                font-size: 2rem;
+            }
+        }
+        
+        // Description styling
+        .component__description {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            
+            p {
+                margin-bottom: 1rem;
+                
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+        
+        // Actions/buttons area
+        .component__actions {
+            .btn {
+                padding: 12px 24px;
+                border-radius: 6px;
+                font-weight: 600;
+                text-decoration: none;
+                display: inline-block;
+                transition: all 0.3s ease;
+                
+                &:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                }
+            }
+        }
+    }
+    
+    // Image area
+    &__image {
+        position: relative;
+        
+        img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            
+            &:hover {
+                transform: scale(1.02);
+            }
+        }
+        
+        // Optional overlay
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(0,0,0,0.1), transparent);
+            border-radius: 8px;
+            pointer-events: none;
+        }
+    }
+    
+    // Responsive adjustments
+    @media (max-width: 768px) {
+        .component__content {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .component__image {
+            margin-top: 1rem;
+        }
+    }
+    
+    // Layout variations
+    &.component--center {
+        .component__content {
+            text-align: center;
+        }
+    }
+    
+    &.component--right {
+        .component__image {
+            order: -1;
+        }
+    }
+}
+
+// =============================
+// FIGMA-TO-CSS CONVERSION HELPERS
+// =============================
+
+// Quick spacing from Figma measurements
+// Usage: @include figma-spacing('padding', 24, 48, 80);
+@mixin figma-spacing($property, $mobile, $tablet, $desktop) {
+    #{$property}: #{$mobile}px;
+    
+    @media (min-width: 768px) {
+        #{$property}: #{$tablet}px;
+    }
+    
+    @media (min-width: 1024px) {
+        #{$property}: #{$desktop}px;
+    }
+}
+
+// Quick font sizing from Figma
+// Usage: @include figma-font(24, 32, 40);
+@mixin figma-font($mobile, $tablet, $desktop) {
+    font-size: #{$mobile}px;
+    
+    @media (min-width: 768px) {
+        font-size: #{$tablet}px;
+    }
+    
+    @media (min-width: 1024px) {
+        font-size: #{$desktop}px;
+    }
+}
+
+// Quick color from Figma hex
+// Usage: @include figma-color('#FF6B35');
+@mixin figma-color($hex) {
+    color: #{$hex};
+}
+
+// Quick background from Figma hex
+// Usage: @include figma-bg('#F8F9FA');
+@mixin figma-bg($hex) {
+    background-color: #{$hex};
+}
+
+// Quick border radius from Figma
+// Usage: @include figma-radius(8);
+@mixin figma-radius($radius) {
+    border-radius: #{$radius}px;
+}
+
+// Quick shadow from Figma
+// Usage: @include figma-shadow(0, 4, 20, 0.1);
+@mixin figma-shadow($x, $y, $blur, $opacity) {
+    box-shadow: #{$x}px #{$y}px #{$blur}px rgba(0, 0, 0, $opacity);
+}
+
+// =============================
+// COMMON COMPONENT PATTERNS
+// =============================
+
+// Card pattern
+.component--card {
+    @include figma-bg('#FFFFFF');
+    @include figma-radius(12);
+    @include figma-shadow(0, 4, 20, 0.08);
+    @include figma-spacing('padding', 24, 32, 40);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+    &:hover {
+        transform: translateY(-4px);
+        @include figma-shadow(0, 8, 30, 0.12);
+    }
+}
+
+// Section pattern
+.component--section {
+    @include figma-spacing('padding', 60, 80, 120);
+    position: relative;
+    overflow: hidden;
+}
+
+// Grid pattern
+.component--grid {
+    display: grid;
+    gap: 24px;
+    
+    &--2 { grid-template-columns: repeat(2, 1fr); }
+    &--3 { grid-template-columns: repeat(3, 1fr); }
+    &--4 { grid-template-columns: repeat(4, 1fr); }
+    
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
+// Hero pattern
+.component--hero {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, rgba(0,0,0,0.4), rgba(0,0,0,0.1));
+        z-index: 1;
+    }
+    
+    .component__content {
+        z-index: 2;
+        position: relative;
+    }
+}
+
+// =============================
+// ANIMATION HELPERS
+// =============================
+
+// Fade in animation
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.component--animate {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+// Stagger animation for multiple items
+.component--stagger {
+    > * {
+        opacity: 0;
+        animation: fadeInUp 0.6s ease-out forwards;
+        
+        @for $i from 1 through 10 {
+            &:nth-child(#{$i}) {
+                animation-delay: #{$i * 0.1}s;
+            }
+        }
+    }
+} 

@@ -1,0 +1,768 @@
+// =============================
+// 1. CSS Variables (Colors, Fonts)
+// =============================
+
+:root {
+    --basic: #23324E;
+    --primary: #23324E;
+    // --secondary: #ecd4b370;
+    --secondary: #1c3a6a;
+    --highlight-a: #009ee2;
+    --highlight-b: #ddc19a;
+    --support-a: #ddc19a;
+    --support-b: #ACA8A1;
+    --h1-font-family: $t_font_body;
+    --h1-font-weight: 500;
+    --h1-font-size: 43px;
+    --h1-letter-spacing: 0px;
+    --h1-line-height: 48px;
+    --h1-font-style: normal;
+    --h2-font-family: $t_font_body;
+    --h2-font-weight: 400;
+    --h2-font-size: 40px;
+    --h2-letter-spacing: 0.4px;
+    --h2-line-height: 46px;
+    --h2-font-style: normal;
+    --paragraph-font-family: $t_font_body;
+    --font-body: $t_font_body;
+    --paragraph-font-weight: 400;
+    --paragraph-font-size: 22px;
+    --paragraph-letter-spacing: 0px;
+    --paragraph-line-height: 30px;
+    --paragraph-font-style: normal;
+}
+
+#logo path {
+    fill: var(--primary);
+}
+
+// =============================
+// 2. Reset & Base Elements
+// =============================
+html,
+body {
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+    margin: 0;
+    height: 100%;
+
+}
+
+body {
+    font-family: var(--paragraph-font-family);
+    font-weight: var(--paragraph-font-weight);
+    font-size: var(--paragraph-font-size);
+    letter-spacing: var(--paragraph-letter-spacing);
+    line-height: var(--paragraph-line-height);
+    font-style: var(--paragraph-font-style);
+    color: var(--basic);
+}
+
+body.menu-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    max-height: 100vh;
+}
+
+a {
+    color: var(--primary);
+    font-family: $t_font_body;
+    text-decoration: none;
+}
+
+a:hover,
+a:focus,
+a:active {
+    font-family: $t_font_body;
+    color: var(--primary);
+    text-decoration: none;
+    color: var(--highlight-a);
+}
+
+
+*,
+*:hover,
+*:focus {
+    outline: 0;
+    // font-family: var(--paragraph-font-family);
+    // color: v/ar(--primary);
+
+}
+
+ol,
+ul {
+    padding-left: 0;
+}
+
+// =============================
+// 3. Typography
+// =============================
+h1,
+.title--h1 {
+    font-family: var(--h1-font-family);
+    font-weight: var(--h1-font-weight);
+    font-size: var(--h1-font-size);
+    letter-spacing: var(--h1-letter-spacing);
+    line-height: var(--h1-line-height);
+    font-style: var(--h1-font-style);
+    color: var(--basic);
+}
+
+h2,
+.title--h2 {
+    font-family: var(--h2-font-family);
+    font-weight: var(--h2-font-weight);
+    font-size: var(--h2-font-size);
+    letter-spacing: var(--h2-letter-spacing);
+    line-height: var(--h2-line-height);
+    font-style: var(--h2-font-style);
+    color: var(--basic);
+}
+
+p,
+.paragraph {
+    font-family: var(--paragraph-font-family);
+    font-weight: var(--paragraph-font-weight);
+    font-size: var(--paragraph-font-size);
+    letter-spacing: var(--paragraph-letter-spacing);
+    line-height: var(--paragraph-line-height);
+    font-style: var(--paragraph-font-style);
+    color: var(--basic);
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+// =============================
+// 4. Layout Helpers
+// =============================
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-col--align-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.flex-col--justify-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.relative {
+    position: relative;
+}
+
+.paddingtopbottom {
+    padding: 40px 0;
+}
+
+.paddingtop {
+    padding-top: 60px;
+}
+
+.paddingbottom {
+    padding-bottom: 80px;
+}
+
+.marginbottom {
+    margin-bottom: 80px;
+}
+
+.margintop {
+    margin-top: 40px;
+}
+
+.mt-8 {
+    margin-top: 8rem !important;
+}
+
+// =============================
+// 5. Utility Classes
+// =============================
+.white {
+    color: #fff !important;
+}
+
+.black {
+    color: #000 !important;
+}
+
+.gray {
+    color: #888 !important;
+}
+
+.green {
+    color: #008000 !important;
+}
+
+.orange {
+    color: orange !important;
+}
+
+.pink {
+    color: pink !important;
+}
+
+.blue {
+    color: #23324E !important;
+}
+
+.b-1 {
+    border: 1px solid var(--basic);
+}
+
+// =============================
+// 6. FIGMA-TO-CODE WORKFLOW HELPERS
+// =============================
+
+// Quick spacing utilities (8px grid system)
+@for $i from 0 through 20 {
+    .p-#{$i} {
+        padding: #{$i * 8}px !important;
+    }
+
+    .pt-#{$i} {
+        padding-top: #{$i * 8}px !important;
+    }
+
+    .pb-#{$i} {
+        padding-bottom: #{$i * 8}px !important;
+    }
+
+    .pl-#{$i} {
+        padding-left: #{$i * 8}px !important;
+    }
+
+    .pr-#{$i} {
+        padding-right: #{$i * 8}px !important;
+    }
+
+    .px-#{$i} {
+        padding-left: #{$i * 8}px !important;
+        padding-right: #{$i * 8}px !important;
+    }
+
+    .py-#{$i} {
+        padding-top: #{$i * 8}px !important;
+        padding-bottom: #{$i * 8}px !important;
+    }
+
+    .m-#{$i} {
+        margin: #{$i * 8}px !important;
+    }
+
+    .mt-#{$i} {
+        margin-top: #{$i * 8}px !important;
+    }
+
+    .mb-#{$i} {
+        margin-bottom: #{$i * 8}px !important;
+    }
+
+    .ml-#{$i} {
+        margin-left: #{$i * 8}px !important;
+    }
+
+    .mr-#{$i} {
+        margin-right: #{$i * 8}px !important;
+    }
+
+    .mx-#{$i} {
+        margin-left: #{$i * 8}px !important;
+        margin-right: #{$i * 8}px !important;
+    }
+
+    .my-#{$i} {
+        margin-top: #{$i * 8}px !important;
+        margin-bottom: #{$i * 8}px !important;
+    }
+}
+
+// Quick font sizes (Figma px to rem conversion)
+@for $i from 8 through 72 {
+    .fs-#{$i} {
+        font-size: #{math.div($i, 16)}rem !important;
+    }
+}
+
+// Quick line heights
+@for $i from 1 through 3 {
+    .lh-#{$i} {
+        line-height: #{$i} !important;
+    }
+}
+
+// Quick border radius
+@for $i from 0 through 20 {
+    .br-#{$i} {
+        border-radius: #{$i}px !important;
+    }
+}
+
+// Quick shadows
+.shadow-sm {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+}
+
+.shadow {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) !important;
+}
+
+.shadow-md {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+.shadow-lg {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+// Quick flex utilities
+.d-flex {
+    display: flex !important;
+}
+
+.d-inline-flex {
+    display: inline-flex !important;
+}
+
+.flex-row {
+    flex-direction: row !important;
+}
+
+.flex-column {
+    flex-direction: column !important;
+}
+
+.flex-wrap {
+    flex-wrap: wrap !important;
+}
+
+.flex-nowrap {
+    flex-wrap: nowrap !important;
+}
+
+.justify-start {
+    justify-content: flex-start !important;
+}
+
+.justify-end {
+    justify-content: flex-end !important;
+}
+
+.justify-center {
+    justify-content: center !important;
+}
+
+.justify-between {
+    justify-content: space-between !important;
+}
+
+.justify-around {
+    justify-content: space-around !important;
+}
+
+.align-start {
+    align-items: flex-start !important;
+}
+
+.align-end {
+    align-items: flex-end !important;
+}
+
+.align-center {
+    align-items: center !important;
+}
+
+.align-baseline {
+    align-items: baseline !important;
+}
+
+.align-stretch {
+    align-items: stretch !important;
+}
+
+// Quick position utilities
+.position-static {
+    position: static !important;
+}
+
+.position-relative {
+    position: relative !important;
+}
+
+.position-absolute {
+    position: absolute !important;
+}
+
+.position-fixed {
+    position: fixed !important;
+}
+
+.position-sticky {
+    position: sticky !important;
+}
+
+// Quick width/height utilities
+.w-25 {
+    width: 25% !important;
+}
+
+.w-50 {
+    width: 50% !important;
+}
+
+.w-75 {
+    width: 75% !important;
+}
+
+.w-100 {
+    width: 100% !important;
+}
+
+.h-25 {
+    height: 25% !important;
+}
+
+.h-50 {
+    height: 50% !important;
+}
+
+.h-75 {
+    height: 75% !important;
+}
+
+.h-100 {
+    height: 100% !important;
+}
+
+// Quick text utilities
+.text-left {
+    text-align: left !important;
+}
+
+.text-right {
+    text-align: right !important;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.text-justify {
+    text-align: justify !important;
+}
+
+.text-uppercase {
+    text-transform: uppercase !important;
+}
+
+.text-lowercase {
+    text-transform: lowercase !important;
+}
+
+.text-capitalize {
+    text-transform: capitalize !important;
+}
+
+.font-weight-light {
+    font-weight: 300 !important;
+}
+
+.font-weight-normal {
+    font-weight: 400 !important;
+}
+
+.font-weight-bold {
+    font-weight: 700 !important;
+}
+
+// Quick background utilities
+.bg-primary {
+    background-color: var(--basic) !important;
+}
+
+.bg-secondary {
+    background-color: var(--secondary) !important;
+}
+
+.bg-highlight-a {
+    background-color: var(--highlight-a) !important;
+}
+
+.bg-highlight-b {
+    background-color: var(--highlight-b) !important;
+}
+
+.bg-support-a {
+    background-color: var(--support-a) !important;
+}
+
+.bg-support-b {
+    background-color: var(--support-b) !important;
+}
+
+// Quick border utilities
+.border {
+    border: 1px solid #dee2e6 !important;
+}
+
+.border-top {
+    border-top: 1px solid #dee2e6 !important;
+}
+
+.border-right {
+    border-right: 1px solid #dee2e6 !important;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #dee2e6 !important;
+}
+
+.border-left {
+    border-left: 1px solid #dee2e6 !important;
+}
+
+.border-0 {
+    border: 0 !important;
+}
+
+// Component base classes for rapid development
+.component {
+    &--card {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 24px;
+        margin-bottom: 16px;
+    }
+
+    &--section {
+        padding: 80px 0;
+
+        @media (max-width: 768px) {
+            padding: 40px 0;
+        }
+    }
+
+    &--container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 16px;
+
+        @media (min-width: 768px) {
+            padding: 0 24px;
+        }
+    }
+
+    &--grid {
+        display: grid;
+        gap: 24px;
+
+        &--2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        &--3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        &--4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+
+.title {
+    font-family: $t_font_body;
+    font-weight: $font-weight-bold;
+    font-size: 43px;
+    line-height: 48px;
+    letter-spacing: 0;
+    // text-align: center;
+    color: var(--basic);
+
+    @include bp($b_laptop) {
+        font-size: 43px;
+        line-height: 48px;
+    }
+
+    &--h1 {
+        @extend .title;
+        font-size: 38px;
+        line-height: 36px;
+        font-weight: $font-weight-medium;
+
+        @include bp($b_laptop) {
+            font-size: 43px;
+            line-height: 36px;
+
+        }
+    }
+
+    &--43 {
+        @extend .title--h1;
+        line-height: 1;
+        font-size: 43px;
+        line-height: 43px;
+        font-weight: $font-weight-medium;
+    }
+
+    &--h1--line-height2 {
+        @extend .title;
+        line-height: 2;
+    }
+
+    &--h2 {
+        @extend .title;
+        font-size: 23px;
+        line-height: 28px;
+
+        @include bp($b_laptop) {
+            font-size: 26px;
+            line-height: 32px;
+
+        }
+    }
+
+    &--carousel {
+        @extend .title;
+        font-size: 21px;
+        line-height: 22px;
+
+        @include bp($b_laptop) {
+            font-weight: $font-weight-bold;
+            font-size: 25px;
+            line-height: 30px;
+        }
+
+    }
+
+    &--h3 {
+        @extend .title;
+        font-size: 17px;
+        line-height: 43px;
+
+        @include bp($b_laptop) {
+            font-weight: $font-weight-medium;
+            font-size: 20px;
+            line-height: 43px;
+        }
+    }
+}
+
+
+// color helpers 
+.carousel-progressbar {
+    background-color: #EBE1D0;
+}
+
+.bg-secondary {
+    background-color: var(--secondary);
+}
+
+.secondary {
+    color: var(--secondary);
+}
+
+.bg-primary {
+    background-color: var(--basic);
+}
+
+.primary {
+    color: var(--basic);
+}
+
+
+// Add more utility classes as needed for your project
+
+// overdie bootstrap classes 
+
+.mb-3 {
+    margin-bottom: 32px !important;
+
+    @include bp($b_laptop) {
+        margin-bottom: 42px !important;
+    }
+}
+
+.mb-4 {
+    margin-bottom: 32px !important;
+
+    @include bp($b_laptop) {
+        margin-bottom: 42px !important;
+    }
+}
+
+em {
+    color: var(--highlight-a);
+    font-style: normal;
+    font-weight: 500
+}
+
+p {
+    font-family: $t_font_body;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 30px;
+    letter-spacing: 0;
+    color: var(--basic);
+    color: $c_white;
+    margin-bottom: 1em;
+}
+
+p  {
+    font-family: $t_font_body;
+    font-weight: 500;
+}
+
+
+.link--arrow {
+    position: relative;
+    padding-right: 20px;
+
+    &::after {
+        content: $p_svg + '/arrow-right.svg';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 10px;
+        height: 10px;
+        fill: var(--basic);
+        transition: all 0.2s ease-in;
+
+        &:hover {}
+    }
+}
+
+.wpml-ls-statics-footer {
+    display: none;
+}
+
+hr {
+    opacity: 1 !important;
+}
+
+
+.easepick-wrapper {
+    z-index: 9 !important;
+}

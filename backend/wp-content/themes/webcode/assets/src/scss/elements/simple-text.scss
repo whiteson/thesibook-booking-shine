@@ -1,0 +1,317 @@
+.simple-text {
+  font-family: $t_font_body;
+  padding: 3rem 0;
+  background: #fff;
+  color: $c_blue;
+  padding: 68px 30px calc(68px - 1em);
+
+
+  @include bp($b_laptop) {
+    padding: 112px 15vw;
+    padding: 112px 15vw calc(112px - 1em);
+    padding: 90px 15vw calc(90px - 1em);
+  }
+
+  &--flipbook {
+    @include bp($b_laptop) {
+      padding: 112px 3vw !important;
+    }
+
+    .simple-text__content p {
+      @include bp($b_laptop) {
+        max-width: 80%;
+        margin: 0 auto;
+      }
+    }
+
+    .container {
+      max-width: 1920px;
+    }
+  }
+
+
+  em {
+    font-family: $t_font_body;
+    font-weight: $font-weight-regular;
+    font-style: normal;
+  }
+
+
+
+  p strong {
+    font-weight: 700;
+  }
+
+  h4{
+    margin-top:0.9em;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  ul,
+  ol,
+  li {
+    font-family: $t_font_body;
+
+    text-align: center;
+  }
+
+  li {
+    font-family: $t_font_body;
+
+    list-style: none;
+    position: relative;
+    display: inline-block;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: -10px;
+      top: calc(50% - 3px);
+      top: 0.6em;
+      width: 4px;
+      height: 4px;
+      background-color: var(--highlight-b);
+      border-radius: 100%;
+
+    }
+  }
+
+  &__link{
+    text-align:center;
+    margin-top:2em;
+  }
+
+  h1 {}
+
+  h2 {}
+
+  h3 {
+    font-size: 28px;
+    line-height: 36px;
+    font-weight: 400;
+    @include bp($b_laptop){
+    line-height: 60px;
+    }
+  }
+
+  h4 {
+    font-size: 28px;
+    line-height: 46px;
+    font-weight: 400;
+  }
+
+  h5 {}
+
+  .h1 {
+    font-family: $t_font_body;
+
+  }
+
+
+  .h2 {
+    font-family: $t_font_body;
+
+  }
+
+
+  .h3 {
+    font-family: $t_font_body;
+
+  }
+
+  font-family:$t_font_body;
+
+  hr {
+    @extend .line-separator;
+    margin: 3em auto !important;
+  }
+
+  hr {
+    margin: 50px 0;
+    height: 0px;
+    max-width: 100%;
+    height: 0px !important;
+    border: 1px solid var(--highlight-b);
+    background: var(--basic);
+    border-radius: 2em;
+    margin: 40px 0;
+
+    @include bp($b_laptop) {
+      margin: 69px 0;
+    }
+
+    border: 1px solid var(--highlight-b)!important;
+
+  }
+
+  &--primary {
+    background: var(--primary);
+    color: var(--secondary);
+
+    .simple-text__title {
+      color: var(--secondary) !important;
+      // line-height: 48px;
+      margin-bottom: 42px;
+      font-weight: normal;
+      text-align: center;
+      font-family: $t_font_body;
+      font-weight: $font-weight-regular;
+      font-style: normal;
+      font-size: 40px;
+      line-height: 46px;
+    }
+
+    .simple-text__content {
+
+      h2 {
+        color: var(--highlight-b) !important;
+      }
+
+      h3 {
+        color: $c_white !important;
+      }
+
+      h4 {
+        color: var(--highlight-b) !important;
+
+      }
+
+      p {
+        color: var(--secondary);
+      }
+    }
+
+
+    hr {
+      border: 1px solid var(--highlight-b) !important;
+    }
+  }
+
+  &--Secondary {
+    background: var(--secondary);
+    color: var(--basic);
+
+    h2,
+    h3 {
+      color: var(--basic);
+    }
+  }
+
+  &--lh-normal {
+    line-height: 1.6;
+  }
+
+  &--lh-large {
+    @include bp($b_laptop) {
+
+      line-height: 36px;
+    }
+
+    .simple-text__content p,
+    .simple-text__content2 p,
+    p {
+      color: $c_blue;
+      @include bp($b_laptop) {
+        line-height: 36px;
+      }
+    }
+  }
+
+
+  &--extra {
+    border-top: 1px solid var(--highlight-a);
+    border-bottom: 1px solid var(--highlight-a);
+  }
+
+  &__title {
+
+    font-family: $t_font_body;
+    font-weight: $font-weight-medium;
+    font-style: normal;
+    font-size: 43px;
+    line-height: 48px;
+    text-align: center;
+
+    @include bp($b_laptop) {
+      margin: 0 auto;
+      padding: 0 20%;
+    }
+  }
+
+  &__subtitle {
+    font-family: $t_font_body;
+    font-size: 40px;
+    line-height: 46px;
+    font-weight: $font-weight-regular;
+    letter-spacing: 1%;
+    // color: var(--highlight-a);
+
+    @include bp($b_laptop) {
+      padding: 0 18%;
+      font-size: 40px;
+      line-height: 46px;
+    }
+  }
+
+  &__content,
+  &__content2,
+  &__content p,
+  &__content2 p {
+    font-family: $t_font_body;
+    font-size: 22px;
+    line-height: 30px;
+    color: $c_blue;
+
+    @include bp($b_laptop) {
+      // font-size: 1.25rem;
+    }
+  }
+
+  &__content2-wrapper,
+  &__content2-wrapper p {
+    color: $c_blue;
+    text-align: center;
+
+    .simple-text__readmore-btn {
+      display: inline-block;
+      margin-bottom: 1rem;
+      color: var(--highlight-a);
+      background: none;
+      border: none;
+      font-size: 22px;
+      line-height: 30px;
+
+      cursor: pointer;
+      text-decoration: underline;
+
+      &:hover {
+        color: var(--highlight-a);
+      }
+    }
+
+    .simple-text__content2 {
+      display: none;
+
+      &.is-open {
+        display: block;
+      }
+    }
+  }
+
+  // Show content2 on desktop
+  @media (min-width: 768px) {
+    &__content2-wrapper {
+      display: none !important;
+    }
+
+    &__content2 {
+      display: block !important;
+    }
+  }
+}

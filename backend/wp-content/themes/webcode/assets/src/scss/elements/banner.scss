@@ -1,0 +1,300 @@
+.banner-container {
+    position: relative;
+    padding: 0;
+
+    @extend .container-fluid;
+
+    padding: 0 8%;
+    padding-bottom: 90px;
+
+    @include bp($b_tablet) {
+        padding: 0 1%;
+        padding-bottom: 90px;
+    }
+
+    @include bp($b_laptop) {
+        // padding: 0 minimax(8%, 150px) 0;
+        // padding: 0 8%;
+        padding: 0 9.4% 0% 9.7%;
+        padding-bottom: 110px;
+    }
+
+    @include bp($b_desktop) {
+        padding: 0 minimax(8%, 150px) 0;
+        padding-bottom: 110px;
+    }
+
+    &__group {
+        position: relative;
+        padding: 40px 0;
+        left: -38px;
+        left: -49px;
+        left: -55px;
+        max-width: 300px;
+        top: -6px;
+
+        @include bp($b_desktop) {
+            left: -88px;
+            padding: 0px;
+            top: -15px;
+            max-width: unset;
+        }
+
+        &__title {
+            font-size: 38px;
+            line-height: 36px;
+            font-weight: 500;
+
+            @include bp($b_laptop) {
+                font-size: 43px;
+            }
+        }
+
+        .subtitle {
+            font-size: 23px;
+            line-height: 32px;
+            font-weight: 400;
+            font-family: $t_font_body;
+            min-width: 300px;
+
+            @include bp($b_laptop) {
+                font-size: 26px;
+            }
+        }
+    }
+
+    &.is-active {
+        .content-wrapper {
+            border-top: 2px solid var(--secondary);
+            border-bottom: 2px solid var(--secondary);
+            border-right: 2px solid var(--secondary);
+
+            &::before,
+            &::after {
+                border-left: 2px solid var(--secondary);
+                height: 15%;
+            }
+
+            .plus-icon svg {
+                opacity: 1;
+                margin-left: 0px;
+            }
+        }
+    }
+
+    &-image {
+        background-repeat: no-repeat;
+        background-position: center;
+        transition: all 0.5s ease-out;
+        aspect-ratio: 1/1.2;
+
+        // @include bp($b_tablet) {
+        //     aspect-ratio: 5/4;
+        // }
+
+        @include bp($b_laptop) {
+            aspect-ratio: 1145/645;
+        }
+
+        @include bp($b_laptop_max) {
+            background-size: cover;
+            background-position: center;
+        }
+
+        @include bp($b_laptop) {
+            background-size: 100%;
+
+            &:hover {
+                background-size: 105%;
+            }
+
+            &:hover .content-wrapper {
+                border-top: 2px solid var(--secondary);
+                border-bottom: 2px solid var(--secondary);
+                border-right: 2px solid var(--secondary);
+
+                &::before,
+                &::after {
+                    border-left: 2px solid var(--secondary);
+                    height: 15%;
+                }
+
+                .plus-icon svg {
+                    opacity: 1;
+                    // margin-left: -35px;
+                }
+            }
+        }
+
+        @include bp($b_desktop) {
+            &:hover .content-wrapper {
+
+                &::before,
+                &::after {
+                    height: 25%;
+                }
+            }
+        }
+    }
+
+    .content-wrapper {
+        position: relative;
+        border-top: 2px solid transparent;
+        border-bottom: 2px solid transparent;
+        border-right: 2px solid transparent;
+        transition: all 0.5s;
+        padding: 25px;
+
+        @include bp($b_laptop) {
+            padding: 2.5% 25px;
+        }
+
+        @include bp($b_desktop) {
+            padding: 12% 25px;
+        }
+
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            width: 100%;
+            background: transparent;
+            border-left: 2px solid transparent;
+            transition: all 0.5s, height 0.5s ease-out;
+        }
+
+        &::before {
+            top: 0;
+            height: 0;
+        }
+
+        &::after {
+            bottom: 0;
+            height: 0;
+        }
+
+        .plus-icon svg {
+            display: block;
+            height: auto;
+            transition: all 0.5s ease-out;
+            // padding: 5px;
+            margin-left: 0;
+            opacity: 1;
+
+            @include bp($b_laptop) {
+                opacity: 0;
+            }
+
+            @include bp($b_laptop_max) {
+                opacity: 1;
+            }
+        }
+
+        .logo-image {
+            height: 30px;
+            width: auto;
+
+            @include bp($b_laptop_max) {
+                display: none;
+            }
+        }
+    }
+
+    .logo-container {
+        position: relative;
+        top: 50px;
+        width: 140px;
+        height: 140px;
+        display: none;
+
+
+        @include bp($b_laptop) {
+            // position: unset;
+            display: block;
+        }
+        @include bp($b_desktop){
+        position: unset;
+        }
+
+        svg {
+            display: block;
+            width: 135px;
+            height: 135px;
+            display: none;
+
+            @include bp($b_laptop) {
+                display: block;
+                position: relative;
+                right: 25px;
+                top: -5px;
+            }
+        }
+    }
+
+    .plus-icon {
+        position: relative;
+        left: -1px;
+        top: 13px;
+
+        // top: 10px;
+        @include bp($b_laptop) {
+            left: 49px;
+            top: 20px;
+            // left: 100px;
+        }
+
+        svg {
+            display: block;
+            width: 36px;
+            height: 36px;
+
+        }
+    }
+
+    @include bp($b_laptop_max) {
+        .title--h2 {
+            left: 0;
+        }
+
+        .content-wrapper {
+            padding: 40px;
+        }
+
+        .title--h2 {
+            left: 0;
+        }
+    }
+
+    @include bp($b_laptop) {
+        .title--h2 {
+            left: -100px;
+        }
+    }
+}
+
+.banner-container-image {
+    position: relative;
+    z-index: 2;
+}
+
+// .banner-container-image:hover {
+//   background-size: 105%;
+
+//   .content-wrapper {
+//     border-top: 2px solid $c_white;
+//     border-bottom: 2px solid $c_white;
+//     border-right: 2px solid $c_white;
+
+//     &::before,
+//     &::after {
+//       border-left: 2px solid $c_white;
+//       height: 15%;
+//     }
+
+//     .plus-icon svg {
+//       opacity: 1;
+//       margin-left: -35px;
+//     }
+//   }
+// }

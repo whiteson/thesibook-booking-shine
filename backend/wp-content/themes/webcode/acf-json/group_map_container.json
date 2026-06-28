@@ -1,0 +1,112 @@
+{
+    "key": "group_map_container",
+    "title": "Map Container",
+    "fields": [
+        {
+            "key": "field_map_container_wine_road_ids",
+            "label": "Wine Road IDs",
+            "name": "wine_road_ids",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Enter wine road ID(s). For multiple roads, separate with commas (e.g., 1,3,5)",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "1,3,5",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_map_container_show_multiple",
+            "label": "Show Multiple Roads",
+            "name": "show_multiple",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Enable to show multiple wine roads on the same map",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Show multiple wine roads on the same map",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "Multiple Roads",
+            "ui_off_text": "Single Road"
+        },
+        {
+            "key": "field_map_container_map_height",
+            "label": "Map Height",
+            "name": "map_height",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Map height (e.g., 500px, 100vh)",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "500px",
+            "placeholder": "500px",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_map_container_map_width",
+            "label": "Map Width",
+            "name": "map_width",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Map width (e.g., 100%, 800px)",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "100%",
+            "placeholder": "100%",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "!==",
+                "value": "post"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Simple element to display wine road maps using shortcodes",
+    "show_in_rest": 0,
+    "modified": 1753017813
+}

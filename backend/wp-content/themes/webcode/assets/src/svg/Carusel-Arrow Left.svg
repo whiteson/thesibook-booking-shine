@@ -1,0 +1,10 @@
+<svg id="Layer_1" data-name="Layer 1"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54.08 54.08">
+    <defs>
+        <style>.cls-1cah4{fill:#23324E;}.cls-2cah2{fill:none;stroke:#eeeae2;stroke-linecap:round;stroke-miterlimit:10;stroke-width:2.5px;}</style>
+    </defs>
+    <title>Carusel-Arrow Left</title>
+    <circle class="cls-1cah4" cx="27.04" cy="27.04" r="27.04"/>
+    <polyline class="cls-2cah2" points="28.08 41.41 13.71 27.04 28.08 12.67"/>
+    <line class="cls-2cah2" x1="14.65" y1="27.04" x2="38.72" y2="27.04"/>
+</svg>
