@@ -1,0 +1,38 @@
+---
+description: Agent constraints for ThesiBook booking platform (book/ + multi-tenant)
+globs:
+  - book/**/*
+  - scripts/install-book.sh
+  - scripts/book-runner.mjs
+  - scripts/book.env*
+  - agents/**/book*
+  - services/booking/**/*
+alwaysApply: false
+---
+
+# ThesiBook Booking Platform
+
+Use when working on `book/`, tenant provisioning, or frontend booking integration.
+
+## Layout
+
+- `book/` — Easy!Appointments upstream clone (**gitignored** — install via `./scripts/install-book.sh`, never push to GitHub)
+- `scripts/install-book.sh` — clone + native PHP/MySQL or optional Docker
+- `services/booking/` — control plane (future, not in EA core)
+- `frontend/` — registration and booking UX
+
+## Behavior
+
+- Read `agents/knowledge/book-architecture.md` before multi-tenant changes.
+- Default strategy: **database-per-workspace** + control plane DB.
+- Prefer env-based DB config patch over editing EA models.
+- Document EA forks in `book/PATCHES.md`.
+- Run `node scripts/book-runner.mjs --phase B2` gate before frontend integration.
+
+## Do not
+
+- Commit or push `book/` to GitHub (entire directory is gitignored).
+- Commit `book/config.php` or `scripts/book.env`.
+- Fork EA for shared-schema multi-tenancy without explicit approval.
+- Mix WordPress user tables with EA admin users.
+- Fetch EA data inside presentational section components — use adapters in `frontend/src/lib/booking/`.

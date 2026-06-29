@@ -4,8 +4,15 @@ frontend/.next
 frontend/node_modules
 scripts/deploy/.env
 scripts/local.env
-backend/wp-config.php
+scripts/book.env
 backend/wp-content/themes/webcode/node_modules
+
+# book/ — Easy!Appointments upstream clone (NEVER commit — install via ./scripts/install-book.sh)
+book/
+
+# Our booking scripts/env (safe to commit)
+!scripts/book/
+scripts/book.env
 
 # Logs
 logs

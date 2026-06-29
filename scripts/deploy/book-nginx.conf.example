@@ -1,0 +1,39 @@
+# Easy!Appointments — nginx + PHP-FPM (no Docker)
+# Install on server: /etc/nginx/sites-available/book.conf → sites-enabled
+# Adjust root, server_name, php socket.
+
+server {
+    listen 80;
+    server_name book.yourdomain.com;
+    root /usr/home/webcode/thesibook-booking-shine/book;
+    index index.php;
+
+    client_max_body_size 32M;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_pass unix:/run/php/php8.2-fpm.sock;
+        fastcgi_read_timeout 120;
+    }
+
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2)$ {
+        expires 7d;
+        access_log off;
+    }
+
+    location ~ /\. {
+        deny all;
+    }
+
+    location ~ ^/storage/ {
+        deny all;
+    }
+}
+
+# Future multi-tenant: wildcard server_name *.book.yourdomain.com
+# + map $host → tenant slug → fastcgi_param EA_TENANT_SLUG
