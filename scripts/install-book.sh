@@ -106,12 +106,14 @@ cli_install() {
 }
 
 clone_upstream() {
-  if [[ ! -d "${BOOK_DIR}/.git" ]]; then
+  if [[ ! -f "${BOOK_DIR}/index.php" ]]; then
     require_cmd git
-    log "Cloning Easy!Appointments into book/ (private on disk — not pushed to GitHub)"
+    log "Cloning Easy!Appointments into book/ (for our monorepo only — not pushed to their GitHub)"
     git clone --depth 1 --branch "${EA_BRANCH}" "${EA_REPO}" "${BOOK_DIR}"
+    rm -rf "${BOOK_DIR}/.git"
+    log "Removed book/.git — book/ is part of this repo, not a separate upstream remote"
   else
-    log "book/ present ($(git -C "${BOOK_DIR}" rev-parse --short HEAD))"
+    log "book/ present"
   fi
   chmod -R u+w "${BOOK_DIR}/storage" 2>/dev/null || true
 }

@@ -10,9 +10,10 @@
  */
 
 import { existsSync, readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const ROOT = process.cwd();
+const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
 const phases = [
   {
@@ -25,8 +26,8 @@ const phases = [
     knowledge: ['agents/knowledge/easyappointments.md'],
     outputs: ['agents/reports/book-setup.md'],
     gate: () =>
-      existsSync(resolve(ROOT, 'book/.git')) &&
-      existsSync(resolve(ROOT, 'book/config.php')),
+      existsSync(resolve(ROOT, 'book/index.php')) &&
+      existsSync(resolve(ROOT, 'book/config-sample.php')),
   },
   {
     id: 'B1',
@@ -90,7 +91,7 @@ const phases = [
     prompt: 'agents/prompts/book-routing-agent.md',
     knowledge: ['agents/knowledge/book-architecture.md'],
     outputs: ['agents/reports/book-routing.md'],
-    gate: () => existsSync(resolve(ROOT, 'agents/reports/book-routing.md')),
+    gate: () => existsSync(resolve(ROOT, 'book/thesibook-bootstrap.php')),
   },
   {
     id: 'B6',

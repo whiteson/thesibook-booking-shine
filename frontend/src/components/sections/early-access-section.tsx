@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -87,6 +88,12 @@ export function EarlyAccessSectionView({ section }: Props) {
                 <p className="mt-2 text-sm text-muted-foreground">
                   {section.successDescription}
                 </p>
+                <Link
+                  href="/register"
+                  className="mt-4 inline-block text-sm font-semibold text-primary hover:underline"
+                >
+                  Δημιουργία λογαριασμού & booking →
+                </Link>
               </div>
             ) : (
               <form onSubmit={onSubmit} className="space-y-4">

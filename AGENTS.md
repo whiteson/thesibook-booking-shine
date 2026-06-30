@@ -65,6 +65,7 @@ node scripts/book-runner.mjs --phase B0
 - Hardcode content in section components.
 - Fetch CMS data inside presentational components.
 - Skip WordPress ACF layout registration when adding a section type.
-- Commit `book/config.php` or tenant DB credentials.
+- Commit or push `book/` to **upstream** Easy!Appointments GitHub (`alextselegidis/easyappointments`).
+- Commit `book/config.php`, `book/vendor/`, or tenant DB credentials.
 - Fork Easy!Appointments for shared-schema multi-tenancy without architecture review.
 - Claim completion without passing validation or documenting why checks were not run.

@@ -2,9 +2,9 @@
 # Run ON SERVER (or: ssh ... 'bash -s' < scripts/deploy/start-frontend.sh)
 set -euo pipefail
 
-FRONTEND="${FRONTEND_DIR:-/usr/home/webcode/thesibook-booking-shine/frontend}"
-LOG="${FRONTEND_LOG:-/usr/home/webcode/thesibook-booking-shine/frontend.log}"
-PID_FILE="${FRONTEND_PID:-/usr/home/webcode/thesibook-booking-shine/frontend.pid}"
+FRONTEND="${FRONTEND_DIR:-/usr/home/thesiu/thesibook-booking-shine/frontend}"
+LOG="${FRONTEND_LOG:-${FRONTEND}/frontend.log}"
+PID_FILE="${FRONTEND_PID:-${FRONTEND}/frontend.pid}"
 
 cd "${FRONTEND}"
 if [[ ! -f server.js ]]; then
@@ -23,7 +23,7 @@ set -a
 [[ -f .env.production ]] && source .env.production
 set +a
 
-: "${PORT:=3002}"
+: "${PORT:=3005}"
 : "${HOSTNAME:=127.0.0.1}"
 
 nohup /usr/bin/node server.js >>"${LOG}" 2>&1 &

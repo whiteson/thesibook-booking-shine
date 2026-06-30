@@ -62,7 +62,7 @@ deploy_show_config_summary() {
   echo "  WordPress (web):         ${DEPLOY_PUBLIC_HTML:-${DEPLOY_REMOTE_ROOT}/public_html}/${DEPLOY_PROJECT_DIR:-thesibook-booking-shine}/backend"
   echo "  DEPLOY_PUBLIC_HTML:      ${DEPLOY_PUBLIC_HTML:-${DEPLOY_REMOTE_ROOT}/public_html}"
   echo "  Link public_html:        $(deploy_yes_no "${DEPLOY_LINK_PUBLIC_HTML:-true}")"
-  echo "  Server owner:            ${DEPLOY_SERVER_USER:-webcode}:${DEPLOY_SERVER_GROUP:-webcode}"
+  echo "  Server owner:            ${DEPLOY_SERVER_USER:-thesiu}:${DEPLOY_SERVER_GROUP:-thesiu}"
   echo "  WP-CLI (remote):         ${WP_CLI:-${DEPLOY_WP_CLI:-auto-detect}}"
   echo ""
   echo "  ── URLs (production) ──"
@@ -88,7 +88,7 @@ deploy_show_config_summary() {
   echo ""
   echo "  ── Next.js ──"
   echo "  NEXT_RENDER_MODE:        ${NEXT_RENDER_MODE:-isr}  (isr = SSG+ISR, ssr = per-request)"
-  echo "  DEPLOY_NODE_PORT:        ${DEPLOY_NODE_PORT:-3002}  (internal 127.0.0.1 — proxy HTTPS → this port)"
+  echo "  DEPLOY_NODE_PORT:        ${DEPLOY_NODE_PORT:-3005}  (internal 127.0.0.1 — proxy HTTPS → this port)"
   echo "  Remote frontend:         ${remote_base}/frontend"
   echo "  DEPLOY_SKIP_BACKEND:     $(deploy_yes_no "${DEPLOY_SKIP_BACKEND:-false}")"
   echo "  DEPLOY_SKIP_FRONTEND:    $(deploy_yes_no "${DEPLOY_SKIP_FRONTEND:-false}")"
@@ -104,7 +104,7 @@ deploy_show_config_summary() {
     fi
   fi
   if [[ "${DEPLOY_SKIP_FRONTEND:-false}" != "true" ]]; then
-    echo "  • npm ci && build (local) → rsync standalone → restart Node :${DEPLOY_NODE_PORT:-3002}"
+    echo "  • npm ci && build (local) → rsync standalone → restart Node :${DEPLOY_NODE_PORT:-3005}"
   fi
   echo ""
 }
@@ -150,7 +150,7 @@ deploy_preflight_checks() {
       echo "  ✓ wp-cli: ${wp_bin}"
     else
       echo "  ✗ wp-cli not runnable: ${wp_bin}"
-      echo "    Set DEPLOY_WP_CLI in .env (e.g. /usr/home/webcode/.linuxbrew/bin/wp)"
+      echo "    Set DEPLOY_WP_CLI in .env (e.g. /usr/home/thesiu/bin/wp)"
       return 1
     fi
   fi
@@ -217,7 +217,7 @@ deploy_resolve_wp_cli() {
     echo "${DEPLOY_WP_CLI}"
     return 0
   fi
-  local found remote_root="${DEPLOY_REMOTE_ROOT:-/usr/home/webcode}"
+  local found remote_root="${DEPLOY_REMOTE_ROOT:-/usr/home/thesiu}"
   found="$(deploy_ssh "bash -lc 'command -v wp 2>/dev/null'" 2>/dev/null | tr -d '\r\n')" || true
   if [[ -n "${found}" ]]; then
     echo "${found}"

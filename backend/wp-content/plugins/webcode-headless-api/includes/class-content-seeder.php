@@ -92,7 +92,7 @@ final class Webcode_Content_Seeder
 	{
 		$base = defined('WEBCODE_FRONTEND_URL')
 			? rtrim((string) WEBCODE_FRONTEND_URL, '/')
-			: 'http://localhost:3000';
+			: 'http://localhost:3010';
 
 		if ($path === '' || $path === '/') {
 			return $base . '/';

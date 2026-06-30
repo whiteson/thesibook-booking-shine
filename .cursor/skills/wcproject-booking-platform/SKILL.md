@@ -22,8 +22,9 @@ services/booking/  (future) Control plane — workspace + DB provisioning
 
 ## Core rules
 
-1. **Single tenant first** — run `./scripts/install-book.sh --up` and complete EA wizard before multi-tenant work.
-2. **Database-per-workspace** is the default multi-tenant strategy (see `agents/knowledge/book-architecture.md`).
+1. **Single tenant first** — run `./scripts/install-book.sh --native --install` then `--serve`.
+2. **`book/` is in our repo** — push to ThesiBook GitHub only, never to upstream EA.
+3. **Database-per-workspace** is the default multi-tenant strategy (see `agents/knowledge/book-architecture.md`).
 3. **Minimize EA core forks** — prefer control plane service + env-based config + reverse proxy.
 4. **GPL-3.0** — document EA patches in `book/PATCHES.md`; fork upstream when modifying EA.
 5. **No secrets in git** — `book/config.php`, `scripts/book.env` are gitignored.
@@ -35,7 +36,7 @@ services/booking/  (future) Control plane — workspace + DB provisioning
 |------:|------|--------|------|
 | B0 | Book bootstrap | `agents/prompts/book-bootstrap-agent.md` | `book/config.php` exists |
 | B1 | EA codebase map | `agents/prompts/book-codebase-analyzer.md` | `agents/reports/book-codebase-map.md` |
-| B2 | Single-tenant local run | `agents/prompts/book-local-dev-agent.md` | Docker up, wizard done, API token noted |
+| B2 | Single-tenant local run | `agents/prompts/book-local-dev-agent.md` | Native install + serve OR Docker; report in book-local-dev.md |
 | B3 | Control plane design | `agents/prompts/book-control-plane-designer.md` | `agents/knowledge/book-control-plane-schema.md` |
 | B4 | Tenant provisioning | `agents/prompts/book-tenant-provisioning-agent.md` | Provisioning API creates tenant DB + admin |
 | B5 | Dynamic routing | `agents/prompts/book-routing-agent.md` | `{slug}.book.local` resolves to tenant |

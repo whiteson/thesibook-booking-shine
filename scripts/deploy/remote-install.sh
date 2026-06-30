@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
-# Run ONCE on the Hetzner server (via SSH). Creates dirs + systemd unit only under thesibook-booking-shine/.
+# Run ONCE on the ThesiBook server (thesiu @ dedi3543). Creates dirs + systemd unit.
+# Does NOT touch webcode.gr or any other account.
 set -euo pipefail
 
-REMOTE_ROOT="${1:?Usage: remote-install.sh /usr/home/webcode [port] [user] [group]}"
-NODE_PORT="${2:-3002}"
-RUN_USER="${3:-webcode}"
-RUN_GROUP="${4:-webcode}"
+REMOTE_ROOT="${1:?Usage: remote-install.sh /usr/home/thesiu [port] [user] [group]}"
+NODE_PORT="${2:-3005}"
+RUN_USER="${3:-thesiu}"
+RUN_GROUP="${4:-thesiu}"
 PROJECT_DIR="thesibook-booking-shine"
 BASE="${REMOTE_ROOT}/${PROJECT_DIR}"
 FRONTEND="${BASE}/frontend"
@@ -19,16 +20,16 @@ if [[ ! -f "${BACKEND}/wp-config.php" ]]; then
 fi
 
 cat >"${ENV_FILE}" <<EOF
-# Managed by deploy — customize WORDPRESS_API_URL / NEXT_PUBLIC_SITE_URL via deploy .env
+# Managed by deploy — customize via scripts/deploy/.env
 NODE_ENV=production
 PORT=${NODE_PORT}
 HOSTNAME=127.0.0.1
 EOF
 
-UNIT_PATH="/etc/systemd/system/webcode-frontend.service"
+UNIT_PATH="/etc/systemd/system/thesibook-frontend.service"
 sudo tee "${UNIT_PATH}" >/dev/null <<EOF
 [Unit]
-Description=Webcode Next.js (headless frontend)
+Description=ThesiBook Next.js (www.thesibook.gr)
 After=network.target
 
 [Service]
@@ -46,9 +47,9 @@ WantedBy=multi-user.target
 EOF
 
 sudo systemctl daemon-reload
-sudo systemctl enable webcode-frontend
+sudo systemctl enable thesibook-frontend
 
-echo "Installed systemd unit: webcode-frontend (User=${RUN_USER} Group=${RUN_GROUP})"
+echo "Installed systemd unit: thesibook-frontend (User=${RUN_USER} Group=${RUN_GROUP})"
 echo "Frontend path: ${FRONTEND}"
 echo "Backend path:  ${BACKEND}"
-echo "Next: run deploy from your machine, then: sudo systemctl start webcode-frontend"
+echo "Next: run deploy from your machine, then: sudo systemctl start thesibook-frontend"

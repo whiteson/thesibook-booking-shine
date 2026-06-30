@@ -16,7 +16,7 @@ Use when working on `book/`, tenant provisioning, or frontend booking integratio
 
 ## Layout
 
-- `book/` — Easy!Appointments upstream clone (**gitignored** — install via `./scripts/install-book.sh`, never push to GitHub)
+- `book/` — Easy!Appointments (**in our repo** — never push to upstream EA GitHub)
 - `scripts/install-book.sh` — clone + native PHP/MySQL or optional Docker
 - `services/booking/` — control plane (future, not in EA core)
 - `frontend/` — registration and booking UX
@@ -31,8 +31,8 @@ Use when working on `book/`, tenant provisioning, or frontend booking integratio
 
 ## Do not
 
-- Commit or push `book/` to GitHub (entire directory is gitignored).
-- Commit `book/config.php` or `scripts/book.env`.
+- Push `book/` changes to upstream `alextselegidis/easyappointments` (their GitHub).
+- Commit `book/config.php`, `book/vendor/`, or `scripts/book.env`.
 - Fork EA for shared-schema multi-tenancy without explicit approval.
 - Mix WordPress user tables with EA admin users.
 - Fetch EA data inside presentational section components — use adapters in `frontend/src/lib/booking/`.

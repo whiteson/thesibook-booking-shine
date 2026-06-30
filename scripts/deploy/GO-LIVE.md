@@ -4,7 +4,7 @@
 
 | URL | Serves |
 |-----|--------|
-| `https://thesibook.gr/` | Next.js (Node, port 3002) |
+| `https://www.thesibook.gr/` | Next.js public site (Node, port 3005) |
 | `https://thesibook.gr/thesibook-booking-shine/backend/` | Headless WordPress CMS + REST API |
 | `https://thesibook.gr/thesibook-booking-shine/backend/wp-admin/` | CMS admin |
 
@@ -44,7 +44,7 @@ Deploy writes `frontend/.env.production` on the server with `WORDPRESS_API_URL` 
 ```bash
 ssh -p 222 USER@HOST
 bash /usr/home/webcode/thesibook-booking-shine/start-frontend.sh
-curl -I http://127.0.0.1:3002/
+curl -I http://127.0.0.1:3005/
 ```
 
 Or from Mac after deploy:
@@ -56,27 +56,28 @@ ssh -p 222 USER@HOST 'bash /usr/home/webcode/thesibook-booking-shine/start-front
 
 ## Point domain root to Node
 
-In the hosting panel for **thesibook.gr**, set reverse proxy / Node.js:
+In the hosting panel for **www.thesibook.gr**, enable Node.js:
 
-- App path: `/usr/home/webcode/thesibook-booking-shine/frontend`
+- App path: `/usr/home/thesiu/thesibook-booking-shine/frontend`
 - Start: `server.js` (standalone build)
-- Port: `3002`
-- **Keep** PHP handling for `/thesibook-booking-shine/backend/`
+- Port: `3005`
+
+**Apex `thesibook.gr`** stays on PHP for `/thesibook-booking-shine/backend/` only.
 
 If no panel option, ask support for:
 
 ```apache
 ProxyPass /thesibook-booking-shine/backend !
-ProxyPass / http://127.0.0.1:3002/
-ProxyPassReverse / http://127.0.0.1:3002/
+ProxyPass / http://127.0.0.1:3005/
+ProxyPassReverse / http://127.0.0.1:3005/
 ```
 
 ## Go-live checklist
 
-- [ ] `curl http://127.0.0.1:3002/` → 200 on server
+- [ ] `curl http://127.0.0.1:3005/` → 200 on server
 - [ ] `https://thesibook.gr/thesibook-booking-shine/backend/wp-json/webcode/v1/health` → 200
 - [ ] `https://thesibook.gr/thesibook-booking-shine/backend/wp-json/webcode/v1/pages/home` → Greek sections (`hero`, `faq`, …)
-- [ ] `https://thesibook.gr/` → ThesiBook Next.js site
+- [ ] `https://www.thesibook.gr/` → ThesiBook Next.js site
 - [ ] Early access form submits (POST `/api/contact` → WordPress `wp_mail`)
 - [ ] Nav links go to `/business`, not `/backend/business`
 - [ ] CMS admin login works at `/thesibook-booking-shine/backend/wp-admin/`

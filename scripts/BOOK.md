@@ -1,15 +1,21 @@
 # Easy!Appointments in ThesiBook
 
-`book/` is **not in git**. Install on each machine (dev Mac, production server) with:
+`book/` lives **in this repo** — push to **your** GitHub only, never to upstream EA.
 
 ```bash
-./scripts/install-book.sh              # clone upstream into book/
-./scripts/install-book.sh --native     # + MySQL database + config.php + composer
+./scripts/install-book.sh              # config + deps (first time)
+./scripts/install-book.sh --native     # + MySQL database + composer
 ./scripts/install-book.sh --native --install  # + CLI seed (admin user)
 ./scripts/install-book.sh --serve      # PHP dev server on port 8090
 ```
 
 Copy `scripts/book.env.example` → `scripts/book.env`. Reuses MySQL credentials from `scripts/local.env` when present.
+
+## Git policy
+
+- **Yes:** commit `book/` source to `thesibook-booking-shine`
+- **No:** push to `github.com/alextselegidis/easyappointments`
+- **No:** commit `book/config.php`, `book/vendor/`, or `scripts/book.env`
 
 ## Production (no Docker)
 

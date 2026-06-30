@@ -7,12 +7,24 @@ scripts/local.env
 scripts/book.env
 backend/wp-content/themes/webcode/node_modules
 
-# book/ — Easy!Appointments upstream clone (NEVER commit — install via ./scripts/install-book.sh)
-book/
-
-# Our booking scripts/env (safe to commit)
-!scripts/book/
-scripts/book.env
+# book/ Easy!Appointments — tracked in OUR repo only (never push to upstream EA GitHub)
+book/config.php
+book/vendor/
+book/node_modules/
+book/tenants/**/meta.json
+book/docker/mysql/
+book/docker/baikal/
+book/docker/openldap/
+book/storage/cache/*
+book/storage/logs/*
+book/storage/sessions/*
+book/storage/backups/*
+book/storage/uploads/*
+!book/storage/**/.htaccess
+!book/storage/**/index.html
+book/npm-debug.log
+book/metafile
+book/.DS_Store
 
 # Logs
 logs

@@ -20,7 +20,7 @@ deploy_load_config "${SCRIPT_DIR}"
 : "${NEXT_PUBLIC_SITE_URL:?Set NEXT_PUBLIC_SITE_URL}"
 
 DEPLOY_PROJECT_DIR="${DEPLOY_PROJECT_DIR:-thesibook-booking-shine}"
-DEPLOY_NODE_PORT="${DEPLOY_NODE_PORT:-3002}"
+DEPLOY_NODE_PORT="${DEPLOY_NODE_PORT:-3005}"
 DEPLOY_SSH_PORT="${DEPLOY_SSH_PORT:-22}"
 DEPLOY_SKIP_BACKEND="${DEPLOY_SKIP_BACKEND:-false}"
 DEPLOY_SKIP_FRONTEND="${DEPLOY_SKIP_FRONTEND:-false}"
@@ -28,8 +28,8 @@ DEPLOY_WP_SETUP="${DEPLOY_WP_SETUP:-true}"
 DEPLOY_WP_SEED="${DEPLOY_WP_SEED:-auto}"
 DEPLOY_LINK_PUBLIC_HTML="${DEPLOY_LINK_PUBLIC_HTML:-true}"
 DEPLOY_PUBLIC_HTML="${DEPLOY_PUBLIC_HTML:-${DEPLOY_REMOTE_ROOT}/public_html}"
-DEPLOY_SERVER_USER="${DEPLOY_SERVER_USER:-webcode}"
-DEPLOY_SERVER_GROUP="${DEPLOY_SERVER_GROUP:-webcode}"
+DEPLOY_SERVER_USER="${DEPLOY_SERVER_USER:-thesiu}"
+DEPLOY_SERVER_GROUP="${DEPLOY_SERVER_GROUP:-thesiu}"
 
 REMOTE_BASE="${DEPLOY_REMOTE_ROOT}/${DEPLOY_PROJECT_DIR}"
 REMOTE_BACKEND="${REMOTE_BASE}/backend"
@@ -81,14 +81,14 @@ if [[ "${DEPLOY_SKIP_BACKEND}" != "true" ]]; then
     "${DEPLOY_SSH}:${REMOTE_BACKEND}/"
 
   if [[ "${DEPLOY_LINK_PUBLIC_HTML}" == "true" ]]; then
-    echo "==> Wiring WordPress into existing public_html (docroot for webcode.gr)..."
+    echo "==> Wiring WordPress into public_html (thesibook.gr CMS path)..."
     if ! deploy_ssh "test -d '${DEPLOY_PUBLIC_HTML}'"; then
       echo "ERROR: public_html not found at ${DEPLOY_PUBLIC_HTML}" >&2
       echo "       Set DEPLOY_PUBLIC_HTML in scripts/deploy/.env to your real docroot path." >&2
       exit 1
     fi
     # Real files under public_html (symlinks to home dir cause 403 on this host)
-    deploy_ssh "mkdir -p '${DEPLOY_PUBLIC_HTML}/thesibook-booking-shine' && rm -f '${DEPLOY_PUBLIC_HTML}/thesibook-booking-shine/backend'"
+    deploy_ssh "mkdir -p '${DEPLOY_PUBLIC_HTML}/thesibook-booking-shine'"
     deploy_rsync \
       --exclude 'wp-config.php' \
       --exclude 'wp-content/uploads/' \
@@ -125,6 +125,7 @@ if [[ "${DEPLOY_SKIP_BACKEND}" != "true" ]]; then
       printf 'WEBCODE_FRONTEND_URL=%q\n' "${WEBCODE_FRONTEND_URL}"
       printf 'WEBCODE_HEADLESS_CORS_ORIGINS=%q\n' "${WEBCODE_HEADLESS_CORS_ORIGINS}"
       printf 'DEPLOY_WP_SEED=%q\n' "${DEPLOY_WP_SEED}"
+      printf 'WP_TABLE_PREFIX=%q\n' "${WP_TABLE_PREFIX:-tsb_}"
       printf 'WP_CLI=%q\n' "${WP_CLI}"
     } >"${DEPLOY_SESSION_ENV}"
     deploy_rsync "${DEPLOY_SESSION_ENV}" "${DEPLOY_SSH}:${REMOTE_BACKEND_WEB}/.deploy-session.env"
@@ -164,31 +165,64 @@ if [[ "${DEPLOY_SKIP_FRONTEND}" != "true" ]]; then
     "${STANDALONE}/" \
     "${DEPLOY_SSH}:${REMOTE_FRONTEND}/"
 
-  echo "==> Writing production env on server..."
-  MEDIA_LINE=""
-  if [[ -n "${WORDPRESS_MEDIA_HOSTNAME:-}" ]]; then
-    MEDIA_LINE="WORDPRESS_MEDIA_HOSTNAME=${WORDPRESS_MEDIA_HOSTNAME}"
-  fi
-  deploy_ssh "cat > '${REMOTE_FRONTEND}/.env.production' <<EOF
+  deploy_ssh "cat > '${REMOTE_FRONTEND}/.env.production' <<'ENVEOF'
 NODE_ENV=production
 PORT=${DEPLOY_NODE_PORT}
 HOSTNAME=127.0.0.1
 WORDPRESS_API_URL=${WORDPRESS_API_URL}
 NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL}
 NEXT_RENDER_MODE=${NEXT_RENDER_MODE:-isr}
-${MEDIA_LINE}
-EOF"
+ENVEOF"
+  # Append optional lines (quoted values for special chars)
+  if [[ -n "${WORDPRESS_MEDIA_HOSTNAME:-}" ]]; then
+    deploy_ssh "printf 'WORDPRESS_MEDIA_HOSTNAME=%q\n' '${WORDPRESS_MEDIA_HOSTNAME}' >> '${REMOTE_FRONTEND}/.env.production'"
+  fi
+  if [[ -n "${NEXT_PUBLIC_EA_BASE_URL:-}" ]]; then
+    deploy_ssh "printf 'NEXT_PUBLIC_EA_BASE_URL=%q\n' '${NEXT_PUBLIC_EA_BASE_URL}' >> '${REMOTE_FRONTEND}/.env.production'"
+  fi
+  if [[ -n "${BOOKING_DB_HOST:-}" ]]; then
+    deploy_ssh "printf '%s\n' \
+      'BOOKING_DB_HOST=${BOOKING_DB_HOST}' \
+      'BOOKING_DB_USER=${BOOKING_DB_USER}' \
+      \"BOOKING_DB_PASSWORD=$(printf '%q' "${BOOKING_DB_PASSWORD}")\" \
+      'BOOKING_DB_NAME=${BOOKING_DB_NAME:-thesibook_control}' \
+      \"BOOKING_JWT_SECRET=$(printf '%q' "${BOOKING_JWT_SECRET}")\" \
+      >> '${REMOTE_FRONTEND}/.env.production'"
+  fi
+  if [[ -n "${PAYPAL_CLIENT_ID:-}" ]]; then
+    deploy_ssh "printf '%s\n' \
+      'PAYPAL_MODE=${PAYPAL_MODE:-live}' \
+      'PAYPAL_CLIENT_ID=${PAYPAL_CLIENT_ID}' \
+      \"PAYPAL_CLIENT_SECRET=$(printf '%q' "${PAYPAL_CLIENT_SECRET}")\" \
+      'NEXT_PUBLIC_PAYPAL_CLIENT_ID=${NEXT_PUBLIC_PAYPAL_CLIENT_ID:-${PAYPAL_CLIENT_ID}}' \
+      'PAYPAL_BUSINESS_EMAIL=${PAYPAL_BUSINESS_EMAIL:-johnbeazoglou@gmail.com}' \
+      'PAYPAL_WEBHOOK_ID=${PAYPAL_WEBHOOK_ID:-}' \
+      >> '${REMOTE_FRONTEND}/.env.production'"
+  fi
 
   deploy_fix_ownership
 
-  echo "==> Restarting webcode-frontend (if systemd unit exists)..."
-  if deploy_ssh "systemctl is-enabled webcode-frontend 2>/dev/null"; then
-    deploy_ssh "sudo systemctl restart webcode-frontend && sudo systemctl is-active webcode-frontend"
+  echo "==> Starting ThesiBook Next.js on port ${DEPLOY_NODE_PORT}..."
+  deploy_ssh "FRONTEND_DIR='${REMOTE_FRONTEND}' PORT='${DEPLOY_NODE_PORT}' bash -s" \
+    < "${SCRIPT_DIR}/start-frontend.sh" || true
+
+  echo "==> Apache proxy for thesibook.gr (if .htaccess writable)..."
+  deploy_ssh "bash -s '${DEPLOY_PUBLIC_HTML}/.htaccess' '${DEPLOY_NODE_PORT}'" \
+    < "${SCRIPT_DIR}/apply-thesibook-proxy.sh" 2>/dev/null || \
+    echo "    NOTE: Could not patch .htaccess — run apply-thesibook-proxy.sh on server manually."
+
+  if [[ -n "${BOOKING_DB_HOST:-}" && -n "${BOOKING_DB_USER:-}" ]]; then
+    echo "==> Control plane DB migrations..."
+    "${SCRIPT_DIR}/setup-control-plane-remote.sh" || echo "    WARN: control plane SQL failed — check BOOKING_DB_* in .env"
+  fi
+
+  echo "==> Restarting thesibook-frontend (if systemd unit exists)..."
+  if deploy_ssh "systemctl is-enabled thesibook-frontend 2>/dev/null"; then
+    deploy_ssh "sudo systemctl restart thesibook-frontend && sudo systemctl is-active thesibook-frontend"
   else
-    echo "    NOTE: webcode-frontend not installed. One-time on server:"
+    echo "    NOTE: thesibook-frontend not installed. Use konsoleH Node.js for www.thesibook.gr or:"
     echo "    scp -P ${DEPLOY_SSH_PORT} scripts/deploy/remote-install.sh ${DEPLOY_SSH}:/tmp/"
     echo "    ssh -p ${DEPLOY_SSH_PORT} ${DEPLOY_SSH} 'bash /tmp/remote-install.sh ${DEPLOY_REMOTE_ROOT} ${DEPLOY_NODE_PORT} ${DEPLOY_SERVER_USER} ${DEPLOY_SERVER_GROUP}'"
-    echo "    Or proxy ${NEXT_PUBLIC_SITE_URL} → 127.0.0.1:${DEPLOY_NODE_PORT} in the panel."
   fi
 fi
 

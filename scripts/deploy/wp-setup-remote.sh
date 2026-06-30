@@ -14,6 +14,7 @@ WP_ADMIN_USER="${WP_ADMIN_USER:-admin}"
 WP_ADMIN_PASSWORD="${WP_ADMIN_PASSWORD:?WP_ADMIN_PASSWORD required for first install}"
 WP_ADMIN_EMAIL="${WP_ADMIN_EMAIL:?WP_ADMIN_EMAIL required for first install}"
 WP_SITE_TITLE="${WP_SITE_TITLE:-Webcode}"
+WP_TABLE_PREFIX="${WP_TABLE_PREFIX:-wp_}"
 WEBCODE_FRONTEND_URL="${WEBCODE_FRONTEND_URL:-}"
 WEBCODE_HEADLESS_CORS_ORIGINS="${WEBCODE_HEADLESS_CORS_ORIGINS:-}"
 DEPLOY_WP_SEED="${DEPLOY_WP_SEED:-auto}"
@@ -53,6 +54,10 @@ if [[ ! -f wp-config.php ]]; then
     --locale=en_US \
     --extra-php="${EXTRA_PHP}" \
     --force
+
+  if [[ "${WP_TABLE_PREFIX:-wp_}" != "wp_" ]]; then
+    sed -i "s/^\$table_prefix = 'wp_'/\$table_prefix = '${WP_TABLE_PREFIX}';/" wp-config.php
+  fi
 fi
 
 FRESH_INSTALL=false

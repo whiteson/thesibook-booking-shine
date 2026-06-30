@@ -214,6 +214,8 @@ final class Webcode_Headless_REST_API
 	private static function allowed_origins(): array
 	{
 		$defaults = [
+			'http://localhost:3010',
+			'http://127.0.0.1:3010',
 			'http://localhost:3000',
 			'http://127.0.0.1:3000',
 			'http://localhost:3002',

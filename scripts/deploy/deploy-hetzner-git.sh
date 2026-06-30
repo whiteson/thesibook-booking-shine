@@ -16,7 +16,7 @@ fi
 : "${NEXT_PUBLIC_SITE_URL:?Set NEXT_PUBLIC_SITE_URL}"
 
 DEPLOY_PROJECT_DIR="${DEPLOY_PROJECT_DIR:-thesibook-booking-shine}"
-DEPLOY_NODE_PORT="${DEPLOY_NODE_PORT:-3002}"
+DEPLOY_NODE_PORT="${DEPLOY_NODE_PORT:-3005}"
 DEPLOY_SSH_PORT="${DEPLOY_SSH_PORT:-22}"
 DEPLOY_GIT_BRANCH="${DEPLOY_GIT_BRANCH:-main}"
 REMOTE_BASE="${DEPLOY_REMOTE_ROOT}/${DEPLOY_PROJECT_DIR}"
@@ -78,7 +78,7 @@ EOF
 
 cd "${REMOTE_BACKEND}" && wp plugin activate webcode-headless-api 2>/dev/null || true
 wp rewrite flush --hard 2>/dev/null || true
-sudo systemctl restart webcode-frontend
+sudo systemctl restart thesibook-frontend
 REMOTE
 
 echo "Git deploy complete."
