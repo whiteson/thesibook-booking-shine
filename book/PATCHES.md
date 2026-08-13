@@ -4,8 +4,8 @@ Track modifications to upstream EA. Do not push to alextselegidis/easyappointmen
 
 | File | Change |
 |------|--------|
-| `index.php` | Load `thesibook-bootstrap.php` instead of flat `config.php` |
-| `thesibook-bootstrap.php` | Multi-tenant: session + `?thesibook_tenant=` → `tenants/{slug}/meta.json`; loads `thesibook-sso-secret.php` **before** tenant early-return (SSO) |
+| `index.php` | Load `thesibook-bootstrap.php` instead of flat `config.php`; skip session `ini_set` when bootstrap already started the session |
+| `thesibook-bootstrap.php` | Multi-tenant: session + `?thesibook_tenant=` → `tenants/{slug}/meta.json`; loads `thesibook-sso-secret.php` **before** tenant early-return (SSO); session GC `ini_set` before `session_start` |
 | `tenants/` | Per-workspace meta (gitignored secrets) |
 | `assets/css/themes/default.scss` | Primary color `#2563eb` (ThesiBook blue) |
 | `application/views/**` | Remove EA logos, links, and "Powered by" branding; titles use thesibook.gr |
@@ -34,7 +34,7 @@ Track modifications to upstream EA. Do not push to alextselegidis/easyappointmen
 | `application/controllers/Recovery.php` | Accept email-only password reset requests |
 | `application/config/email.php` | Send mail From info@thesibook.gr; optional `thesibook-email-config.php` SMTP |
 | `thesibook-email-config.php.example` | Production SMTP template (copy to gitignored `thesibook-email-config.php`) |
-| `thesibook-bootstrap.php` | Tenant query helpers; `thesibook_password_reset_link()` for email reset URLs |
+| `thesibook-bootstrap.php` | Tenant query helpers; `thesibook_password_reset_link()` for email reset URLs; session GC before `session_start` |
 | `application/libraries/Accounts.php` | Email-only password reset token lookup |
 | `assets/js/utils/url.js` | Append `thesibook_tenant` to AJAX URLs on tenant pages |
 

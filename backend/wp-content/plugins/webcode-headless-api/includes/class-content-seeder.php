@@ -472,8 +472,8 @@ final class Webcode_Content_Seeder
 					[
 						'icon'  => 'Mail',
 						'title' => 'Email',
-						'value' => 'hello@thesibook.gr',
-						'href'  => 'mailto:hello@thesibook.gr',
+						'value' => 'info@thesibook.gr',
+						'href'  => 'mailto:info@thesibook.gr',
 					],
 					[
 						'icon'  => 'MessageCircle',
@@ -691,7 +691,7 @@ final class Webcode_Content_Seeder
 		}
 
 		$branding = [
-			'email'             => 'hello@thesibook.gr',
+			'email'             => 'info@thesibook.gr',
 			'telephone'         => '',
 			'address'           => 'Αθήνα, Ελλάδα',
 			'working_hours'     => 'Δευτέρα — Παρασκευή · 09:00 — 18:00',

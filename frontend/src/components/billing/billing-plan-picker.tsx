@@ -4,6 +4,7 @@ import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
+import { usePayPalReady } from "@/components/billing/paypal-provider";
 import { cn } from "@/lib/utils";
 import type { PlanId } from "@/types/booking";
 
@@ -44,17 +45,40 @@ function PayPalSubscribeButton({
   plan: UpgradePlan;
   disabled?: boolean;
 }) {
-  const router = useRouter();
-  const [{ isPending }] = usePayPalScriptReducer();
-  const [processing, setProcessing] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const customIdRef = useRef<string | null>(null);
+  const paypalReady = usePayPalReady();
 
   if (disabled) {
     return (
       <p className="text-xs text-muted-foreground">Τρέχον πλάνο — ενεργό</p>
     );
   }
+
+  if (!paypalReady) {
+    return (
+      <div className="flex h-10 items-center gap-2 text-sm text-muted-foreground">
+        <Loader2 className="h-4 w-4 animate-spin" />
+        Φόρτωση PayPal…
+      </div>
+    );
+  }
+
+  return (
+    <PayPalSubscribeButtonInner workspaceId={workspaceId} plan={plan} />
+  );
+}
+
+function PayPalSubscribeButtonInner({
+  workspaceId,
+  plan,
+}: {
+  workspaceId: number;
+  plan: UpgradePlan;
+}) {
+  const router = useRouter();
+  const [{ isPending }] = usePayPalScriptReducer();
+  const [processing, setProcessing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const customIdRef = useRef<string | null>(null);
 
   if (isPending) {
     return (
@@ -107,9 +131,18 @@ function PayPalSubscribeButton({
               throw new Error(msg);
             }
             customIdRef.current = data.customId;
+            const origin = window.location.origin;
             return actions.subscription.create({
               plan_id: data.paypalPlanId,
               custom_id: data.customId,
+              application_context: {
+                brand_name: "ThesiBook",
+                locale: "el-GR",
+                shipping_preference: "NO_SHIPPING",
+                user_action: "SUBSCRIBE_NOW",
+                return_url: `${origin}/dashboard?billing=success`,
+                cancel_url: `${origin}/dashboard?billing=cancelled`,
+              },
             });
           } finally {
             setProcessing(false);

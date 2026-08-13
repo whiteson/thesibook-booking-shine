@@ -38,7 +38,7 @@ export const Route = createFileRoute("/")({
           "@type": "Organization",
           name: "ThesiBook",
           url: "https://thesibook.gr",
-          email: "hello@thesibook.gr",
+          email: "info@thesibook.gr",
           description:
             "Πλατφόρμα online κρατήσεων για σεμινάρια, workshops και εκπαιδευτικές επιχειρήσεις στην Ελλάδα.",
         }),

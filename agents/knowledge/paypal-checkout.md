@@ -19,14 +19,29 @@ Registration is always **free**. Paid plans auto-renew every year.
 
 Yearly **Subscriptions** (not one-time 30-day checkout).
 
+Live catalog (app **thesibookgr**):
+
+| | ID |
+|--|----|
+| Product | `PROD-278286744M261052D` |
+| Small plan €84 / year, infinite cycles | `P-2N025788NM3580701NJ626GI` |
+
+Env (local `.env.local` + `scripts/deploy/.env`):
+
+```env
+PAYPAL_MODE=live
+PAYPAL_PRODUCT_ID=PROD-278286744M261052D
+PAYPAL_PLAN_SMALL=P-2N025788NM3580701NJ626GI
+PAYPAL_WEBHOOK_ID=7WN644779S115611K
+```
+
 1. [PayPal Developer Dashboard](https://developer.paypal.com/dashboard/)
 2. App **thesibookgr** — enable **Subscriptions**
-3. Webhooks → `https://www.thesibook.gr/api/billing/paypal/webhook`
-   - `BILLING.SUBSCRIPTION.ACTIVATED`
-   - `PAYMENT.SALE.COMPLETED`
-   - `PAYMENT.CAPTURE.COMPLETED`
+3. Webhook → `https://www.thesibook.gr/api/billing/paypal/webhook` (all events)
+   Used by us: `BILLING.SUBSCRIPTION.ACTIVATED`, `PAYMENT.SALE.COMPLETED`,
+   `BILLING.SUBSCRIPTION.CANCELLED`, `BILLING.SUBSCRIPTION.PAYMENT.FAILED`
 
-ThesiBook creates PayPal billing plans (`YEAR`) automatically on first checkout.
+Re-create catalog: `./scripts/setup-paypal-yearly-plan.sh` (idempotent).
 
 ## Viva.com Smart Checkout (disabled)
 
@@ -63,4 +78,6 @@ First payment stores the Viva transaction ID. A daily cron charges the same card
 - `frontend/src/app/api/billing/paypal/*`
 - `frontend/src/app/api/billing/viva/*`
 - `frontend/src/app/api/billing/cron/renew/route.ts`
+- `frontend/src/components/billing/billing-plan-picker.tsx`
+- `scripts/setup-paypal-yearly-plan.sh`
 - `services/booking/sql/007_yearly_subscriptions.sql`

@@ -344,14 +344,20 @@ async function paypalJson(
     token: string;
     method?: string;
     body?: string;
+    requestId?: string;
   },
 ): Promise<Response> {
+  const headers: Record<string, string> = {
+    Authorization: `Bearer ${init.token}`,
+    "Content-Type": "application/json",
+    Prefer: "return=representation",
+  };
+  if (init.requestId) {
+    headers["PayPal-Request-Id"] = init.requestId;
+  }
   return fetch(`${apiBase(init.paypalMode)}${path}`, {
     method: init.method ?? "GET",
-    headers: {
-      Authorization: `Bearer ${init.token}`,
-      "Content-Type": "application/json",
-    },
+    headers,
     body: init.body,
   });
 }
@@ -386,6 +392,7 @@ async function ensurePayPalProduct(token: string, mode: PayPalMode): Promise<str
     method: "POST",
     token,
     paypalMode: mode,
+    requestId: "thesibook-product-yearly-v1",
     body: JSON.stringify({
       name: "ThesiBook",
       type: "SERVICE",
@@ -414,6 +421,7 @@ async function ensurePayPalBillingPlan(
     method: "POST",
     token,
     paypalMode: mode,
+    requestId: `thesibook-plan-${planId}-yearly-v1`,
     body: JSON.stringify({
       product_id: productId,
       name: planLabel(planId),
@@ -451,9 +459,26 @@ async function ensurePayPalBillingPlan(
 export async function getPayPalYearlyPlanId(
   planId: "small" | "unlimited",
 ): Promise<string> {
+  const envPlan =
+    planId === "small"
+      ? process.env.PAYPAL_PLAN_SMALL
+      : process.env.PAYPAL_PLAN_UNLIMITED;
+  const envProduct = process.env.PAYPAL_PRODUCT_ID;
+
+  if (envPlan) {
+    await saveCatalogId(planId, envPlan).catch(() => undefined);
+    if (envProduct) {
+      await saveCatalogId("product", envProduct).catch(() => undefined);
+    }
+    return envPlan;
+  }
+
   const config = getPayPalConfig();
   const token = await getPayPalAccessToken(config);
-  const productId = await ensurePayPalProduct(token, config.mode);
+  const productId = envProduct || (await ensurePayPalProduct(token, config.mode));
+  if (envProduct) {
+    await saveCatalogId("product", envProduct).catch(() => undefined);
+  }
   return ensurePayPalBillingPlan(token, config.mode, planId, productId);
 }
 

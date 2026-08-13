@@ -160,10 +160,9 @@ export function DashboardView() {
                       <h2 className="text-xl font-bold">{ws.displayName}</h2>
                       <p className="text-sm text-muted-foreground">/{ws.slug}</p>
                       <span className="mt-2 inline-block rounded-full bg-secondary px-3 py-1 text-xs font-medium">
-                        {plan?.nameEl ?? ws.plan} —{" "}
-                        {plan?.priceEur === 0
+                        {plan?.id === "free" || plan?.priceEur === 0
                           ? "Δωρεάν"
-                          : `€${plan?.priceEur}/έτος`}
+                          : `${plan?.nameEl ?? ws.plan} — €${plan?.priceEur}/έτος`}
                       </span>
                       {expiry && ws.plan !== "free" ? (
                         <p className="mt-2 text-xs text-muted-foreground">

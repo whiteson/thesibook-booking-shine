@@ -65,8 +65,10 @@ require_once __DIR__ . '/thesibook-bootstrap.php';
  *
  */
 
-ini_set('session.gc_probability', 1);
-ini_set('session.gc_divisor', 100);
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    ini_set('session.gc_probability', 1);
+    ini_set('session.gc_divisor', 100);
+}
 
 /*
  *---------------------------------------------------------------

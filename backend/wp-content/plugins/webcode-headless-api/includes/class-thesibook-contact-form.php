@@ -56,7 +56,7 @@ final class Thesibook_Contact_Form
 			return $admin;
 		}
 
-		return 'hello@thesibook.gr';
+		return 'info@thesibook.gr';
 	}
 
 	public static function ensure(): int

@@ -22,7 +22,7 @@ export const defaultSiteSettings: SiteSettings = {
   siteName: "ThesiBook",
   tagline:
     "Η νέα πλατφόρμα κρατήσεων για εκπαιδευτικές επιχειρήσεις στην Ελλάδα.",
-  email: "hello@thesibook.gr",
+  email: "info@thesibook.gr",
   address: "Αθήνα, Ελλάδα",
   mainNav: defaultMainNav,
   footerNav: [

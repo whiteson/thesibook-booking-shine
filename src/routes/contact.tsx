@@ -33,7 +33,7 @@ function ContactPage() {
 
         <section className="mx-auto mt-12 grid max-w-5xl gap-5 px-4 sm:grid-cols-3 sm:px-6 lg:px-8">
           {[
-            { icon: Mail, title: "Email", value: "hello@thesibook.gr", href: "mailto:hello@thesibook.gr" },
+            { icon: Mail, title: "Email", value: "info@thesibook.gr", href: "mailto:info@thesibook.gr" },
             { icon: MessageCircle, title: "Support", value: "Συνήθως απαντάμε σε 24 ώρες", href: "#" },
             { icon: MapPin, title: "Έδρα", value: "Αθήνα, Ελλάδα", href: "#" },
           ].map((c) => (

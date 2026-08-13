@@ -96,7 +96,9 @@ export function RegisterForm() {
               <Label htmlFor="slug">URL workspace (προαιρετικό)</Label>
               <Input id="slug" name="slug" placeholder={preview || "my-business"} className="mt-1.5" />
               {preview ? (
-                <p className="mt-1 text-xs text-muted-foreground">thesibook.gr/book/{preview}</p>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  thesibook.gr/book/?thesibook_tenant={preview}
+                </p>
               ) : null}
             </div>
 

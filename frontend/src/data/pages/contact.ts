@@ -26,8 +26,8 @@ export const contactPage: PageViewModel = {
         {
           icon: "Mail",
           title: "Email",
-          value: "hello@thesibook.gr",
-          href: "mailto:hello@thesibook.gr",
+          value: "info@thesibook.gr",
+          href: "mailto:info@thesibook.gr",
         },
         {
           icon: "MessageCircle",

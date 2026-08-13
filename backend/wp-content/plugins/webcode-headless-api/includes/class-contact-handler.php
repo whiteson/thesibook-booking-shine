@@ -264,7 +264,7 @@ final class Webcode_Contact_Handler
 			return $admin;
 		}
 
-		return 'hello@thesibook.gr';
+		return 'info@thesibook.gr';
 	}
 
 	private static function default_form_id(): int

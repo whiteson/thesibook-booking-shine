@@ -100,7 +100,7 @@ echo json_encode([
   'provision_mode' => '${PROVISION_MODE}',
   'display_name' => '${DISPLAY_NAME}',
   'debug' => true,
-  'language' => 'english',
+  'language' => 'greek',
 ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 " > "${META_FILE}"
 }
@@ -175,6 +175,12 @@ if [[ -n "${ADMIN_EMAIL}" && -n "${ADMIN_PASSWORD}" ]]; then
     "${MYSQL[@]}" "${DB_NAME}" <<SQL
 UPDATE ${DB_PREFIX}settings SET value='${DISPLAY_NAME}' WHERE name='company_name';
 UPDATE ${DB_PREFIX}settings SET value='info@thesibook.gr' WHERE name='company_email';
+UPDATE ${DB_PREFIX}settings SET value='https://thesibook.gr' WHERE name='company_link';
+UPDATE ${DB_PREFIX}settings SET value='Europe/Athens' WHERE name='default_timezone';
+UPDATE ${DB_PREFIX}settings SET value='monday' WHERE name='first_weekday';
+UPDATE ${DB_PREFIX}settings SET value='greek' WHERE name='default_language';
+UPDATE ${DB_PREFIX}settings SET value='military' WHERE name='time_format';
+UPDATE ${DB_PREFIX}users SET timezone='Europe/Athens';
 UPDATE ${DB_PREFIX}users u
   INNER JOIN ${DB_PREFIX}roles r ON u.id_roles = r.id
   SET u.email='${ADMIN_EMAIL}', u.first_name='Admin', u.last_name='User'

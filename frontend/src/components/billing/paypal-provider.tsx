@@ -1,7 +1,19 @@
 "use client";
 
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-import { useEffect, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
+
+const PayPalReadyContext = createContext(false);
+
+export function usePayPalReady(): boolean {
+  return useContext(PayPalReadyContext);
+}
 
 type PayPalRuntimeConfig = {
   configured: boolean;
@@ -11,7 +23,7 @@ type PayPalRuntimeConfig = {
 };
 
 type Props = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export function PayPalProvider({ children }: Props) {
@@ -31,12 +43,12 @@ export function PayPalProvider({ children }: Props) {
       );
   }, []);
 
-  if (!config) {
-    return <>{children}</>;
-  }
-
-  if (!config.configured || !config.clientId) {
-    return <>{children}</>;
+  if (!config || !config.configured || !config.clientId) {
+    return (
+      <PayPalReadyContext.Provider value={false}>
+        {children}
+      </PayPalReadyContext.Provider>
+    );
   }
 
   return (
@@ -48,12 +60,14 @@ export function PayPalProvider({ children }: Props) {
         vault: true,
         locale: "el_GR",
         components: "buttons",
-        enableFunding: "card,venmo",
-        disableFunding: "paylater,credit",
+        enableFunding: "card",
+        disableFunding: "paylater,credit,venmo",
         dataPageType: "checkout",
       }}
     >
-      {children}
+      <PayPalReadyContext.Provider value={true}>
+        {children}
+      </PayPalReadyContext.Provider>
     </PayPalScriptProvider>
   );
 }

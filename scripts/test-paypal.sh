@@ -40,5 +40,7 @@ if [[ -z "$TOKEN" ]]; then
 fi
 
 echo "OK — access token received (${#TOKEN} chars)"
-echo "Production webhook: https://thesibook.gr/api/billing/paypal/webhook"
-echo "Production dashboard: https://thesibook.gr/dashboard"
+echo "Yearly product: ${PAYPAL_PRODUCT_ID:-not set}"
+echo "Yearly plan (small €84): ${PAYPAL_PLAN_SMALL:-not set}"
+echo "Production webhook: https://www.thesibook.gr/api/billing/paypal/webhook"
+echo "Production dashboard: https://www.thesibook.gr/dashboard"

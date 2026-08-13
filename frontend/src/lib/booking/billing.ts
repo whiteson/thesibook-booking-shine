@@ -289,6 +289,17 @@ export async function findBillingOrderByMerchantTrnsOrPayPalId(
   return rows[0] ?? null;
 }
 
+export async function markSubscriptionStatus(
+  paypalSubscriptionId: string,
+  status: "cancelled" | "past_due" | "paused" | "active",
+): Promise<void> {
+  const pool = getControlPlanePool();
+  await pool.query(
+    `UPDATE cp_subscriptions SET status = ? WHERE paypal_subscription_id = ?`,
+    [status, paypalSubscriptionId],
+  );
+}
+
 export async function markBillingOrderFailed(
   billingOrderId: number,
 ): Promise<void> {

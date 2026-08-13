@@ -26,8 +26,11 @@ export async function POST(request: Request) {
 
   const workspaceId = Number(body.workspaceId);
   const plan = body.plan;
-  if (!workspaceId || (plan !== "small" && plan !== "unlimited")) {
-    return NextResponse.json({ error: "Invalid workspace or plan" }, { status: 400 });
+  if (!workspaceId || plan !== "small") {
+    return NextResponse.json(
+      { error: "Διαθέσιμο μόνο το ετήσιο πλάνο €84." },
+      { status: 400 },
+    );
   }
 
   if (!(await userOwnsWorkspace(user.id, workspaceId))) {

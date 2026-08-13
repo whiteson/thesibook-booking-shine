@@ -128,7 +128,7 @@ if [[ "${DEPLOY_SKIP_BACKEND}" != "true" ]]; then
       printf 'WP_SITE_TITLE=%q\n' "${WP_SITE_TITLE:-Webcode}"
       printf 'WEBCODE_FRONTEND_URL=%q\n' "${WEBCODE_FRONTEND_URL}"
       printf 'WEBCODE_HEADLESS_CORS_ORIGINS=%q\n' "${WEBCODE_HEADLESS_CORS_ORIGINS}"
-      printf 'WEBCODE_CONTACT_MAIL_TO=%q\n' "${WEBCODE_CONTACT_MAIL_TO:-hello@thesibook.gr}"
+      printf 'WEBCODE_CONTACT_MAIL_TO=%q\n' "${WEBCODE_CONTACT_MAIL_TO:-info@thesibook.gr}"
       printf 'WEBCODE_SMTP_HOST=%q\n' "${WEBCODE_SMTP_HOST:-}"
       printf 'WEBCODE_SMTP_PORT=%q\n' "${WEBCODE_SMTP_PORT:-587}"
       printf 'WEBCODE_SMTP_USER=%q\n' "${WEBCODE_SMTP_USER:-}"
@@ -174,6 +174,9 @@ if [[ "${DEPLOY_SKIP_BOOK}" != "true" ]]; then
     --exclude 'storage/backups/*' \
     --exclude 'docker/mysql' \
     --exclude 'config.php' \
+    --exclude 'thesibook-sso-secret.php' \
+    --exclude 'thesibook-email-config.php' \
+    --exclude 'tenants/*' \
     "${REPO_ROOT}/book/" \
     "${DEPLOY_SSH}:${REMOTE_BOOK_WEB}/"
 
@@ -187,6 +190,21 @@ if [[ "${DEPLOY_SKIP_BOOK}" != "true" ]]; then
   echo "==> Book remote setup (composer, permissions, .htaccess)..."
   deploy_ssh "cd '${REMOTE_BOOK_WEB}' && if command -v composer >/dev/null 2>&1 && [[ ! -d vendor ]]; then composer install --no-interaction --prefer-dist --no-dev; fi && chmod -R u+w storage"
   deploy_ssh "bash -s '${REMOTE_BOOK_WEB}' '${REMOTE_BOOK_WEB}'" < "${SCRIPT_DIR}/setup-book-web.sh"
+
+  if [[ -n "${BOOKING_JWT_SECRET:-}" ]]; then
+    echo "==> Writing booking SSO secret (matches BOOKING_JWT_SECRET)..."
+    SSO_TMP="$(mktemp)"
+    php -r '
+      $secret = $argv[1];
+      $out = $argv[2];
+      $php = "<?php\ndeclare(strict_types=1);\ndefined('\''THESIBOOK_SSO_SECRET'\'') || define('\''THESIBOOK_SSO_SECRET'\'', " . var_export($secret, true) . ");\n";
+      file_put_contents($out, $php);
+    ' "${BOOKING_JWT_SECRET}" "${SSO_TMP}"
+    deploy_rsync "${SSO_TMP}" "${DEPLOY_SSH}:${REMOTE_BOOK_WEB}/thesibook-sso-secret.php"
+    rm -f "${SSO_TMP}"
+  else
+    echo "    WARN: BOOKING_JWT_SECRET empty — dashboard SSO into EA admin will fail until thesibook-sso-secret.php exists"
+  fi
 
   deploy_fix_ownership
 fi
@@ -249,6 +267,8 @@ ENVEOF"
       'NEXT_PUBLIC_PAYPAL_CLIENT_ID=${NEXT_PUBLIC_PAYPAL_CLIENT_ID:-${PAYPAL_CLIENT_ID}}' \
       'PAYPAL_BUSINESS_EMAIL=${PAYPAL_BUSINESS_EMAIL:-johnbeazoglous@gmail.com}' \
       'PAYPAL_WEBHOOK_ID=${PAYPAL_WEBHOOK_ID:-}' \
+      'PAYPAL_PRODUCT_ID=${PAYPAL_PRODUCT_ID:-}' \
+      'PAYPAL_PLAN_SMALL=${PAYPAL_PLAN_SMALL:-}' \
       >> '${REMOTE_FRONTEND}/.env.production'"
   fi
   if [[ -n "${VIVA_CLIENT_ID:-}" ]]; then

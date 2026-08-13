@@ -6,7 +6,9 @@ import {
   findBillingOrderByPayPalSubscription,
   findSubscriptionByPayPalId,
   markBillingOrderPaid,
+  markSubscriptionStatus,
   upsertSubscription,
+  attachPayPalSubscriptionId,
 } from "@/lib/booking/billing";
 import {
   getPayPalConfig,
@@ -18,9 +20,8 @@ import type { PlanId } from "@/types/booking";
 
 /**
  * PayPal webhook.
- * URL: {NEXT_PUBLIC_SITE_URL}/api/billing/paypal/webhook
- * Events: PAYMENT.CAPTURE.COMPLETED, BILLING.SUBSCRIPTION.ACTIVATED,
- *         PAYMENT.SALE.COMPLETED, BILLING.SUBSCRIPTION.CANCELLED
+ * URL: https://www.thesibook.gr/api/billing/paypal/webhook
+ * Events: BILLING.SUBSCRIPTION.*, PAYMENT.SALE.COMPLETED, PAYMENT.CAPTURE.COMPLETED
  */
 export async function POST(request: Request) {
   const rawBody = await request.text();
@@ -82,6 +83,21 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true });
   }
 
+  if (eventType === "BILLING.SUBSCRIPTION.CREATED") {
+    const subscriptionId = event.resource.id;
+    const customId = event.resource.custom_id;
+    if (subscriptionId && customId) {
+      const billingOrder = await findBillingOrderByMerchantTrns(customId);
+      if (billingOrder) {
+        await attachPayPalSubscriptionId(
+          Number(billingOrder.id),
+          subscriptionId,
+        );
+      }
+    }
+    return NextResponse.json({ ok: true });
+  }
+
   if (
     eventType === "BILLING.SUBSCRIPTION.ACTIVATED" ||
     eventType === "BILLING.SUBSCRIPTION.UPDATED"
@@ -117,70 +133,102 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true });
   }
 
-  if (eventType === "PAYMENT.SALE.COMPLETED") {
-    const subscriptionId = event.resource.billing_agreement_id;
+  if (
+    eventType === "PAYMENT.SALE.COMPLETED" ||
+    eventType === "BILLING.SUBSCRIPTION.PAYMENT.COMPLETED"
+  ) {
+    const subscriptionId =
+      event.resource.billing_agreement_id ?? event.resource.id;
     if (!subscriptionId) {
       return NextResponse.json({ ok: true, skipped: "no agreement" });
     }
+    return NextResponse.json(
+      await applyPaypalSubscriptionPayment(subscriptionId),
+    );
+  }
 
-    const sub = await findSubscriptionByPayPalId(subscriptionId);
-    const existing = await findBillingOrderByPayPalSubscription(subscriptionId);
-    if (!sub && !existing) {
-      return NextResponse.json({ ok: true, skipped: "unknown subscription" });
+  if (
+    eventType === "BILLING.SUBSCRIPTION.CANCELLED" ||
+    eventType === "BILLING.SUBSCRIPTION.EXPIRED"
+  ) {
+    const subscriptionId = event.resource.id;
+    if (subscriptionId) {
+      await markSubscriptionStatus(subscriptionId, "cancelled");
     }
+    return NextResponse.json({ ok: true });
+  }
 
-    const workspaceId = Number(sub?.workspace_id ?? existing?.workspace_id);
-    const userId = Number(sub?.user_id ?? existing?.user_id);
-    const planId = String(sub?.plan_id ?? existing?.plan_id) as
-      | "small"
-      | "unlimited";
-
-    if (existing && existing.status !== "paid") {
-      await markBillingOrderPaid({
-        billingOrderId: Number(existing.id),
-        planId,
-        workspaceId,
-        paypalSubscriptionId: subscriptionId,
-        billingProvider: "paypal",
-      });
-    } else {
-      const periodEnd = sub?.current_period_end
-        ? new Date(String(sub.current_period_end)).getTime()
-        : 0;
-      const alreadyCovered = periodEnd > Date.now() + 60 * 24 * 60 * 60 * 1000;
-      if (alreadyCovered) {
-        return NextResponse.json({ ok: true, skipped: "already active" });
-      }
-
-      const merchantTrns = `TB-PP-${workspaceId}-${Date.now()}`;
-      const billingOrderId = await createBillingOrder({
-        workspaceId,
-        userId,
-        planId,
-        amountCents: planAmountCents(planId),
-        merchantTrns,
-        paymentProvider: "paypal",
-        isRenewal: true,
-      });
-      await markBillingOrderPaid({
-        billingOrderId,
-        planId,
-        workspaceId,
-        paypalSubscriptionId: subscriptionId,
-        billingProvider: "paypal",
-      });
+  if (
+    eventType === "BILLING.SUBSCRIPTION.SUSPENDED" ||
+    eventType === "BILLING.SUBSCRIPTION.PAYMENT.FAILED"
+  ) {
+    const subscriptionId =
+      event.resource.id ?? event.resource.billing_agreement_id;
+    if (subscriptionId) {
+      await markSubscriptionStatus(subscriptionId, "past_due");
     }
-
-    await upsertSubscription({
-      workspaceId,
-      userId,
-      planId,
-      provider: "paypal",
-      paypalSubscriptionId: subscriptionId,
-    });
-
-    return NextResponse.json({ ok: true, renewed: true });
+    return NextResponse.json({ ok: true });
   }
 
   return NextResponse.json({ ok: true, ignored: eventType });
+}
+
+async function applyPaypalSubscriptionPayment(subscriptionId: string) {
+  const sub = await findSubscriptionByPayPalId(subscriptionId);
+  const existing = await findBillingOrderByPayPalSubscription(subscriptionId);
+  if (!sub && !existing) {
+    return { ok: true, skipped: "unknown subscription" };
+  }
+
+  const workspaceId = Number(sub?.workspace_id ?? existing?.workspace_id);
+  const userId = Number(sub?.user_id ?? existing?.user_id);
+  const planId = String(sub?.plan_id ?? existing?.plan_id) as
+    | "small"
+    | "unlimited";
+
+  if (existing && existing.status !== "paid") {
+    await markBillingOrderPaid({
+      billingOrderId: Number(existing.id),
+      planId,
+      workspaceId,
+      paypalSubscriptionId: subscriptionId,
+      billingProvider: "paypal",
+    });
+  } else {
+    const periodEnd = sub?.current_period_end
+      ? new Date(String(sub.current_period_end)).getTime()
+      : 0;
+    const alreadyCovered = periodEnd > Date.now() + 60 * 24 * 60 * 60 * 1000;
+    if (alreadyCovered) {
+      return { ok: true, skipped: "already active" };
+    }
+
+    const merchantTrns = `TB-PP-${workspaceId}-${Date.now()}`;
+    const billingOrderId = await createBillingOrder({
+      workspaceId,
+      userId,
+      planId,
+      amountCents: planAmountCents(planId),
+      merchantTrns,
+      paymentProvider: "paypal",
+      isRenewal: true,
+    });
+    await markBillingOrderPaid({
+      billingOrderId,
+      planId,
+      workspaceId,
+      paypalSubscriptionId: subscriptionId,
+      billingProvider: "paypal",
+    });
+  }
+
+  await upsertSubscription({
+    workspaceId,
+    userId,
+    planId,
+    provider: "paypal",
+    paypalSubscriptionId: subscriptionId,
+  });
+
+  return { ok: true, renewed: true };
 }
