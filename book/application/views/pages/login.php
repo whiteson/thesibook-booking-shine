@@ -12,14 +12,14 @@
 <form id="login-form">
     <div class="mb-3">
         <label for="username" class="form-label fw-medium ">
-            <?= lang('username') ?>
+            <?= lang('email') ?>
         </label>
         <div class="input-group">
             <span class="input-group-text bg-light border-end-0">
-                <i class="fas fa-user "></i>
+                <i class="fas fa-envelope "></i>
             </span>
-            <input type="text" id="username" 
-                   placeholder="<?= lang('enter_username_here') ?>" class="form-control border-start-0 ps-2" required/>
+            <input type="email" id="username" 
+                   placeholder="<?= lang('enter_email_here') ?>" class="form-control border-start-0 ps-2" required/>
         </div>
     </div>
 
@@ -66,7 +66,7 @@
     </div>
 
     <div class="text-center">
-        <a href="<?= site_url('recovery') ?>" class="text-decoration-none  small">
+        <a href="<?= site_url('recovery') . thesibook_tenant_query() ?>" class="text-decoration-none  small">
             <i class="fas fa-key me-1"></i>
             <?= lang('forgot_your_password') ?>
         </a>

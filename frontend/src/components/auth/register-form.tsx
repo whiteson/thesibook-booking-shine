@@ -115,8 +115,8 @@ export function RegisterForm() {
           </p>
         </div>
 
-        <div className="mt-8 grid gap-3 sm:grid-cols-3">
-          {PLANS.map((p) => (
+        <div className="mt-8 grid gap-3 sm:grid-cols-2">
+          {PLANS.filter((p) => p.id !== "unlimited").map((p) => (
             <div key={p.id} className="rounded-2xl border border-border bg-card/80 p-4 text-center text-sm">
               <p className="font-semibold">{p.nameEl}</p>
               <p className="mt-1 text-2xl font-bold text-primary">

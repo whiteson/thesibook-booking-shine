@@ -1,8 +1,12 @@
 /**
- * PayPal Checkout (Orders v2) — plan upgrades for ThesiBook.
+ * PayPal Checkout (Orders v2) + yearly Subscriptions for ThesiBook.
  * @see https://developer.paypal.com/docs/checkout/
- * @see https://developer.paypal.com/docs/api/webhooks/v1/
+ * @see https://developer.paypal.com/docs/subscriptions/
  */
+
+import type { RowDataPacket } from "mysql2";
+import { getControlPlanePool } from "./db";
+import { planAmountEur, planLabel } from "./plans";
 
 export type PayPalMode = "sandbox" | "live";
 
@@ -38,7 +42,7 @@ export function getPayPalConfig(): PayPalConfig {
     clientId,
     clientSecret,
     businessEmail:
-      process.env.PAYPAL_BUSINESS_EMAIL ?? "johnbeazoglou@gmail.com",
+      process.env.PAYPAL_BUSINESS_EMAIL ?? "johnbeazoglous@gmail.com",
     webhookId: process.env.PAYPAL_WEBHOOK_ID ?? null,
   };
 }
@@ -56,7 +60,7 @@ export function getPublicPayPalConfig(): PayPalPublicConfig {
     clientId,
     mode,
     businessEmail:
-      process.env.PAYPAL_BUSINESS_EMAIL ?? "johnbeazoglou@gmail.com",
+      process.env.PAYPAL_BUSINESS_EMAIL ?? "johnbeazoglous@gmail.com",
   };
 }
 
@@ -289,10 +293,13 @@ export type PayPalWebhookEvent = {
     id?: string;
     status?: string;
     custom_id?: string;
+    billing_agreement_id?: string;
     supplementary_data?: {
       related_ids?: { order_id?: string };
     };
     amount?: { value?: string; currency_code?: string };
+    subscriber?: { email_address?: string };
+    plan_id?: string;
   };
 };
 
@@ -328,4 +335,157 @@ export async function verifyPayPalWebhook(params: {
 
   const data = (await res.json()) as { verification_status?: string };
   return data.verification_status === "SUCCESS";
+}
+
+async function paypalJson(
+  path: string,
+  init: {
+    paypalMode: PayPalMode;
+    token: string;
+    method?: string;
+    body?: string;
+  },
+): Promise<Response> {
+  return fetch(`${apiBase(init.paypalMode)}${path}`, {
+    method: init.method ?? "GET",
+    headers: {
+      Authorization: `Bearer ${init.token}`,
+      "Content-Type": "application/json",
+    },
+    body: init.body,
+  });
+}
+
+async function getCatalogId(key: string): Promise<string | null> {
+  try {
+    const pool = getControlPlanePool();
+    const [rows] = await pool.query<RowDataPacket[]>(
+      "SELECT paypal_id FROM cp_paypal_catalog WHERE id = ? LIMIT 1",
+      [key],
+    );
+    return rows[0] ? String(rows[0].paypal_id) : null;
+  } catch {
+    return null;
+  }
+}
+
+async function saveCatalogId(key: string, paypalId: string): Promise<void> {
+  const pool = getControlPlanePool();
+  await pool.query(
+    `INSERT INTO cp_paypal_catalog (id, paypal_id) VALUES (?, ?)
+     ON DUPLICATE KEY UPDATE paypal_id = VALUES(paypal_id)`,
+    [key, paypalId],
+  );
+}
+
+async function ensurePayPalProduct(token: string, mode: PayPalMode): Promise<string> {
+  const existing = await getCatalogId("product");
+  if (existing) return existing;
+
+  const res = await paypalJson("/v1/catalogs/products", {
+    method: "POST",
+    token,
+    paypalMode: mode,
+    body: JSON.stringify({
+      name: "ThesiBook",
+      type: "SERVICE",
+      description: "ThesiBook yearly booking workspace plans",
+      category: "SOFTWARE",
+    }),
+  });
+  if (!res.ok) {
+    throw new Error(`PayPal product create failed: ${await res.text()}`);
+  }
+  const data = (await res.json()) as { id: string };
+  await saveCatalogId("product", data.id);
+  return data.id;
+}
+
+async function ensurePayPalBillingPlan(
+  token: string,
+  mode: PayPalMode,
+  planId: "small" | "unlimited",
+  productId: string,
+): Promise<string> {
+  const existing = await getCatalogId(planId);
+  if (existing) return existing;
+
+  const res = await paypalJson("/v1/billing/plans", {
+    method: "POST",
+    token,
+    paypalMode: mode,
+    body: JSON.stringify({
+      product_id: productId,
+      name: planLabel(planId),
+      description: planLabel(planId),
+      status: "ACTIVE",
+      billing_cycles: [
+        {
+          frequency: { interval_unit: "YEAR", interval_count: 1 },
+          tenure_type: "REGULAR",
+          sequence: 1,
+          total_cycles: 0,
+          pricing_scheme: {
+            fixed_price: {
+              value: planAmountEur(planId),
+              currency_code: "EUR",
+            },
+          },
+        },
+      ],
+      payment_preferences: {
+        auto_bill_outstanding: true,
+        setup_fee_failure_action: "CONTINUE",
+        payment_failure_threshold: 3,
+      },
+    }),
+  });
+  if (!res.ok) {
+    throw new Error(`PayPal plan create failed: ${await res.text()}`);
+  }
+  const data = (await res.json()) as { id: string };
+  await saveCatalogId(planId, data.id);
+  return data.id;
+}
+
+export async function getPayPalYearlyPlanId(
+  planId: "small" | "unlimited",
+): Promise<string> {
+  const config = getPayPalConfig();
+  const token = await getPayPalAccessToken(config);
+  const productId = await ensurePayPalProduct(token, config.mode);
+  return ensurePayPalBillingPlan(token, config.mode, planId, productId);
+}
+
+export async function getPayPalSubscription(subscriptionId: string): Promise<{
+  id: string;
+  status: string;
+  customId?: string;
+  planId?: string;
+  subscriberEmail?: string;
+}> {
+  const config = getPayPalConfig();
+  const token = await getPayPalAccessToken(config);
+  const res = await paypalJson(`/v1/billing/subscriptions/${subscriptionId}`, {
+    method: "GET",
+    token,
+    paypalMode: config.mode,
+  });
+  if (!res.ok) {
+    throw new Error(`PayPal get subscription failed (${res.status})`);
+  }
+  const data = (await res.json()) as {
+    id: string;
+    status: string;
+    custom_id?: string;
+    plan_id?: string;
+    subscriber?: { email_address?: string };
+  };
+  return {
+    id: data.id,
+    status: data.status,
+    customId: data.custom_id,
+    planId: data.plan_id,
+    subscriberEmail: data.subscriber?.email_address,
+  };
 }

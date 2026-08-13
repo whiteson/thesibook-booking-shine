@@ -7,7 +7,7 @@
 
         <div class="text-center my-5">
             <h3>
-                ThesiBook
+                thesibook.gr
             </h3>
             <h6 class="text-primary">
                 Online Appointment Scheduler

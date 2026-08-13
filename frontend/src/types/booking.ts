@@ -55,12 +55,13 @@ export type BillingOrderSummary = {
 
 export const PLANS: PlanInfo[] = [
   { id: "free", nameEl: "Δωρεάν", priceEur: 0, maxAttendants: 5 },
-  { id: "small", nameEl: "Μικρή", priceEur: 7, maxAttendants: 10 },
-  { id: "unlimited", nameEl: "Απεριόριστη", priceEur: 15, maxAttendants: null },
+  { id: "small", nameEl: "Μικρή", priceEur: 84, maxAttendants: null },
+  { id: "unlimited", nameEl: "Απεριόριστη", priceEur: 180, maxAttendants: null },
 ];
+
+export const BILLING_INTERVAL_DAYS = 365;
 
 export function planLimit(plan: PlanId): number {
   if (plan === "free") return 5;
-  if (plan === "small") return 10;
   return Number.MAX_SAFE_INTEGER;
 }

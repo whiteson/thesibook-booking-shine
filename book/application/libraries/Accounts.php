@@ -207,19 +207,26 @@ class Accounts
      */
     public function generate_reset_token(string $username, string $email): array
     {
+        $email = strtolower(trim($email));
+        $username = trim($username);
+
         $query = $this->CI->db
-            ->select('users.id, users.email')
+            ->select('users.id, users.email, user_settings.username')
             ->from('users')
             ->join('user_settings', 'user_settings.id_users = users.id', 'inner')
-            ->where('users.email', $email)
-            ->where('user_settings.username', $username)
-            ->get();
+            ->where('users.email', $email);
 
-        if (!$query->num_rows()) {
+        if ($username !== '' && $username !== $email) {
+            $query->where('user_settings.username', $username);
+        }
+
+        $result = $query->limit(1)->get();
+
+        if (!$result->num_rows()) {
             throw new RuntimeException('The user was not found in the database with the provided info.');
         }
 
-        $user = $query->row_array();
+        $user = $result->row_array();
 
         // Generate a secure random token
         $token = bin2hex(random_bytes(32));

@@ -78,6 +78,8 @@ cd frontend && npm run lint && npm run typecheck && npm run build
 
 - Add multi-tenant columns to EA tables without architecture review.
 - Store plaintext tenant DB passwords in control plane.
+- **Drop `ea_*` tables** on a pool database that has an active tenant (`cp_db_pool.status = assigned`). Use `php index.php console migrate` for schema upgrades, not `console install` (runs `migrate fresh` and wipes all data).
+- Re-run `provision-tenant.sh` expecting a wipe — it skips install when tables exist and refuses to drop tables unless `EA_PROVISION_FORCE_REINSTALL=1` and no booking data is present.
 - Hardcode booking URLs in section components — use CMS settings or env.
 - Skip `book-codebase-map.md` before provisioning work.
 - Claim B2 complete without Docker health check or documented skip reason.

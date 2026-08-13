@@ -114,8 +114,6 @@ class Booking extends EA_Controller
 
     /**
      * Render the booking page.
-    /**
-     * Render the booking page.
      */
     public function index(): void
     {
@@ -128,6 +126,13 @@ class Booking extends EA_Controller
         }
 
         $company_name = setting('company_name');
+        $tenant_display_name = function_exists('thesibook_tenant_display_name')
+            ? thesibook_tenant_display_name()
+            : '';
+
+        if ($tenant_display_name !== '') {
+            $company_name = $tenant_display_name;
+        }
         $company_logo = setting('company_logo');
         $company_color = setting('company_color');
         $disable_booking = setting('disable_booking');
@@ -293,6 +298,15 @@ class Booking extends EA_Controller
             $customer = null;
         }
 
+        if (
+            !$customer
+            && session('role_slug') === DB_SLUG_CUSTOMER
+            && session('user_id')
+        ) {
+            $customer = $this->customers_model->find(session('user_id'));
+            $this->customers_model->only($customer, $this->allowed_customer_fields);
+        }
+
         script_vars([
             'manage_mode' => $manage_mode,
             'available_services' => $available_services,
@@ -309,6 +323,8 @@ class Booking extends EA_Controller
             'customer_token' => $customer_token,
             'default_language' => setting('default_language'),
             'default_timezone' => setting('default_timezone'),
+            'thesibook_tenant' => $_SESSION['thesibook_tenant'] ?? '',
+            'tenant_display_name' => $tenant_display_name,
         ]);
 
         html_vars([
@@ -359,7 +375,66 @@ class Booking extends EA_Controller
             'customer_data' => $customer,
         ]);
 
+        $class_oriented_booking = setting('class_oriented_booking', '0') === '1';
+
+        if ($class_oriented_booking && !$manage_mode) {
+            html_vars([
+                'wide_booking_layout' => true,
+                'class_oriented_booking' => true,
+                'logged_in_customer' => session('role_slug') === DB_SLUG_CUSTOMER ? session('user_id') : null,
+                'logged_in_customer_name' => $customer
+                    ? trim(($customer['first_name'] ?? '') . ' ' . ($customer['last_name'] ?? ''))
+                    : '',
+            ]);
+
+            $this->load->view('pages/class_booking');
+
+            return;
+        }
+
         $this->load->view('pages/booking');
+    }
+
+    /**
+     * Return the weekly class schedule (class-oriented booking mode).
+     */
+    public function get_classes(): void
+    {
+        try {
+            method('post');
+
+            $disable_booking = setting('disable_booking');
+
+            if ($disable_booking) {
+                abort(403);
+            }
+
+            $week_start = request('week_start');
+            $selected_date = request('selected_date');
+
+            if (empty($week_start) && empty($selected_date)) {
+                $week_start = date('Y-m-d');
+            } elseif (empty($week_start)) {
+                $week_start = $selected_date;
+            }
+
+            if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', (string) $week_start)) {
+                throw new InvalidArgumentException('Invalid week start date.');
+            }
+
+            $this->load->library('class_schedule');
+
+            $first_weekday = (int) setting('first_weekday', '0');
+            $week_start = $this->class_schedule->get_week_start((string) $week_start, $first_weekday);
+            $classes = $this->class_schedule->get_weekly_classes($week_start);
+
+            json_response([
+                'week_start' => $week_start,
+                'classes' => $classes,
+            ]);
+        } catch (Throwable $e) {
+            json_exception($e);
+        }
     }
 
     /**
@@ -436,7 +511,11 @@ class Booking extends EA_Controller
             }
 
             // Check appointment availability before registering it to the database.
-            $appointment['id_users_provider'] = $this->check_datetime_availability();
+            if (setting('class_oriented_booking', '0') === '1' && !$manage_mode) {
+                $appointment['id_users_provider'] = $this->check_class_slot_availability($appointment);
+            } else {
+                $appointment['id_users_provider'] = $this->check_datetime_availability();
+            }
 
             if (!$appointment['id_users_provider']) {
                 throw new RuntimeException(lang('requested_hour_is_unavailable'));
@@ -643,6 +722,55 @@ class Booking extends EA_Controller
         }
 
         return $is_still_available ? $appointment['id_users_provider'] : null;
+    }
+
+    /**
+     * Validate a fixed weekly lesson slot (class-oriented booking).
+     *
+     * @param array<string, mixed> $appointment
+     */
+    protected function check_class_slot_availability(array $appointment): ?int
+    {
+        $provider_id = (int) ($appointment['id_users_provider'] ?? 0);
+        $service_id = (int) ($appointment['id_services'] ?? 0);
+
+        if (!$provider_id || !$service_id || empty($appointment['start_datetime']) || empty($appointment['end_datetime'])) {
+            return null;
+        }
+
+        $start = new DateTime($appointment['start_datetime']);
+        $end = new DateTime($appointment['end_datetime']);
+        $weekday = (int) $start->format('w');
+        $start_time = $start->format('H:i:s');
+
+        $this->load->model('weekly_lessons_model');
+
+        $lesson = $this->db
+            ->get_where('weekly_lessons', [
+                'id_services' => $service_id,
+                'id_users_provider' => $provider_id,
+                'weekday' => $weekday,
+                'is_active' => 1,
+            ])
+            ->row_array();
+
+        if (empty($lesson) || substr((string) $lesson['start_time'], 0, 5) !== $start->format('H:i')) {
+            return null;
+        }
+
+        $service = $this->services_model->find($service_id);
+        $capacity = max(1, (int) ($service['attendants_number'] ?? 1));
+        $exclude_id = !empty($appointment['id']) ? (int) $appointment['id'] : null;
+
+        $booked = $this->appointments_model->get_attendants_number_for_period(
+            $start,
+            $end,
+            $service_id,
+            $provider_id,
+            $exclude_id,
+        );
+
+        return $booked < $capacity ? $provider_id : null;
     }
 
     /**

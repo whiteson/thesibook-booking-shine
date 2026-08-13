@@ -43,6 +43,16 @@ wp rewrite structure '/%postname%/' --hard
 wp webcode seed
 ```
 
+## Headless blocking page (public CMS URL)
+
+MU-plugin: `backend/wp-content/mu-plugins/webcode-headless-front.php`
+
+Replaces the WordPress theme on public CMS URLs with a minimal logo screen linking to Next.js. Allows `/wp-json/`, `/wp-admin/`, `/wp-login.php` through.
+
+Requires `WEBCODE_FRONTEND_URL` in `wp-config.php`. Copy from **webcode-elevate** on every new headless project — not optional.
+
+Full playbook: `.cursor/skills/webcode-headless-front/SKILL.md`
+
 ## Local / MailHog (optional)
 
 `backend/wp-content/mu-plugins/webcode-mailhog-smtp.php` routes mail to MailHog in dev.

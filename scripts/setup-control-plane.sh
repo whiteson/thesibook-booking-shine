@@ -17,6 +17,7 @@ mysql -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASS}" < "${ROOT}/services/booking/s
 mysql -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASS}" thesibook_control < "${ROOT}/services/booking/sql/002_plans.sql" 2>/dev/null || true
 mysql -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASS}" thesibook_control < "${ROOT}/services/booking/sql/003_billing_orders.sql" 2>/dev/null || true
 mysql -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASS}" thesibook_control < "${ROOT}/services/booking/sql/004_paypal.sql" 2>/dev/null || true
-mysql -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASS}" thesibook_control < "${ROOT}/services/booking/sql/005_paypal_details.sql" 2>/dev/null || true
+mysql -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASS}" thesibook_control < "${ROOT}/services/booking/sql/006_db_pool.sql" 2>/dev/null || true
+mysql -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASS}" thesibook_control < "${ROOT}/services/booking/sql/008_small_plan_unlimited.sql" 2>/dev/null || true
 
 echo "Control plane ready: thesibook_control"

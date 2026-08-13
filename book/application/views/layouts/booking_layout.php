@@ -7,14 +7,14 @@
     <meta name="theme-color" content="#2563eb">
     <meta name="google" content="notranslate">
 
-    <meta property="og:title" content="<?= lang('page_title') . ' ' . e(vars('company_name')) ?> | ThesiBook"/>
+    <meta property="og:title" content="<?= lang('page_title') . ' ' . e(vars('company_name')) ?> | thesibook.gr"/>
     <meta property="og:description" content="Book Your Appointment With A Few Clicks"/>
     <meta property="og:url" content="<?= base_url() ?>">
     <meta property="og:type" content="website">
 
     <?php slot('meta'); ?>
 
-    <title><?= lang('page_title') . ' ' . e(vars('company_name')) ?> | ThesiBook</title>
+    <title><?= lang('page_title') . ' ' . e(vars('company_name')) ?> | thesibook.gr</title>
 
     <link rel="stylesheet" type="text/css" href="<?= asset_url('assets/vendor/cookieconsent/cookieconsent.min.css') ?>">
     <link rel="stylesheet" type="text/css" href="<?= asset_url('assets/vendor/flatpickr/flatpickr.min.css') ?>">
@@ -31,11 +31,13 @@
 <body>
 <div id="main" class="container min-vh-100">
     <div class="row wrapper min-vh-100 justify-content-center align-items-center py-0 py-md-3">
-        <div id="book-appointment-wizard" class="col-12 col-lg-10 col-xl-8 col-xxl-7 bg-body overflow-hidden p-0 my-auto">
+        <div id="book-appointment-wizard"
+             class="<?= !empty(vars('wide_booking_layout')) ? 'col-12' : 'col-12 col-lg-10 col-xl-8 col-xxl-7' ?> bg-body overflow-hidden p-0 my-auto">
 
             <?php component('booking_header', [
                 'company_name' => vars('company_name'),
                 'company_logo' => vars('company_logo'),
+                'class_oriented_booking' => !empty(vars('class_oriented_booking')),
             ]); ?>
 
             <?php slot('content'); ?>

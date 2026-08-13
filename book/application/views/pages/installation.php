@@ -4,7 +4,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-    <title>Installation | ThesiBook</title>
+    <title>Installation | thesibook.gr</title>
 
     <link rel="stylesheet" type="text/css" href="<?= asset_url('assets/css/themes/default.css') ?>">
     <link rel="stylesheet" type="text/css" href="<?= asset_url('assets/css/general.css') ?>">
@@ -20,7 +20,7 @@
         <div class="row">
             <div class="col-lg-9 offset-lg-1">
                 <h1 class="text-dark-emphasis fw-light py-5">
-                    ThesiBook Installation
+                    thesibook.gr Installation
                 </h1>
             </div>
         </div>    
@@ -32,15 +32,15 @@
         <div class="col-lg-9 offset-lg-1">
 
             <div>
-                <h3>Welcome to the ThesiBook installation page.</h3>
+                <h3>Welcome to the thesibook.gr installation page.</h3>
 
                 <p class="text-break">
-                    This page will help you set the main settings of your ThesiBook installation. You will be able to
+                    This page will help you set the main settings of your thesibook.gr installation. You will be able to
                     edit these settings and many more in the backend session of your system. Remember to use the
                     <strong class="text-primary">
                         <?= site_url('user/login') ?>
                     </strong>
-                    URL to connect to the backend section of ThesiBook.
+                    URL to connect to the backend section of thesibook.gr.
                 </p>
             </div>
 
@@ -171,7 +171,7 @@
 
             <div class="mb-3">
                 <h3>License</h3>
-                ThesiBook is licensed under the <span class="badge text-bg-primary">GPL-3.0 license</span>. By using the
+                thesibook.gr is licensed under the <span class="badge text-bg-primary">GPL-3.0 license</span>. By using the
                 code in any way <br> you agree with the terms described in the following url:
                 <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">https://www.gnu.org/licenses/gpl-3.0.en.html</a>
             </div>
@@ -180,7 +180,7 @@
 
             <button type="button" id="install" class="btn btn-primary mb-3">
                 <i class="icon-white icon-ok me-2"></i>
-                Install ThesiBook
+                Install thesibook.gr
             </button>
             
             
@@ -194,7 +194,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-9 offset-lg-1 py-3">
-                ThesiBook
+                thesibook.gr
             </div>
         </div>
     </div>

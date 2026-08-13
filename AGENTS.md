@@ -38,6 +38,7 @@ Components render data.
 | Path | Purpose |
 |------|---------|
 | `.cursor/skills/wcproject-lovable-nextjs-v2/SKILL.md` | CMS + frontend migration playbook |
+| `.cursor/skills/webcode-headless-front/SKILL.md` | Block WP theme on CMS URL (mu-plugin) |
 | `.cursor/skills/wcproject-booking-platform/SKILL.md` | Booking + multi-tenant playbook |
 | `.cursor/rules/wcproject-lovable-nextjs-v2-agent.mdc` | Frontend/CMS agent constraints |
 | `.cursor/rules/wcproject-booking-platform-agent.mdc` | Booking agent constraints |

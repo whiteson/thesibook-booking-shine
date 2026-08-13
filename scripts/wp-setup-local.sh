@@ -78,9 +78,13 @@ run_wp rewrite structure '/%postname%/' --hard 2>/dev/null || run_wp rewrite str
 run_wp rewrite flush --hard
 
 run_wp plugin activate advanced-custom-fields-pro 2>/dev/null || true
+run_wp plugin install contact-form-7 --activate 2>/dev/null || run_wp plugin activate contact-form-7 2>/dev/null || true
 run_wp plugin activate webcode-headless-api
 run_wp plugin activate classic-editor 2>/dev/null || true
 run_wp theme activate webcode 2>/dev/null || run_wp theme enable webcode --activate 2>/dev/null || true
+
+log "Contact form (CF7)..."
+run_wp webcode ensure-contact-form 2>/dev/null || true
 
 if [[ "${LOCAL_WP_SEED}" == "true" ]]; then
   log "Seeding ThesiBook options + pages..."

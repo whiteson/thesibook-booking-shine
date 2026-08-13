@@ -9,7 +9,7 @@
 
     <?php slot('meta'); ?>
 
-    <title><?= vars('page_title') ?? lang('account') ?> | ThesiBook</title>
+    <title><?= vars('page_title') ?? lang('account') ?> | thesibook.gr</title>
 
     <link rel="stylesheet" type="text/css" href="<?= asset_url(
         'assets/css/themes/' . setting('theme', 'default') . '.css',

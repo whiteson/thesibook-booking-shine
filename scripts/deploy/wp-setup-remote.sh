@@ -17,6 +17,13 @@ WP_SITE_TITLE="${WP_SITE_TITLE:-Webcode}"
 WP_TABLE_PREFIX="${WP_TABLE_PREFIX:-wp_}"
 WEBCODE_FRONTEND_URL="${WEBCODE_FRONTEND_URL:-}"
 WEBCODE_HEADLESS_CORS_ORIGINS="${WEBCODE_HEADLESS_CORS_ORIGINS:-}"
+WEBCODE_CONTACT_MAIL_TO="${WEBCODE_CONTACT_MAIL_TO:-hello@thesibook.gr}"
+WEBCODE_SMTP_HOST="${WEBCODE_SMTP_HOST:-}"
+WEBCODE_SMTP_PORT="${WEBCODE_SMTP_PORT:-587}"
+WEBCODE_SMTP_USER="${WEBCODE_SMTP_USER:-}"
+WEBCODE_SMTP_PASSWORD="${WEBCODE_SMTP_PASSWORD:-}"
+WEBCODE_SMTP_FROM="${WEBCODE_SMTP_FROM:-}"
+WEBCODE_SMTP_ENCRYPTION="${WEBCODE_SMTP_ENCRYPTION:-tls}"
 DEPLOY_WP_SEED="${DEPLOY_WP_SEED:-auto}"
 
 run_wp() {
@@ -38,6 +45,18 @@ if [[ ! -f wp-config.php ]]; then
   fi
   if [[ -n "${WEBCODE_HEADLESS_CORS_ORIGINS}" ]]; then
     EXTRA_PHP+="define('WEBCODE_HEADLESS_CORS_ORIGINS', '${WEBCODE_HEADLESS_CORS_ORIGINS}');"$'\n'
+  fi
+  if [[ -n "${WEBCODE_CONTACT_MAIL_TO}" ]]; then
+    EXTRA_PHP+="define('WEBCODE_CONTACT_MAIL_TO', '${WEBCODE_CONTACT_MAIL_TO}');"$'\n'
+  fi
+  EXTRA_PHP+="define('WEBCODE_MAILHOG', false);"$'\n'
+  if [[ -n "${WEBCODE_SMTP_HOST}" ]]; then
+    EXTRA_PHP+="define('WEBCODE_SMTP_HOST', '${WEBCODE_SMTP_HOST}');"$'\n'
+    EXTRA_PHP+="define('WEBCODE_SMTP_PORT', ${WEBCODE_SMTP_PORT:-587});"$'\n'
+    EXTRA_PHP+="define('WEBCODE_SMTP_USER', '${WEBCODE_SMTP_USER}');"$'\n'
+    EXTRA_PHP+="define('WEBCODE_SMTP_PASSWORD', '${WEBCODE_SMTP_PASSWORD}');"$'\n'
+    EXTRA_PHP+="define('WEBCODE_SMTP_FROM', '${WEBCODE_SMTP_FROM:-${WEBCODE_SMTP_USER}}');"$'\n'
+    EXTRA_PHP+="define('WEBCODE_SMTP_ENCRYPTION', '${WEBCODE_SMTP_ENCRYPTION:-tls}');"$'\n'
   fi
   EXTRA_PHP+="define('WP_HOME', '${WP_ROOT_URL}');"$'\n'
   EXTRA_PHP+="define('WP_SITEURL', '${WP_ROOT_URL}');"$'\n'
@@ -77,15 +96,43 @@ else
   run_wp option update siteurl "${WP_ROOT_URL}" 2>/dev/null || true
 fi
 
+if [[ -n "${WEBCODE_FRONTEND_URL}" ]]; then
+  run_wp config set WEBCODE_FRONTEND_URL "${WEBCODE_FRONTEND_URL}" --type=constant 2>/dev/null || true
+fi
+if [[ -n "${WEBCODE_HEADLESS_CORS_ORIGINS}" ]]; then
+  run_wp config set WEBCODE_HEADLESS_CORS_ORIGINS "${WEBCODE_HEADLESS_CORS_ORIGINS}" --type=constant 2>/dev/null || true
+fi
+if [[ -n "${WEBCODE_CONTACT_MAIL_TO}" ]]; then
+  run_wp config set WEBCODE_CONTACT_MAIL_TO "${WEBCODE_CONTACT_MAIL_TO}" --type=constant 2>/dev/null || true
+fi
+run_wp config set WEBCODE_MAILHOG false --raw --type=constant 2>/dev/null || true
+if [[ -n "${WEBCODE_SMTP_HOST}" ]]; then
+  run_wp config set WEBCODE_SMTP_HOST "${WEBCODE_SMTP_HOST}" --type=constant 2>/dev/null || true
+  run_wp config set WEBCODE_SMTP_PORT "${WEBCODE_SMTP_PORT:-587}" --type=constant 2>/dev/null || true
+  run_wp config set WEBCODE_SMTP_USER "${WEBCODE_SMTP_USER}" --type=constant 2>/dev/null || true
+  run_wp config set WEBCODE_SMTP_PASSWORD "${WEBCODE_SMTP_PASSWORD}" --type=constant 2>/dev/null || true
+  run_wp config set WEBCODE_SMTP_ENCRYPTION "${WEBCODE_SMTP_ENCRYPTION:-tls}" --type=constant 2>/dev/null || true
+else
+  run_wp config delete WEBCODE_SMTP_HOST 2>/dev/null || run_wp config set WEBCODE_SMTP_HOST '' --type=constant 2>/dev/null || true
+  run_wp config delete WEBCODE_SMTP_PASSWORD 2>/dev/null || true
+fi
+if [[ -n "${WEBCODE_SMTP_FROM:-}" ]]; then
+  run_wp config set WEBCODE_SMTP_FROM "${WEBCODE_SMTP_FROM}" --type=constant 2>/dev/null || true
+fi
+
 echo "==> Permalinks, plugins, theme..."
 run_wp rewrite structure '/%postname%/' --hard 2>/dev/null || run_wp rewrite structure '/%postname%/'
 run_wp rewrite flush --hard
 
 run_wp plugin activate advanced-custom-fields-pro 2>/dev/null || true
+run_wp plugin install contact-form-7 --activate 2>/dev/null || run_wp plugin activate contact-form-7 2>/dev/null || true
 run_wp plugin activate webcode-headless-api
 run_wp plugin activate classic-editor 2>/dev/null || true
 
 run_wp theme activate webcode 2>/dev/null || run_wp theme enable webcode --activate 2>/dev/null || true
+
+echo "==> ThesiBook contact form..."
+run_wp webcode ensure-contact-form 2>/dev/null || true
 
 RUN_SEED=false
 if [[ "${DEPLOY_WP_SEED}" == "true" ]]; then

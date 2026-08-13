@@ -20,6 +20,7 @@ require_once WEBCODE_HEADLESS_API_DIR . 'includes/class-acf-normalizer.php';
 require_once WEBCODE_HEADLESS_API_DIR . 'includes/class-section-enricher.php';
 require_once WEBCODE_HEADLESS_API_DIR . 'includes/class-yoast-seo-resolver.php';
 require_once WEBCODE_HEADLESS_API_DIR . 'includes/class-contact-handler.php';
+require_once WEBCODE_HEADLESS_API_DIR . 'includes/class-thesibook-contact-form.php';
 require_once WEBCODE_HEADLESS_API_DIR . 'includes/class-content-seeder.php';
 require_once WEBCODE_HEADLESS_API_DIR . 'includes/class-rest-api.php';
 
@@ -33,5 +34,6 @@ add_action('plugins_loaded', static function (): void {
 
 	Webcode_Image_Webp::register();
 	Webcode_Headless_REST_API::register();
+	Thesibook_Contact_Form::register();
 	Webcode_Contact_Handler::register();
 });

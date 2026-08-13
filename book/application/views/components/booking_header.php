@@ -19,12 +19,19 @@
         </span>
 
         <div class="d-flex justify-content-center justify-content-md-start">
+            <?php if (!empty($class_oriented_booking)): ?>
+            <span class="small fw-normal text-white-50">
+                <?= lang('class_schedule_title') ?>
+            </span>
+            <?php else: ?>
             <span class="display-booking-selection small fw-normal text-white-50">
                 <?= lang('service') ?> │ <?= lang('provider') ?>
             </span>
+            <?php endif; ?>
         </div>
     </div>
 
+    <?php if (empty($class_oriented_booking)): ?>
     <div id="steps" class="d-block d-md-inline-block float-md-end overflow-hidden mx-auto my-3 my-md-1" style="width: 200px;">
         <div id="step-1" class="book-step active-step d-inline-block float-start rounded text-center bg-white"
              data-tippy-content="<?= lang('service_and_provider') ?>"
@@ -48,4 +55,5 @@
             <strong class="d-block text-center text-white-50" style="font-size: 12px; cursor: default;">4</strong>
         </div>
     </div>
+    <?php endif; ?>
 </div>

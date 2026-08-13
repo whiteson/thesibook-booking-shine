@@ -45,6 +45,7 @@ class Recovery extends EA_Controller
             'company_name' => $company_name,
             'require_captcha' => setting('require_captcha'),
             'altcha_enabled' => setting('altcha_enabled'),
+            'recovery_email_debug' => $this->recovery_email_debug_snapshot(),
         ]);
 
         $this->load->view('pages/recovery');
@@ -58,7 +59,7 @@ class Recovery extends EA_Controller
         try {
             method('post');
 
-            check('username', 'string');
+            check('username', 'string|null');
             check('email', 'email');
             check('captcha', 'string|null');
 
@@ -96,17 +97,19 @@ class Recovery extends EA_Controller
             }
 
             $username = request('username');
+            $email = request('email');
+
+            if (empty($username) && !empty($email)) {
+                $username = $email;
+            }
 
             if (empty($username)) {
                 throw new InvalidArgumentException('No username value provided.');
             }
 
-            // Validate username format
             if (!preg_match('/^[a-zA-Z0-9_@.\-]+$/', $username) || strlen($username) > 255) {
                 throw new InvalidArgumentException('Invalid username format.');
             }
-
-            $email = request('email');
 
             if (empty($email)) {
                 throw new InvalidArgumentException('No email value provided.');
@@ -117,23 +120,62 @@ class Recovery extends EA_Controller
                 throw new InvalidArgumentException('Invalid email format.');
             }
 
+            $debug = $this->recovery_email_debug_enabled() ? ['steps' => []] : null;
+
+            if ($debug !== null) {
+                $debug['steps'][] = 'Request received for ' . $email;
+                $debug['tenant'] = (string) ($_SESSION['thesibook_tenant'] ?? '');
+            }
+
             // Always respond with success to prevent user enumeration
             // Even if the user doesn't exist, we don't reveal that information
             try {
                 $reset_data = $this->accounts->generate_reset_token($username, $email);
                 $company_color = setting('company_color');
 
+                if ($debug !== null) {
+                    $debug['steps'][] = 'User found; reset token generated';
+                    $debug['user_found'] = true;
+                }
+
                 if ($reset_data) {
-                    $reset_link = site_url('recovery/reset?token=' . $reset_data['token']);
+                    $reset_link = thesibook_password_reset_link($reset_data['token']);
                     $settings = [
                         'company_name' => setting('company_name'),
                         'company_link' => setting('company_link'),
-                        'company_email' => setting('company_email'),
+                        'company_email' => config('from_address') ?: 'info@thesibook.gr',
                         'company_color' =>
                             !empty($company_color) && $company_color != DEFAULT_COMPANY_COLOR ? $company_color : null,
                     ];
 
-                    $this->email_messages->send_password_reset_link($reset_link, $reset_data['email'], $settings);
+                    if ($debug !== null) {
+                        $debug['reset_link'] = $reset_link;
+                        $debug['recipient'] = $reset_data['email'];
+                        $debug['mail'] = $this->recovery_email_debug_snapshot();
+                    }
+
+                    try {
+                        $this->email_messages->send_password_reset_link($reset_link, $reset_data['email'], $settings);
+
+                        if ($debug !== null) {
+                            $debug['mail_sent'] = true;
+                            $debug['steps'][] = 'PHPMailer send() returned success';
+                        }
+                    } catch (Throwable $mail_error) {
+                        log_message(
+                            'error',
+                            'Password reset email failed for ' .
+                                $reset_data['email'] .
+                                ': ' .
+                                $mail_error->getMessage(),
+                        );
+
+                        if ($debug !== null) {
+                            $debug['mail_sent'] = false;
+                            $debug['mail_error'] = $mail_error->getMessage();
+                            $debug['steps'][] = 'Mail failed: ' . $mail_error->getMessage();
+                        }
+                    }
                 }
             } catch (RuntimeException $e) {
                 // Log the actual error but don't reveal it to the user
@@ -146,17 +188,64 @@ class Recovery extends EA_Controller
                         ' from IP: ' .
                         $this->input->ip_address(),
                 );
+
+                if ($debug !== null) {
+                    $debug['user_found'] = false;
+                    $debug['mail_sent'] = false;
+                    $debug['lookup_error'] = $e->getMessage();
+                    $debug['steps'][] = 'No matching user for email/username';
+                }
             }
 
             // Add a small delay to prevent timing attacks
             usleep(random_int(100000, 500000)); // 100-500ms delay
 
-            json_response([
-                'success' => true,
-            ]);
+            $response = ['success' => true];
+
+            if ($debug !== null) {
+                $response['debug'] = $debug;
+            }
+
+            json_response($response);
         } catch (Throwable $e) {
             json_exception($e);
         }
+    }
+
+    /**
+     * Whether recovery email debug output is enabled (tenant DEBUG_MODE only).
+     */
+    protected function recovery_email_debug_enabled(): bool
+    {
+        return class_exists('Config', false) && Config::DEBUG_MODE;
+    }
+
+    /**
+     * @return array<string, mixed>|null
+     */
+    protected function recovery_email_debug_snapshot(): ?array
+    {
+        if (!$this->recovery_email_debug_enabled()) {
+            return null;
+        }
+
+        return array_merge([
+            'enabled' => true,
+            'tenant' => (string) ($_SESSION['thesibook_tenant'] ?? ''),
+            'environment' => defined('ENVIRONMENT') ? ENVIRONMENT : 'unknown',
+            'protocol' => (string) config('protocol'),
+            'from_address' => (string) (config('from_address') ?: 'info@thesibook.gr'),
+            'from_name' => (string) (config('from_name') ?: setting('company_name')),
+            'smtp_host' => (string) (config('smtp_host') ?: ''),
+            'smtp_port' => (string) (config('smtp_port') ?: ''),
+            'smtp_user' => (string) (config('smtp_user') ?: ''),
+            'smtp_crypto' => (string) (config('smtp_crypto') ?: ''),
+            'smtp_auth' => (bool) config('smtp_auth'),
+            'smtp_password_set' => (string) config('smtp_pass') !== '',
+            'delivery_mode' => (string) (config('delivery_mode') ?: config('protocol')),
+        ], function_exists('thesibook_email_debug_status') ? thesibook_email_debug_status() : [
+            'email_config_file' => is_readable(FCPATH . 'thesibook-email-config.php') ? 'loaded' : 'missing',
+        ]);
     }
 
     /**

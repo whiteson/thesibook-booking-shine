@@ -10,4 +10,5 @@ class Config
     const DB_NAME = '{{EA_DB_NAME}}';
     const DB_USERNAME = '{{EA_DB_USER}}';
     const DB_PASSWORD = '{{EA_DB_PASSWORD}}';
+    const DB_PREFIX = '{{EA_DB_PREFIX}}';
 }

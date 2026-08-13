@@ -1,0 +1,8 @@
+[
+  {
+    "db_name": "thesiu_db1",
+    "db_user": "thesiu_1",
+    "db_password": "CHANGE_ME",
+    "db_host": "lqxx.your-database.de"
+  }
+]

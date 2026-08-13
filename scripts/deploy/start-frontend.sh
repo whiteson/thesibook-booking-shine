@@ -12,19 +12,29 @@ if [[ ! -f server.js ]]; then
   exit 1
 fi
 
+: "${PORT:=3005}"
+: "${HOSTNAME:=127.0.0.1}"
+
 if [[ -f "${PID_FILE}" ]] && kill -0 "$(cat "${PID_FILE}")" 2>/dev/null; then
   echo "Stopping existing process $(cat "${PID_FILE}")..."
   kill "$(cat "${PID_FILE}")" 2>/dev/null || true
   sleep 1
 fi
 
+# Also stop anything else bound to PORT (stale deploys may leave orphan PIDs)
+if command -v lsof >/dev/null 2>&1; then
+  OLD_PIDS="$(lsof -t -iTCP:"${PORT}" -sTCP:LISTEN 2>/dev/null || true)"
+  if [[ -n "${OLD_PIDS}" ]]; then
+    echo "Stopping stale listener(s) on port ${PORT}: ${OLD_PIDS}"
+    kill ${OLD_PIDS} 2>/dev/null || true
+    sleep 1
+  fi
+fi
+
 set -a
 # shellcheck disable=SC1091
 [[ -f .env.production ]] && source .env.production
 set +a
-
-: "${PORT:=3005}"
-: "${HOSTNAME:=127.0.0.1}"
 
 nohup /usr/bin/node server.js >>"${LOG}" 2>&1 &
 echo $! >"${PID_FILE}"

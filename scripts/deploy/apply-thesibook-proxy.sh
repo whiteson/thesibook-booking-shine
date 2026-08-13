@@ -30,6 +30,9 @@ BLOCK="${MARKER_BEGIN}
 # thesibook.gr (apex) — PHP only; CMS at /thesibook-booking-shine/backend/
 <IfModule mod_rewrite.c>
 RewriteEngine On
+# konsoleH DirectoryIndex (index.htm) becomes /index.html — proxy home to Node root
+RewriteCond %{HTTP_HOST} ^www\\.thesibook\\.gr$ [NC]
+RewriteRule ^index\\.(html?|htm)$ http://127.0.0.1:${NODE_PORT}/ [P,L,E=PROXY_TO_THESIBOOK:1]
 RewriteCond %{HTTP_HOST} ^www\\.thesibook\\.gr$ [NC]
 RewriteRule ^ http://127.0.0.1:${NODE_PORT}%{REQUEST_URI} [P,L,E=PROXY_TO_THESIBOOK:1]
 </IfModule>

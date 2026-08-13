@@ -8,26 +8,29 @@
     </h4>
     
     <p class="small mb-0">
-        <?= lang('type_username_and_email_for_reset_link') ?>
+        <?= lang('type_email_for_reset_link') ?>
     </p>
 </div>
 
 <div class="alert d-none"></div>
 
-<form>
-    <div class="mb-3">
-        <label for="username" class="form-label fw-medium">
-            <?= lang('username') ?>
-        </label>
-        <div class="input-group">
-            <span class="input-group-text bg-light border-end-0">
-                <i class="fas fa-user"></i>
-            </span>
-            <input type="text" id="username"
-                   placeholder="<?= lang('enter_username_here') ?>" class="form-control border-start-0 ps-2"/>
+<?php if (!empty(vars('recovery_email_debug'))): ?>
+    <div id="recovery-email-debug" class="alert alert-warning small mb-4">
+        <div class="fw-semibold mb-2">
+            <i class="fas fa-bug me-1"></i>
+            Email debug (DEBUG_MODE)
+        </div>
+        <pre class="mb-0 recovery-debug-pre small bg-dark text-light p-2 rounded"><?= e(
+            json_encode(vars('recovery_email_debug'), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES),
+        ) ?></pre>
+        <div id="recovery-email-debug-result" class="mt-3" style="display:none;">
+            <div class="fw-semibold mb-1">Last submit result</div>
+            <pre class="mb-0 recovery-debug-pre"></pre>
         </div>
     </div>
-    
+<?php endif; ?>
+
+<form>
     <div class="mb-4">
         <label for="email" class="form-label fw-medium">
             <?= lang('email') ?>
@@ -36,7 +39,7 @@
             <span class="input-group-text bg-light border-end-0">
                 <i class="fas fa-envelope"></i>
             </span>
-            <input type="text" id="email"
+            <input type="email" id="email" required
                    placeholder="<?= lang('enter_email_here') ?>" class="form-control border-start-0 ps-2"/>
         </div>
     </div>
@@ -71,7 +74,7 @@
     </div>
     
     <div class="text-center">
-        <a href="<?= site_url('login') ?>" class="text-decoration-none small">
+        <a href="<?= site_url('login') . thesibook_tenant_query() ?>" class="text-decoration-none small">
             <i class="fas fa-arrow-left me-1"></i>
             <?= lang('go_to_login') ?>
         </a>

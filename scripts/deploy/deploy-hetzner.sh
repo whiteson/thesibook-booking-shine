@@ -24,6 +24,7 @@ DEPLOY_NODE_PORT="${DEPLOY_NODE_PORT:-3005}"
 DEPLOY_SSH_PORT="${DEPLOY_SSH_PORT:-22}"
 DEPLOY_SKIP_BACKEND="${DEPLOY_SKIP_BACKEND:-false}"
 DEPLOY_SKIP_FRONTEND="${DEPLOY_SKIP_FRONTEND:-false}"
+DEPLOY_SKIP_BOOK="${DEPLOY_SKIP_BOOK:-false}"
 DEPLOY_WP_SETUP="${DEPLOY_WP_SETUP:-true}"
 DEPLOY_WP_SEED="${DEPLOY_WP_SEED:-auto}"
 DEPLOY_LINK_PUBLIC_HTML="${DEPLOY_LINK_PUBLIC_HTML:-true}"
@@ -35,6 +36,9 @@ REMOTE_BASE="${DEPLOY_REMOTE_ROOT}/${DEPLOY_PROJECT_DIR}"
 REMOTE_BACKEND="${REMOTE_BASE}/backend"
 REMOTE_BACKEND_WEB="${DEPLOY_PUBLIC_HTML}/${DEPLOY_PROJECT_DIR}/backend"
 REMOTE_FRONTEND="${REMOTE_BASE}/frontend"
+REMOTE_BOOK="${REMOTE_BASE}/book"
+REMOTE_BOOK_WEB="${DEPLOY_PUBLIC_HTML}/book"
+REMOTE_SERVICES="${REMOTE_BASE}/services"
 WP_ROOT_URL="$(deploy_wp_root_url)"
 
 WEBCODE_FRONTEND_URL="${NEXT_PUBLIC_SITE_URL%/}"
@@ -60,7 +64,7 @@ deploy_confirm_proceed || exit 1
 echo "==> Deploy target: ${DEPLOY_SSH}:${REMOTE_BASE}"
 echo "    (other folders under ${DEPLOY_REMOTE_ROOT} are not touched)"
 
-deploy_ssh "mkdir -p '${REMOTE_BACKEND}' '${REMOTE_FRONTEND}'"
+deploy_ssh "mkdir -p '${REMOTE_BACKEND}' '${REMOTE_FRONTEND}' '${REMOTE_BOOK}' '${REMOTE_SERVICES}/booking'"
 deploy_fix_ownership() {
   deploy_ssh "chown -R '${DEPLOY_SERVER_USER}:${DEPLOY_SERVER_GROUP}' '${REMOTE_BASE}' 2>/dev/null || true"
 }
@@ -124,6 +128,13 @@ if [[ "${DEPLOY_SKIP_BACKEND}" != "true" ]]; then
       printf 'WP_SITE_TITLE=%q\n' "${WP_SITE_TITLE:-Webcode}"
       printf 'WEBCODE_FRONTEND_URL=%q\n' "${WEBCODE_FRONTEND_URL}"
       printf 'WEBCODE_HEADLESS_CORS_ORIGINS=%q\n' "${WEBCODE_HEADLESS_CORS_ORIGINS}"
+      printf 'WEBCODE_CONTACT_MAIL_TO=%q\n' "${WEBCODE_CONTACT_MAIL_TO:-hello@thesibook.gr}"
+      printf 'WEBCODE_SMTP_HOST=%q\n' "${WEBCODE_SMTP_HOST:-}"
+      printf 'WEBCODE_SMTP_PORT=%q\n' "${WEBCODE_SMTP_PORT:-587}"
+      printf 'WEBCODE_SMTP_USER=%q\n' "${WEBCODE_SMTP_USER:-}"
+      printf 'WEBCODE_SMTP_PASSWORD=%q\n' "${WEBCODE_SMTP_PASSWORD:-}"
+      printf 'WEBCODE_SMTP_FROM=%q\n' "${WEBCODE_SMTP_FROM:-${WEBCODE_SMTP_USER:-}}"
+      printf 'WEBCODE_SMTP_ENCRYPTION=%q\n' "${WEBCODE_SMTP_ENCRYPTION:-tls}"
       printf 'DEPLOY_WP_SEED=%q\n' "${DEPLOY_WP_SEED}"
       printf 'WP_TABLE_PREFIX=%q\n' "${WP_TABLE_PREFIX:-tsb_}"
       printf 'WP_CLI=%q\n' "${WP_CLI}"
@@ -133,10 +144,51 @@ if [[ "${DEPLOY_SKIP_BACKEND}" != "true" ]]; then
       < "${SCRIPT_DIR}/wp-setup-remote.sh"
     deploy_fix_ownership
   else
-    echo "==> WordPress maintenance (plugins, permalinks)..."
-    deploy_ssh "cd '${REMOTE_BACKEND_WEB}' && '${WP_CLI}' plugin activate webcode-headless-api 2>/dev/null || true; '${WP_CLI}' rewrite flush --hard 2>/dev/null || true" || true
+    echo "==> WordPress maintenance (plugins, permalinks, contact form)..."
+    deploy_ssh "cd '${REMOTE_BACKEND_WEB}' && '${WP_CLI}' plugin install contact-form-7 --activate 2>/dev/null || '${WP_CLI}' plugin activate contact-form-7 2>/dev/null || true; '${WP_CLI}' plugin activate webcode-headless-api 2>/dev/null || true; '${WP_CLI}' config set WEBCODE_MAILHOG false --raw --type=constant 2>/dev/null || true; \
+      ${WEBCODE_SMTP_HOST:+\"${WP_CLI}\" config set WEBCODE_SMTP_HOST \"${WEBCODE_SMTP_HOST}\" --type=constant 2>/dev/null || true; } \
+      ${WEBCODE_SMTP_HOST:+\"${WP_CLI}\" config set WEBCODE_SMTP_PORT \"${WEBCODE_SMTP_PORT:-587}\" --type=constant 2>/dev/null || true; } \
+      ${WEBCODE_SMTP_HOST:+\"${WP_CLI}\" config set WEBCODE_SMTP_USER \"${WEBCODE_SMTP_USER}\" --type=constant 2>/dev/null || true; } \
+      ${WEBCODE_SMTP_HOST:+\"${WP_CLI}\" config set WEBCODE_SMTP_PASSWORD \"${WEBCODE_SMTP_PASSWORD}\" --type=constant 2>/dev/null || true; } \
+      ${WEBCODE_SMTP_HOST:+\"${WP_CLI}\" config set WEBCODE_SMTP_FROM \"${WEBCODE_SMTP_FROM:-${WEBCODE_SMTP_USER}}\" --type=constant 2>/dev/null || true; } \
+      ${WEBCODE_SMTP_HOST:+\"${WP_CLI}\" config set WEBCODE_SMTP_ENCRYPTION \"${WEBCODE_SMTP_ENCRYPTION:-tls}\" --type=constant 2>/dev/null || true; } \
+      '${WP_CLI}' webcode ensure-contact-form 2>/dev/null || true; '${WP_CLI}' rewrite flush --hard 2>/dev/null || true" || true
     deploy_fix_ownership
   fi
+fi
+
+# --- Book (Easy!Appointments) + provisioning scripts ---
+if [[ "${DEPLOY_SKIP_BOOK}" != "true" ]]; then
+  if [[ ! -d "${REPO_ROOT}/book" ]]; then
+    echo "ERROR: book/ missing — run ./scripts/install-book.sh first." >&2
+    exit 1
+  fi
+
+  echo "==> Syncing Easy!Appointments (book/) to web root..."
+  deploy_ssh "mkdir -p '${REMOTE_BOOK_WEB}' '${REMOTE_SERVICES}/booking'"
+  deploy_rsync \
+    --exclude '.git' \
+    --exclude 'storage/cache/*' \
+    --exclude 'storage/logs/*' \
+    --exclude 'storage/sessions/*' \
+    --exclude 'storage/backups/*' \
+    --exclude 'docker/mysql' \
+    --exclude 'config.php' \
+    "${REPO_ROOT}/book/" \
+    "${DEPLOY_SSH}:${REMOTE_BOOK_WEB}/"
+
+  echo "==> Syncing services/booking (provisioning)..."
+  deploy_rsync \
+    "${REPO_ROOT}/services/booking/" \
+    "${DEPLOY_SSH}:${REMOTE_SERVICES}/booking/"
+
+  deploy_ssh "chmod +x '${REMOTE_SERVICES}/booking/scripts/provision-tenant.sh' 2>/dev/null || true"
+
+  echo "==> Book remote setup (composer, permissions, .htaccess)..."
+  deploy_ssh "cd '${REMOTE_BOOK_WEB}' && if command -v composer >/dev/null 2>&1 && [[ ! -d vendor ]]; then composer install --no-interaction --prefer-dist --no-dev; fi && chmod -R u+w storage"
+  deploy_ssh "bash -s '${REMOTE_BOOK_WEB}' '${REMOTE_BOOK_WEB}'" < "${SCRIPT_DIR}/setup-book-web.sh"
+
+  deploy_fix_ownership
 fi
 
 # --- Frontend (Next.js standalone) ---
@@ -195,8 +247,31 @@ ENVEOF"
       'PAYPAL_CLIENT_ID=${PAYPAL_CLIENT_ID}' \
       \"PAYPAL_CLIENT_SECRET=$(printf '%q' "${PAYPAL_CLIENT_SECRET}")\" \
       'NEXT_PUBLIC_PAYPAL_CLIENT_ID=${NEXT_PUBLIC_PAYPAL_CLIENT_ID:-${PAYPAL_CLIENT_ID}}' \
-      'PAYPAL_BUSINESS_EMAIL=${PAYPAL_BUSINESS_EMAIL:-johnbeazoglou@gmail.com}' \
+      'PAYPAL_BUSINESS_EMAIL=${PAYPAL_BUSINESS_EMAIL:-johnbeazoglous@gmail.com}' \
       'PAYPAL_WEBHOOK_ID=${PAYPAL_WEBHOOK_ID:-}' \
+      >> '${REMOTE_FRONTEND}/.env.production'"
+  fi
+  if [[ -n "${VIVA_CLIENT_ID:-}" ]]; then
+    deploy_ssh "printf '%s\n' \
+      'VIVA_MODE=${VIVA_MODE:-live}' \
+      'VIVA_CLIENT_ID=${VIVA_CLIENT_ID}' \
+      \"VIVA_CLIENT_SECRET=$(printf '%q' "${VIVA_CLIENT_SECRET}")\" \
+      'VIVA_SOURCE_CODE=${VIVA_SOURCE_CODE:-0000}' \
+      'BILLING_CRON_SECRET=${BILLING_CRON_SECRET:-}' \
+      >> '${REMOTE_FRONTEND}/.env.production'"
+  fi
+  if [[ -n "${EA_PROVISION_MODE:-}" || -n "${NEXT_PUBLIC_EA_BASE_URL:-}" ]]; then
+    deploy_ssh "printf '%s\n' \
+      'EA_PROVISION_MODE=${EA_PROVISION_MODE:-separate}' \
+      'EA_BASE_URL=${NEXT_PUBLIC_EA_BASE_URL:-https://book.thesibook.gr}' \
+      'EA_DB_HOST=${EA_DB_HOST:-${BOOKING_DB_HOST:-localhost}}' \
+      'EA_DB_USER=${EA_DB_USER:-${BOOKING_DB_USER}}' \
+      \"EA_DB_PASSWORD=$(printf '%q' "${EA_DB_PASSWORD:-${BOOKING_DB_PASSWORD}}")\" \
+      'EA_SHARED_DB_NAME=${EA_SHARED_DB_NAME:-${BOOKING_DB_NAME}}' \
+      'BOOK_ROOT=${BOOK_ROOT:-${DEPLOY_PUBLIC_HTML}/book}' \
+      'BOOKING_STRICT_EMAIL_MX=${BOOKING_STRICT_EMAIL_MX:-true}' \
+      \"EA_MYSQL_ADMIN_USER=${EA_MYSQL_ADMIN_USER:-}\" \
+      \"EA_MYSQL_ADMIN_PASSWORD=$(printf '%q' "${EA_MYSQL_ADMIN_PASSWORD:-}")\" \
       >> '${REMOTE_FRONTEND}/.env.production'"
   fi
 
@@ -214,6 +289,13 @@ ENVEOF"
   if [[ -n "${BOOKING_DB_HOST:-}" && -n "${BOOKING_DB_USER:-}" ]]; then
     echo "==> Control plane DB migrations..."
     "${SCRIPT_DIR}/setup-control-plane-remote.sh" || echo "    WARN: control plane SQL failed — check BOOKING_DB_* in .env"
+    if [[ -f "${SCRIPT_DIR}/db-pool.json" ]]; then
+      echo "==> Seeding tenant DB pool (cp_db_pool)..."
+      deploy_rsync "${SCRIPT_DIR}/db-pool.json" "${DEPLOY_SSH}:/tmp/thesibook-db-pool.json"
+      deploy_rsync "${SCRIPT_DIR}/seed-db-pool.php" "${DEPLOY_SSH}:/tmp/thesibook-seed-db-pool.php"
+      deploy_ssh "POOL_FILE=/tmp/thesibook-db-pool.json BOOKING_DB_HOST='${BOOKING_DB_HOST}' BOOKING_DB_USER='${BOOKING_DB_USER}' BOOKING_DB_PASSWORD='${BOOKING_DB_PASSWORD}' BOOKING_DB_NAME='${BOOKING_DB_NAME}' php /tmp/thesibook-seed-db-pool.php && rm -f /tmp/thesibook-db-pool.json /tmp/thesibook-seed-db-pool.php" \
+        || echo "    WARN: DB pool seed failed — check scripts/deploy/db-pool.json"
+    fi
   fi
 
   echo "==> Restarting thesibook-frontend (if systemd unit exists)..."
@@ -230,5 +312,6 @@ echo ""
 echo "Deploy complete."
 echo "  API:    ${WORDPRESS_API_URL%/}/health"
 echo "  Site:   ${NEXT_PUBLIC_SITE_URL}"
+echo "  Book:   ${NEXT_PUBLIC_EA_BASE_URL:-https://book.thesibook.gr}"
 echo "  WP:     ${WP_ROOT_URL}/wp-admin"
 echo "  Admin:  ${WP_ADMIN_USER:-admin} (password from scripts/deploy/.env)"

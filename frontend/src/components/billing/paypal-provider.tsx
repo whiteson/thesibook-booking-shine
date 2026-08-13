@@ -26,7 +26,7 @@ export function PayPalProvider({ children }: Props) {
           configured: false,
           clientId: null,
           mode: "sandbox",
-          businessEmail: "johnbeazoglou@gmail.com",
+          businessEmail: "johnbeazoglous@gmail.com",
         }),
       );
   }, []);
@@ -44,7 +44,8 @@ export function PayPalProvider({ children }: Props) {
       options={{
         clientId: config.clientId,
         currency: "EUR",
-        intent: "capture",
+        intent: "subscription",
+        vault: true,
         locale: "el_GR",
         components: "buttons",
         enableFunding: "card,venmo",

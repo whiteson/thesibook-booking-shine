@@ -9,7 +9,7 @@
 
 <nav id="header" class="navbar navbar-expand-md navbar-dark bg-primary p-0">
     <div id="header-logo" class="navbar-brand p-1 lh-1">
-        <h6 class="mb-1 mt-1 fw-bold text-white" style="font-size: 15px;">ThesiBook</h6>
+        <h6 class="mb-1 mt-1 fw-bold text-white" style="font-size: 15px;">thesibook.gr</h6>
         <small class="d-block text-white-50" style="font-size: 12px;">Online Appointment Scheduler</small>
     </div>
 
@@ -56,6 +56,9 @@
                     </a>
                     <a class="dropdown-item" href="<?= site_url('service_categories') ?>">
                         <?= lang('categories') ?>
+                    </a>
+                    <a class="dropdown-item" href="<?= site_url('weekly_lessons') ?>">
+                        <?= lang('weekly_lessons') ?>
                     </a>
                 </div>
             </li>

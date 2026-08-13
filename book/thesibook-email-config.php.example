@@ -1,0 +1,19 @@
+<?php
+/**
+ * Copy to thesibook-email-config.php (gitignored) for reliable outbound mail on production.
+ * Use the same SMTP mailbox as WordPress (WEBCODE_SMTP_* in scripts/deploy/.env).
+ */
+declare(strict_types=1);
+
+defined('THESIBOOK_EMAIL_CONFIG') || define('THESIBOOK_EMAIL_CONFIG', [
+    'protocol' => 'smtp',
+    'smtp_host' => 'mail.your-server.de',
+    'smtp_port' => 587,
+    'smtp_user' => 'info@thesibook.gr',
+    'smtp_pass' => 'CHANGE_ME',
+    'smtp_crypto' => 'tls',
+    'smtp_auth' => true,
+    'from_address' => 'info@thesibook.gr',
+    'from_name' => 'thesibook.gr',
+    'reply_to' => 'info@thesibook.gr',
+]);

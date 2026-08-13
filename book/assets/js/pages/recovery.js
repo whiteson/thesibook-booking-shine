@@ -16,7 +16,6 @@
  */
 App.Pages.Recovery = (function () {
     const $form = $('form');
-    const $username = $('#username');
     const $email = $('#email');
     const $getNewPassword = $('#get-new-password');
     const $captchaText = $('.captcha-text');
@@ -63,8 +62,8 @@ App.Pages.Recovery = (function () {
 
         $getNewPassword.prop('disabled', true);
 
-        const username = $username.val();
         const email = $email.val();
+        const username = email;
         const captcha = $captchaText.length > 0 ? $captchaText.val() : null;
         const altchaPayloadValue = $altchaPayload.length > 0 ? $altchaPayload.val() : null;
 
@@ -103,18 +102,55 @@ App.Pages.Recovery = (function () {
                 if (response.success) {
                     $alert.addClass('alert-success');
                     $alert.text(lang('reset_link_sent_with_email'));
+                    renderEmailDebug(response.debug);
                 } else {
                     $alert.addClass('alert-danger');
-                    $alert.text(
-                        'The operation failed! Please enter a valid username ' +
-                            'and email address in order to receive a password reset link.',
-                    );
+                    $alert.text(response.message || lang('reset_link_sent_with_email'));
                     refreshCaptcha();
                 }
+            })
+            .fail((jqXHR) => {
+                $alert.removeClass('d-none alert-success').addClass('alert-danger');
+
+                const response = jqXHR.responseJSON;
+
+                if (response && response.message) {
+                    $alert.text(response.message);
+                } else if (jqXHR.status === 403) {
+                    $alert.text('Session expired. Refresh the page and try again.');
+                } else {
+                    $alert.text('Could not send the reset link. Refresh the page and try again.');
+                }
+
+                if (response && response.debug) {
+                    renderEmailDebug(response.debug);
+                }
+
+                refreshCaptcha();
             })
             .always(() => {
                 $getNewPassword.prop('disabled', false);
             });
+    }
+
+    /**
+     * Show recovery email debug details when DEBUG_MODE is on.
+     *
+     * @param {Object|null} debug
+     */
+    function renderEmailDebug(debug) {
+        if (!debug) {
+            return;
+        }
+
+        const $panel = $('#recovery-email-debug-result');
+
+        if (!$panel.length) {
+            console.info('[recovery email debug]', debug);
+            return;
+        }
+
+        $panel.show().find('pre').text(JSON.stringify(debug, null, 2));
     }
     
     /**

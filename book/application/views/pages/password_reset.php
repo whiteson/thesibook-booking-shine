@@ -90,7 +90,7 @@
 <?php endif; ?>
 
 <div class="text-center">
-    <a href="<?= site_url('login') ?>" class="text-decoration-none small">
+    <a href="<?= site_url('login') . thesibook_tenant_query() ?>" class="text-decoration-none small">
         <i class="fas fa-arrow-left me-1"></i>
         <?= lang('go_to_login') ?>
     </a>

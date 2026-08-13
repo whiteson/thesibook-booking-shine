@@ -2,7 +2,7 @@
 
 <?php section('content'); ?>
 
-<h3 class="mb-3">ThesiBook Update</h3>
+<h3 class="mb-3">thesibook.gr Update</h3>
 
 <?php if (vars('success')): ?>
     <div>
@@ -11,7 +11,7 @@
         </div>
         
         <p>
-            You can now use the latest ThesiBook version.
+            You can now use the latest thesibook.gr version.
         </p>
         
         <a href="<?= site_url('about') ?>" class="btn btn-primary btn-large mb-3">

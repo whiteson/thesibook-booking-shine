@@ -3,12 +3,15 @@ frontend/.env*
 frontend/.next
 frontend/node_modules
 scripts/deploy/.env
+scripts/deploy/db-pool.json
 scripts/local.env
 scripts/book.env
 backend/wp-content/themes/webcode/node_modules
 
 # book/ Easy!Appointments — tracked in OUR repo only (never push to upstream EA GitHub)
 book/config.php
+book/thesibook-sso-secret.php
+book/thesibook-email-config.php
 book/vendor/
 book/node_modules/
 book/tenants/**/meta.json

@@ -129,7 +129,17 @@ App.Pages.PasswordReset = (function () {
                     $form.hide();
                     // Redirect to login page after a short delay
                     setTimeout(() => {
-                        window.location.href = App.Utils.Url.siteUrl('login');
+                        const tenant = App.Utils.Url.queryParam('thesibook_tenant');
+                        let loginUrl = App.Utils.Url.siteUrl('login');
+
+                        if (tenant !== null && tenant !== '' && !loginUrl.includes('thesibook_tenant=')) {
+                            loginUrl +=
+                                (loginUrl.includes('?') ? '&' : '?') +
+                                'thesibook_tenant=' +
+                                encodeURIComponent(tenant);
+                        }
+
+                        window.location.href = loginUrl;
                     }, 2000);
                 } else {
                     $alert.addClass('alert-danger');

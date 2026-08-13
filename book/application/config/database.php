@@ -54,7 +54,9 @@ $db['default']['username'] = Config::DB_USERNAME;
 $db['default']['password'] = Config::DB_PASSWORD;
 $db['default']['database'] = Config::DB_NAME;
 $db['default']['dbdriver'] = 'mysqli';
-$db['default']['dbprefix'] = 'ea_';
+$db['default']['dbprefix'] = (class_exists('Config', false) && (new ReflectionClass('Config'))->hasConstant('DB_PREFIX'))
+    ? Config::DB_PREFIX
+    : 'ea_';
 $db['default']['pconnect'] = FALSE;
 $db['default']['db_debug'] = TRUE;
 $db['default']['cache_on'] = FALSE;

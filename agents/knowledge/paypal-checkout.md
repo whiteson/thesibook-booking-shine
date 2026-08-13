@@ -1,79 +1,66 @@
-# PayPal Checkout — ThesiBook billing
+# Billing — PayPal yearly subscriptions (Viva later)
 
-Plan upgrades use **PayPal Checkout** (PayPal account or card).
+**Production:** https://www.thesibook.gr/dashboard
 
-**Production site:** https://thesibook.gr
+Payouts: **johnbeazoglous@gmail.com** (PayPal app **thesibookgr**).
 
-## Business account
-
-Payments go to: **johnbeazoglou@gmail.com** · app **thesibookgr**
-
-## Environment
-
-### Local (`frontend/.env.local`)
-
-```env
-NEXT_PUBLIC_SITE_URL=http://localhost:3010
-PAYPAL_MODE=live
-PAYPAL_CLIENT_ID=...
-PAYPAL_CLIENT_SECRET=...
-NEXT_PUBLIC_PAYPAL_CLIENT_ID=...
-PAYPAL_BUSINESS_EMAIL=johnbeazoglou@gmail.com
-```
-
-### Production (`https://thesibook.gr`)
-
-Set on the server (see `scripts/deploy/config.example.env`):
-
-```env
-NEXT_PUBLIC_SITE_URL=https://thesibook.gr
-PAYPAL_MODE=live
-PAYPAL_CLIENT_ID=...
-PAYPAL_CLIENT_SECRET=...
-NEXT_PUBLIC_PAYPAL_CLIENT_ID=...
-PAYPAL_BUSINESS_EMAIL=johnbeazoglou@gmail.com
-PAYPAL_WEBHOOK_ID=...
-```
-
-PayPal return URLs (set automatically from `NEXT_PUBLIC_SITE_URL`):
-
-- Success: `https://thesibook.gr/dashboard?billing=success`
-- Cancel: `https://thesibook.gr/dashboard?billing=cancelled`
-
-## PayPal Developer setup
-
-1. [PayPal Developer Dashboard](https://developer.paypal.com/dashboard/) — johnbeazoglou@gmail.com
-2. App **thesibookgr** → Live Client ID + Secret
-3. **Webhooks** → Add:
-   - URL: `https://thesibook.gr/api/billing/paypal/webhook`
-   - Event: `PAYMENT.CAPTURE.COMPLETED`
-4. Copy Webhook ID → `PAYPAL_WEBHOOK_ID`
-
-Test OAuth locally: `./scripts/test-paypal.sh`
-
-## Flow
-
-```txt
-https://thesibook.gr/dashboard → plan card → PayPal
-  → POST /api/billing/paypal/create-order
-  → PayPal popup
-  → POST /api/billing/paypal/capture-order
-  → workspace plan + 30 days
-  → webhook backup if browser closes early
-```
+**Active now:** PayPal only. Viva Checkout is in the codebase but turned off.
 
 ## Plans
 
-| Plan | Price | Access |
-|------|-------|--------|
-| free | €0 | 5 attendants |
-| small | €7/mo | 10 attendants, 30 days |
-| unlimited | €15/mo | unlimited, 30 days |
+| Plan | Price | Access | Renewal |
+|------|-------|--------|---------|
+| free | €0 | 5 attendants | — |
+| small | **€84 / year** | unlimited attendants | auto |
+
+Registration is always **free**. Paid plans auto-renew every year.
+
+## PayPal
+
+Yearly **Subscriptions** (not one-time 30-day checkout).
+
+1. [PayPal Developer Dashboard](https://developer.paypal.com/dashboard/)
+2. App **thesibookgr** — enable **Subscriptions**
+3. Webhooks → `https://www.thesibook.gr/api/billing/paypal/webhook`
+   - `BILLING.SUBSCRIPTION.ACTIVATED`
+   - `PAYMENT.SALE.COMPLETED`
+   - `PAYMENT.CAPTURE.COMPLETED`
+
+ThesiBook creates PayPal billing plans (`YEAR`) automatically on first checkout.
+
+## Viva.com Smart Checkout (disabled)
+
+Not shown in the dashboard. Re-enable later by restoring the Viva button and `create-order` route.
+
+1. Viva banking app → Settings → API Access: **Client ID** + **Client Secret**
+2. Payment source for the website (4-digit `sourceCode`, often `0000`)
+3. Enable **Allow recurring payments via API**
+4. Payment source Success URL: `https://www.thesibook.gr/api/billing/viva/return`
+5. Failure URL: `https://www.thesibook.gr/dashboard?billing=cancelled`
+6. Webhook: `https://www.thesibook.gr/api/billing/viva/webhook`  
+   Event: **Transaction Payment Created** (1796)
+
+```env
+VIVA_MODE=live
+VIVA_CLIENT_ID=...
+VIVA_CLIENT_SECRET=...
+VIVA_SOURCE_CODE=0000
+BILLING_CRON_SECRET=...
+```
+
+First payment stores the Viva transaction ID. A daily cron charges the same card each year:
+
+```bash
+# daily 06:00
+0 6 * * * curl -fsS -X POST -H "Authorization: Bearer $BILLING_CRON_SECRET" \
+  https://www.thesibook.gr/api/billing/cron/renew
+```
 
 ## Code
 
-- `frontend/src/lib/booking/paypal.ts`
+- `frontend/src/lib/booking/paypal.ts` — Orders + Subscriptions
+- `frontend/src/lib/booking/viva.ts` — Smart Checkout + recurring
 - `frontend/src/app/api/billing/paypal/*`
-- `frontend/src/components/billing/billing-plan-picker.tsx`
-
-Run DB migrations: `./scripts/setup-control-plane.sh`
+- `frontend/src/app/api/billing/viva/*`
+- `frontend/src/app/api/billing/cron/renew/route.ts`
+- `services/booking/sql/007_yearly_subscriptions.sql`

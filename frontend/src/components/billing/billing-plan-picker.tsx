@@ -3,7 +3,7 @@
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import type { PlanId } from "@/types/booking";
 
@@ -25,23 +25,17 @@ const UPGRADE_OPTIONS: Array<{
   {
     plan: "small",
     title: "Μικρό",
-    price: "€7",
-    features: ["Έως 10 κρατήσεις", "Admin panel", "Δημόσια σελίδα κρατήσεων"],
-  },
-  {
-    plan: "unlimited",
-    title: "Απεριόριστο",
-    price: "€15",
+    price: "€84",
     features: [
       "Απεριόριστες κρατήσεις",
       "Admin panel",
-      "Προτεραιότητα υποστήριξης",
+      "Δημόσια σελίδα κρατήσεων",
     ],
     highlight: true,
   },
 ];
 
-function PayPalCheckoutButton({
+function PayPalSubscribeButton({
   workspaceId,
   plan,
   disabled,
@@ -54,6 +48,7 @@ function PayPalCheckoutButton({
   const [{ isPending }] = usePayPalScriptReducer();
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const customIdRef = useRef<string | null>(null);
 
   if (disabled) {
     return (
@@ -88,26 +83,34 @@ function PayPalCheckoutButton({
           layout: "vertical",
           color: plan === "unlimited" ? "blue" : "gold",
           shape: "rect",
-          label: "paypal",
+          label: "subscribe",
           height: 45,
           tagline: false,
         }}
-        createOrder={async () => {
+        createSubscription={async (_, actions) => {
           setError(null);
           setProcessing(true);
           try {
-            const res = await fetch("/api/billing/paypal/create-order", {
+            const res = await fetch("/api/billing/paypal/create-subscription", {
               method: "POST",
               headers: { "content-type": "application/json" },
               body: JSON.stringify({ workspaceId, plan }),
             });
-            const data = (await res.json()) as { id?: string; error?: string };
-            if (!res.ok || !data.id) {
-              const msg = data.error ?? "Αποτυχία δημιουργίας παραγγελίας";
+            const data = (await res.json()) as {
+              paypalPlanId?: string;
+              customId?: string;
+              error?: string;
+            };
+            if (!res.ok || !data.paypalPlanId || !data.customId) {
+              const msg = data.error ?? "Αποτυχία δημιουργίας συνδρομής";
               setError(msg);
               throw new Error(msg);
             }
-            return data.id;
+            customIdRef.current = data.customId;
+            return actions.subscription.create({
+              plan_id: data.paypalPlanId,
+              custom_id: data.customId,
+            });
           } finally {
             setProcessing(false);
           }
@@ -116,18 +119,24 @@ function PayPalCheckoutButton({
           setProcessing(true);
           setError(null);
           try {
-            const res = await fetch("/api/billing/paypal/capture-order", {
-              method: "POST",
-              headers: { "content-type": "application/json" },
-              body: JSON.stringify({ orderID: data.orderID }),
-            });
+            const res = await fetch(
+              "/api/billing/paypal/activate-subscription",
+              {
+                method: "POST",
+                headers: { "content-type": "application/json" },
+                body: JSON.stringify({
+                  subscriptionID: data.subscriptionID,
+                  customId: customIdRef.current,
+                }),
+              },
+            );
             const result = (await res.json()) as {
               ok?: boolean;
               error?: string;
               plan?: string;
             };
             if (!res.ok) {
-              setError(result.error ?? "Αποτυχία πληρωμής");
+              setError(result.error ?? "Αποτυχία ενεργοποίησης συνδρομής");
               return;
             }
             router.push(
@@ -143,11 +152,11 @@ function PayPalCheckoutButton({
         }}
         onError={(err) => {
           console.error("PayPal error", err);
-          setError("Σφάλμα PayPal — δοκιμάστε ξανά ή πληρώστε με κάρτα.");
+          setError("Σφάλμα PayPal — δοκιμάστε ξανά ή άλλη κάρτα / λογαριασμό.");
         }}
       />
       <p className="mt-2 text-center text-[11px] text-muted-foreground">
-        PayPal ή κάρτα · ασφαλής πληρωμή
+        PayPal ή κάρτα μέσω PayPal · αυτόματη ανανέωση κάθε χρόνο
       </p>
     </div>
   );
@@ -159,12 +168,11 @@ export function BillingPlanPicker({
   className,
 }: Props) {
   const visiblePlans = UPGRADE_OPTIONS.filter((opt) => {
-    if (currentPlan === "free") return true;
-    if (currentPlan === "small") return opt.plan === "unlimited";
+    if (currentPlan === "free") return opt.plan === "small";
     return false;
   });
 
-  if (currentPlan === "unlimited") {
+  if (currentPlan === "small" || currentPlan === "unlimited") {
     return (
       <div
         className={cn(
@@ -172,7 +180,7 @@ export function BillingPlanPicker({
           className,
         )}
       >
-        Έχετε το απεριόριστο πλάνο — ευχαριστούμε!
+        Έχετε το απεριόριστο ετήσιο πλάνο — ανανεώνεται αυτόματα κάθε χρόνο.
       </div>
     );
   }
@@ -184,7 +192,7 @@ export function BillingPlanPicker({
       <div>
         <h3 className="font-semibold">Αναβάθμιση πλάνου</h3>
         <p className="mt-1 text-sm text-muted-foreground">
-          Μηνιαία πρόσβαση 30 ημερών · ανανέωση με PayPal
+          Ετήσια συνδρομή PayPal · αυτόματη ανανέωση κάθε χρόνο
         </p>
       </div>
       <div
@@ -212,7 +220,7 @@ export function BillingPlanPicker({
                 <p className="text-2xl font-bold text-primary">
                   {opt.price}
                   <span className="text-sm font-normal text-muted-foreground">
-                    /μήνα
+                    /έτος
                   </span>
                 </p>
               </div>
@@ -225,7 +233,7 @@ export function BillingPlanPicker({
                 ))}
               </ul>
               <div className="mt-5">
-                <PayPalCheckoutButton
+                <PayPalSubscribeButton
                   workspaceId={workspaceId}
                   plan={opt.plan}
                   disabled={isCurrent}

@@ -21,14 +21,14 @@ run_sql() {
   local file="$1"
   local remote="/tmp/thesibook_migrate.sql"
   # Shared hosting: no CREATE DATABASE; target BOOKING_DB_NAME
-  sed -e '/^CREATE DATABASE/d' -e "s/USE thesibook_control;/USE ${BOOKING_DB_NAME};/" \
+  sed -e '/^CREATE DATABASE/d' -e '/^  CHARACTER SET/d' -e "s/USE thesibook_control;/USE ${BOOKING_DB_NAME};/" \
     "${ROOT}/services/booking/sql/${file}" > /tmp/thesibook_migrate_local.sql
   deploy_rsync /tmp/thesibook_migrate_local.sql "${DEPLOY_SSH}:${remote}"
   deploy_ssh "mysql -h'${BOOKING_DB_HOST}' -u'${BOOKING_DB_USER}' -p'${BOOKING_DB_PASSWORD}' '${BOOKING_DB_NAME}' < '${remote}' 2>/dev/null || true; rm -f '${remote}'"
   rm -f /tmp/thesibook_migrate_local.sql
 }
 
-for sql in 001_control_plane.sql 002_plans.sql 003_billing_orders.sql 004_paypal.sql 005_paypal_details.sql; do
+for sql in 001_control_plane.sql 002_plans.sql 003_billing_orders.sql 004_paypal.sql 005_paypal_details.sql 006_db_pool.sql 007_yearly_subscriptions.sql 008_small_plan_unlimited.sql; do
   echo "==> ${sql}"
   run_sql "${sql}"
 done

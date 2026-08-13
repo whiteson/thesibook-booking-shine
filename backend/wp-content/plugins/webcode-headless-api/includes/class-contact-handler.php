@@ -117,7 +117,13 @@ final class Webcode_Contact_Handler
 		string $company,
 		string $message
 	): WP_REST_Response|WP_Error|null {
+		$phone         = trim((string) ($request->get_param('phone') ?? ''));
+		$business_type = trim((string) ($request->get_param('business_type') ?? $request->get_param('businessType') ?? ''));
+
 		$form_id = (int) $request->get_param('form_id');
+		if ($form_id <= 0 && class_exists('Thesibook_Contact_Form')) {
+			$form_id = Thesibook_Contact_Form::form_id();
+		}
 		if ($form_id <= 0) {
 			$form_id = self::default_form_id();
 		}
@@ -134,6 +140,9 @@ final class Webcode_Contact_Handler
 		$_POST = [
 			'your-name'             => $name,
 			'your-email'            => $email,
+			'your-phone'            => $phone,
+			'your-company'          => $company,
+			'business-type'         => $business_type,
 			'company'               => $company,
 			'your-message'          => $message,
 			'_wpcf7'                => (string) $form_id,
@@ -239,6 +248,10 @@ final class Webcode_Contact_Handler
 
 	private static function recipient_email(): string
 	{
+		if (defined('WEBCODE_CONTACT_MAIL_TO') && is_string(WEBCODE_CONTACT_MAIL_TO) && is_email(WEBCODE_CONTACT_MAIL_TO)) {
+			return WEBCODE_CONTACT_MAIL_TO;
+		}
+
 		if (function_exists('get_field')) {
 			$option_email = get_field('email', 'option');
 			if (is_string($option_email) && is_email($option_email)) {

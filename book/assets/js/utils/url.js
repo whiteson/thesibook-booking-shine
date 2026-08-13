@@ -34,7 +34,14 @@ window.App.Utils.Url = (function () {
      * @returns {String}
      */
     function siteUrl(uri) {
-        return `${vars('base_url')}${vars('index_page') ? '/' + vars('index_page') : ''}/${uri}`;
+        let url = `${vars('base_url')}${vars('index_page') ? '/' + vars('index_page') : ''}/${uri}`;
+        const tenant = queryParam('thesibook_tenant') || vars('thesibook_tenant') || '';
+
+        if (tenant !== null && tenant !== '') {
+            url += (url.includes('?') ? '&' : '?') + 'thesibook_tenant=' + encodeURIComponent(tenant);
+        }
+
+        return url;
     }
 
     /**

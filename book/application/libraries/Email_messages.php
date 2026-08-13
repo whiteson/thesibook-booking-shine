@@ -263,16 +263,26 @@ class Email_messages
         if (config('protocol') === 'smtp') {
             $php_mailer->isSMTP();
             $php_mailer->Host = config('smtp_host');
-            $php_mailer->SMTPAuth = config('smtp_auth');
+            $php_mailer->SMTPAuth = (bool) config('smtp_auth');
             $php_mailer->Username = config('smtp_user');
             $php_mailer->Password = config('smtp_pass');
-            $php_mailer->SMTPSecure = config('smtp_crypto');
+            $smtp_crypto = config('smtp_crypto');
+
+            if (!empty($smtp_crypto)) {
+                $php_mailer->SMTPSecure = $smtp_crypto;
+            } else {
+                $php_mailer->SMTPSecure = false;
+                $php_mailer->SMTPAutoTLS = false;
+            }
+
             $php_mailer->Port = config('smtp_port');
+        } else {
+            $php_mailer->isMail();
         }
 
         $from_name = config('from_name') ?: setting('company_name');
-        $from_address = config('from_address') ?: setting('company_email');
-        $reply_to_address = config('reply_to') ?: setting('company_email');
+        $from_address = config('from_address') ?: 'info@thesibook.gr';
+        $reply_to_address = config('reply_to') ?: $from_address;
 
         $php_mailer->setFrom($from_address, $from_name);
         $php_mailer->addReplyTo($reply_to_address);
@@ -298,7 +308,11 @@ class Email_messages
             $php_mailer->AltBody = $plain_text;
         }
 
-        $php_mailer->addEmbeddedImage(FCPATH . 'assets/img/logo.png', 'logo.png', 'logo.png', 'base64', 'image/png');
+        try {
+            $php_mailer->addEmbeddedImage(FCPATH . 'assets/img/logo.png', 'logo.png', 'logo.png', 'base64', 'image/png');
+        } catch (Exception) {
+            // Logo is optional; do not block transactional mail.
+        }
 
         return $php_mailer;
     }

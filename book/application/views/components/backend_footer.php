@@ -7,7 +7,7 @@
 ?>
 <div id="footer" class="d-lg-flex justify-content-lg-start align-items-lg-center p-2 text-center text-lg-left mt-auto bg-body border-top" style="font-size: 11px;">
     <div class="mb-3 me-lg-5 mb-lg-0">
-        <span class="fw-semibold">ThesiBook</span>
+        <span class="fw-semibold">thesibook.gr</span>
         <span>v<?= config('version') ?></span>
     </div>
 

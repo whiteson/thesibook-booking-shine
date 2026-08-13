@@ -145,9 +145,9 @@ export function DashboardView() {
           <div className="mt-8 space-y-6">
             {workspaces.map((ws) => {
               const plan = PLANS.find((p) => p.id === ws.plan);
+              const paidUnlimited = ws.plan !== "free";
               const atLimit =
-                ws.plan !== "unlimited" &&
-                ws.attendantCount >= ws.attendantLimit;
+                !paidUnlimited && ws.attendantCount >= ws.attendantLimit;
               const expiry = formatExpiry(ws.planExpiresAt);
 
               return (
@@ -163,7 +163,7 @@ export function DashboardView() {
                         {plan?.nameEl ?? ws.plan} —{" "}
                         {plan?.priceEur === 0
                           ? "Δωρεάν"
-                          : `€${plan?.priceEur}/μήνα`}
+                          : `€${plan?.priceEur}/έτος`}
                       </span>
                       {expiry && ws.plan !== "free" ? (
                         <p className="mt-2 text-xs text-muted-foreground">
@@ -187,12 +187,10 @@ export function DashboardView() {
                       <span>Κρατήσεις (attendants)</span>
                       <span className="font-medium">
                         {ws.attendantCount}
-                        {ws.plan !== "unlimited"
-                          ? ` / ${ws.attendantLimit}`
-                          : ""}
+                        {!paidUnlimited ? ` / ${ws.attendantLimit}` : " · απεριόριστες"}
                       </span>
                     </div>
-                    {ws.plan !== "unlimited" ? (
+                    {!paidUnlimited ? (
                       <div className="mt-2 h-2 overflow-hidden rounded-full bg-muted">
                         <div
                           className="h-full rounded-full bg-gradient-brand transition-all"
@@ -247,10 +245,8 @@ export function DashboardView() {
           <h3 className="font-semibold">Πληρωμές με PayPal</h3>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
             <li>Δωρεάν — έως 5 κρατήσεις</li>
-            <li>Μικρό €7/μήνα — PayPal ή κάρτα</li>
-            <li>Απεριόριστο €15/μήνα — PayPal ή κάρτα</li>
-            <li>30 ημέρες πρόσβαση ανά πληρωμή · ανανέωση από το dashboard</li>
-            <li>Λογαριασμός: johnbeazoglou@gmail.com</li>
+            <li>Μικρό €84/έτος — απεριόριστες κρατήσεις, PayPal, αυτόματη ανανέωση</li>
+            <li>Εισπράξεις: johnbeazoglous@gmail.com</li>
           </ul>
         </section>
       </main>

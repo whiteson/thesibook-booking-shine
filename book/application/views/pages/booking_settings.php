@@ -347,6 +347,22 @@
 
                                     <div class="mb-3">
                                         <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="class-oriented-booking"
+                                                   data-field="class_oriented_booking">
+                                            <label class="form-check-label" for="class-oriented-booking">
+                                                <?= lang('class_oriented_booking') ?>
+                                            </label>
+                                        </div>
+
+                                        <div class="form-text text-muted">
+                                            <small>
+                                                <?= lang('class_oriented_booking_hint') ?>
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <div class="form-check form-switch">
                                             <input class="form-check-input" type="checkbox" id="display-any-provider"
                                                    data-field="display_any_provider">
                                             <label class="form-check-label" for="display-any-provider">

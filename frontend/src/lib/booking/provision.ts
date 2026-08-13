@@ -32,38 +32,80 @@ export async function ensureUniqueSlug(base: string): Promise<string> {
   return `${slug}-${Date.now()}`;
 }
 
-export async function provisionWorkspace(params: {
-  slug: string;
-  displayName: string;
-  adminEmail: string;
-  adminPassword: string;
-}): Promise<void> {
+export async function provisionWorkspace(
+  params: {
+    slug: string;
+    displayName: string;
+    adminEmail: string;
+    adminPassword: string;
+  },
+  poolSlot?: {
+    db_host: string;
+    db_name: string;
+    db_user: string;
+    db_password_enc: string;
+  },
+): Promise<void> {
   const root = path.resolve(process.cwd(), "..");
+  const bookRoot = process.env.BOOK_ROOT ?? path.join(root, "book");
   const script = path.join(
     root,
     "services/booking/scripts/provision-tenant.sh",
   );
+  const mode = process.env.EA_PROVISION_MODE ?? "separate";
 
-  await execFileAsync(script, [
-    params.slug,
-    "",
-    params.displayName,
-    params.adminEmail,
-    params.adminPassword,
-  ], {
-    cwd: root,
-    env: { ...process.env, PATH: process.env.PATH },
-    timeout: 120_000,
-  });
+  await execFileAsync(
+    script,
+    [
+      params.slug,
+      "",
+      params.displayName,
+      params.adminEmail,
+      params.adminPassword,
+    ],
+    {
+      cwd: root,
+      env: {
+        ...process.env,
+        PATH: process.env.PATH,
+        BOOK_ROOT: bookRoot,
+        EA_PROVISION_MODE: mode,
+        EA_BASE_URL: process.env.EA_BASE_URL ?? process.env.NEXT_PUBLIC_EA_BASE_URL,
+        EA_DB_HOST: process.env.EA_DB_HOST ?? process.env.BOOKING_DB_HOST,
+        EA_DB_USER: process.env.EA_DB_USER ?? process.env.BOOKING_DB_USER,
+        EA_DB_PASSWORD:
+          process.env.EA_DB_PASSWORD ?? process.env.BOOKING_DB_PASSWORD,
+        EA_SHARED_DB_NAME:
+          process.env.EA_SHARED_DB_NAME ?? process.env.BOOKING_DB_NAME,
+        EA_POOL_DB_HOST: poolSlot?.db_host,
+        EA_POOL_DB_NAME: poolSlot?.db_name,
+        EA_POOL_DB_USER: poolSlot?.db_user,
+        EA_POOL_DB_PASSWORD: poolSlot?.db_password_enc,
+        BOOKING_DB_NAME: process.env.BOOKING_DB_NAME,
+        BOOKING_DB_USER: process.env.BOOKING_DB_USER,
+        BOOKING_DB_PASSWORD: process.env.BOOKING_DB_PASSWORD,
+        EA_SYNC_ADMIN: "1",
+      },
+      timeout: 180_000,
+    },
+  );
 }
+
+import { bookingAdminSsoPath } from "@/lib/booking/sso";
 
 export function bookingUrls(slug: string) {
   const eaBase =
-    process.env.NEXT_PUBLIC_EA_BASE_URL ?? "http://127.0.0.1:8090";
+    process.env.EA_BASE_URL ??
+    process.env.NEXT_PUBLIC_EA_BASE_URL ??
+    "http://127.0.0.1:8090";
   const q = `thesibook_tenant=${encodeURIComponent(slug)}`;
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    process.env.SITE_URL ??
+    "http://localhost:3000";
   return {
     eaBaseUrl: eaBase,
-    bookingAdminUrl: `${eaBase}/index.php/backend?${q}`,
+    bookingAdminUrl: `${siteUrl.replace(/\/$/, "")}${bookingAdminSsoPath(slug)}`,
     bookingPublicUrl: `${eaBase}/?${q}`,
   };
 }

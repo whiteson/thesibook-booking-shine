@@ -79,6 +79,10 @@ window.App.Utils.Date = (function () {
      * @return {Number} Returns the ID of the weekday.
      */
     function getWeekdayId(weekDayName) {
+        if (typeof weekDayName === 'number' || /^[0-6]$/.test(String(weekDayName))) {
+            return parseInt(String(weekDayName), 10);
+        }
+
         let result;
 
         switch (weekDayName.toLowerCase()) {

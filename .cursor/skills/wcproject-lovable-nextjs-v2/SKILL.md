@@ -104,6 +104,12 @@ Each layout `type` must match:
 
 See `agents/knowledge/wordpress-backend.md`.
 
+### Headless blocking page (required)
+
+Copy `backend/wp-content/mu-plugins/webcode-headless-front.php` from webcode-elevate so the CMS URL does not render the full WP theme. Set `WEBCODE_FRONTEND_URL` in wp-config.
+
+See `.cursor/skills/webcode-headless-front/SKILL.md`.
+
 ## Local development (your Mac)
 
 **Not the same as production deploy.** Use:
