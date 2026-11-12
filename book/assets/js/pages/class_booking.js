@@ -70,6 +70,7 @@ App.Pages.ClassBooking = (function () {
         calendar.render();
 
         loadWeekClasses(getWeekStart(calendar.view.currentStart));
+        loadStudioEvents();
 
         $submit.on('click', submitBooking);
         $modal.on('hidden.bs.modal', resetModal);
@@ -249,6 +250,10 @@ App.Pages.ClassBooking = (function () {
         $('#class-selected-start-datetime').val(classItem.start_datetime);
         $('#class-selected-end-datetime').val(classItem.end_datetime);
 
+        $modal.find('.modal-title').text(
+            classItem.kind === 'event' ? lang('studio_event') : lang('class_booking_modal_title'),
+        );
+
         const name = App.Utils.String.escapeHtml(classItem.name);
         const teacher = App.Utils.String.escapeHtml(classItem.teacher_name || '');
         const timeLabel = formatTimeRange(classItem.start_time, classItem.end_time);
@@ -374,6 +379,64 @@ App.Pages.ClassBooking = (function () {
     /**
      * Reset modal state.
      */
+    /**
+     * Load one-off events. They stay off the weekly grid.
+     */
+    function loadStudioEvents() {
+        const $list = $('#studio-events-list');
+        const $eventsEmpty = $('#studio-events-empty');
+
+        if (!$list.length) {
+            return;
+        }
+
+        $.post(App.Utils.Url.siteUrl('booking/get_events'), {
+            csrf_token: vars('csrf_token'),
+        })
+            .done((response) => {
+                const events = response.events || [];
+                $list.empty();
+
+                if (!events.length) {
+                    $eventsEmpty.show();
+                    return;
+                }
+
+                $eventsEmpty.hide();
+
+                events.forEach((item) => {
+                    const full = Boolean(Number(item.is_full));
+                    const name = App.Utils.String.escapeHtml(item.name || '');
+                    const teacher = App.Utils.String.escapeHtml(item.teacher_name || '');
+                    const description = App.Utils.String.escapeHtml(item.description || '');
+                    const dateLabel = moment(item.date || item.start_datetime).format('LL');
+                    const timeLabel = formatTimeRange(item.start_time, item.end_time);
+                    const spots = `${item.booked}/${item.capacity} ${lang('class_spots')}`;
+                    const buttonLabel = full ? lang('class_full') : lang('event_book');
+
+                    $list.append(`
+                        <article class="border rounded p-3 d-flex flex-wrap justify-content-between align-items-center gap-3">
+                            <div>
+                                <div class="fw-semibold">${name}</div>
+                                <div class="small text-muted">${dateLabel} · ${timeLabel}</div>
+                                ${teacher ? `<div class="small text-muted">${teacher}</div>` : ''}
+                                ${description ? `<div class="small mt-1">${description}</div>` : ''}
+                                <div class="small text-muted">${spots}</div>
+                            </div>
+                            <button type="button" class="btn btn-sm ${full ? 'btn-outline-secondary' : 'btn-primary'} book-studio-event" ${full ? 'disabled' : ''}>
+                                ${buttonLabel}
+                            </button>
+                        </article>
+                    `);
+
+                    $list.find('.book-studio-event').last().on('click', () => openBookingModal(item));
+                });
+            })
+            .fail(() => {
+                $eventsEmpty.text(lang('unexpected_issues')).show();
+            });
+    }
+
     function resetModal() {
         $('#class-booking-form')[0].reset();
         $('#class-booking-form .is-invalid').removeClass('is-invalid');

@@ -21,5 +21,6 @@ mysql -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASS}" thesibook_control < "${ROOT}/
 mysql -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASS}" thesibook_control < "${ROOT}/services/booking/sql/006_db_pool.sql" 2>/dev/null || true
 mysql -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASS}" thesibook_control < "${ROOT}/services/booking/sql/007_yearly_subscriptions.sql" 2>/dev/null || true
 mysql -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASS}" thesibook_control < "${ROOT}/services/booking/sql/008_small_plan_unlimited.sql" 2>/dev/null || true
+mysql -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASS}" thesibook_control < "${ROOT}/services/booking/sql/009_password_resets.sql" 2>/dev/null || true
 
 echo "Control plane ready: thesibook_control"

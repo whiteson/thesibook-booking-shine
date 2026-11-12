@@ -149,7 +149,7 @@ if [[ "${DEPLOY_SKIP_BACKEND}" != "true" ]]; then
       ${WEBCODE_SMTP_HOST:+\"${WP_CLI}\" config set WEBCODE_SMTP_HOST \"${WEBCODE_SMTP_HOST}\" --type=constant 2>/dev/null || true; } \
       ${WEBCODE_SMTP_HOST:+\"${WP_CLI}\" config set WEBCODE_SMTP_PORT \"${WEBCODE_SMTP_PORT:-587}\" --type=constant 2>/dev/null || true; } \
       ${WEBCODE_SMTP_HOST:+\"${WP_CLI}\" config set WEBCODE_SMTP_USER \"${WEBCODE_SMTP_USER}\" --type=constant 2>/dev/null || true; } \
-      ${WEBCODE_SMTP_HOST:+\"${WP_CLI}\" config set WEBCODE_SMTP_PASSWORD \"${WEBCODE_SMTP_PASSWORD}\" --type=constant 2>/dev/null || true; } \
+      ${WEBCODE_SMTP_HOST:+\"${WP_CLI}\" --quiet config set WEBCODE_SMTP_PASSWORD \"${WEBCODE_SMTP_PASSWORD}\" --type=constant >/dev/null 2>&1 || true; } \
       ${WEBCODE_SMTP_HOST:+\"${WP_CLI}\" config set WEBCODE_SMTP_FROM \"${WEBCODE_SMTP_FROM:-${WEBCODE_SMTP_USER}}\" --type=constant 2>/dev/null || true; } \
       ${WEBCODE_SMTP_HOST:+\"${WP_CLI}\" config set WEBCODE_SMTP_ENCRYPTION \"${WEBCODE_SMTP_ENCRYPTION:-tls}\" --type=constant 2>/dev/null || true; } \
       '${WP_CLI}' webcode ensure-contact-form 2>/dev/null || true; '${WP_CLI}' rewrite flush --hard 2>/dev/null || true" || true
@@ -176,6 +176,7 @@ if [[ "${DEPLOY_SKIP_BOOK}" != "true" ]]; then
     --exclude 'config.php' \
     --exclude 'thesibook-sso-secret.php' \
     --exclude 'thesibook-email-config.php' \
+    --exclude 'thesibook-control-plane.php' \
     --exclude 'tenants/*' \
     "${REPO_ROOT}/book/" \
     "${DEPLOY_SSH}:${REMOTE_BOOK_WEB}/"
@@ -204,6 +205,23 @@ if [[ "${DEPLOY_SKIP_BOOK}" != "true" ]]; then
     rm -f "${SSO_TMP}"
   else
     echo "    WARN: BOOKING_JWT_SECRET empty — dashboard SSO into EA admin will fail until thesibook-sso-secret.php exists"
+  fi
+
+  if [[ -n "${BOOKING_DB_HOST:-}" && -n "${BOOKING_DB_NAME:-}" ]]; then
+    echo "==> Writing control-plane DB config for the attendant cap..."
+    CP_TMP="$(mktemp)"
+    php -r '
+      $out = $argv[1];
+      $php = "<?php\nreturn " . var_export([
+        "host" => $argv[2],
+        "user" => $argv[3],
+        "password" => $argv[4],
+        "database" => $argv[5],
+      ], true) . ";\n";
+      file_put_contents($out, $php);
+    ' "${CP_TMP}" "${BOOKING_DB_HOST}" "${BOOKING_DB_USER}" "${BOOKING_DB_PASSWORD}" "${BOOKING_DB_NAME}"
+    deploy_rsync "${CP_TMP}" "${DEPLOY_SSH}:${REMOTE_BOOK_WEB}/thesibook-control-plane.php"
+    rm -f "${CP_TMP}"
   fi
 
   deploy_fix_ownership
@@ -249,6 +267,16 @@ ENVEOF"
   fi
   if [[ -n "${NEXT_PUBLIC_EA_BASE_URL:-}" ]]; then
     deploy_ssh "printf 'NEXT_PUBLIC_EA_BASE_URL=%q\n' '${NEXT_PUBLIC_EA_BASE_URL}' >> '${REMOTE_FRONTEND}/.env.production'"
+  fi
+  if [[ -n "${SMTP_HOST:-${WEBCODE_SMTP_HOST:-}}" ]]; then
+    deploy_ssh "printf '%s\n' \
+      'SMTP_HOST=${SMTP_HOST:-${WEBCODE_SMTP_HOST}}' \
+      'SMTP_PORT=${SMTP_PORT:-${WEBCODE_SMTP_PORT:-587}}' \
+      'SMTP_USER=${SMTP_USER:-${WEBCODE_SMTP_USER:-}}' \
+      \"SMTP_PASSWORD=$(printf '%q' "${SMTP_PASSWORD:-${WEBCODE_SMTP_PASSWORD:-}}")\" \
+      \"SMTP_FROM=$(printf '%q' "${SMTP_FROM:-ThesiBook <info@thesibook.gr>}")\" \
+      'SMTP_SECURE=${SMTP_SECURE:-false}' \
+      >> '${REMOTE_FRONTEND}/.env.production'"
   fi
   if [[ -n "${BOOKING_DB_HOST:-}" ]]; then
     deploy_ssh "printf '%s\n' \

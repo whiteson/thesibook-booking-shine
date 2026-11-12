@@ -64,3 +64,7 @@ Log in `book-orchestrator-log.md`:
 The Lovable → WP → Next.js pipeline (`agents/prompts/orchestrator.md`) is **independent**.
 
 Booking phases do not replace WP phases. Frontend may integrate both CMS (`/wp-json/webcode/v1`) and booking API.
+
+## After B7
+
+Weekly classes product work is a **separate** pipeline: `agents/prompts/education-slice-orchestrator.md` (`node scripts/education-runner.mjs`, phases E1–E4). Do not fold E1–E4 into B7.

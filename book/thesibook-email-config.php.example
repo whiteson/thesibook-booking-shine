@@ -1,7 +1,10 @@
 <?php
 /**
- * Copy to thesibook-email-config.php (gitignored) for reliable outbound mail on production.
- * Use the same SMTP mailbox as WordPress (WEBCODE_SMTP_* in scripts/deploy/.env).
+ * Copy to thesibook-email-config.php (gitignored).
+ *
+ * Production: same SMTP mailbox as WordPress (WEBCODE_SMTP_* in scripts/deploy/.env).
+ * Local Mac: use 127.0.0.1:1025 (MailHog). UI: http://localhost:8025
+ *   brew install mailhog && brew services start mailhog
  */
 declare(strict_types=1);
 

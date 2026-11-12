@@ -62,12 +62,54 @@ class Appointments_model extends EA_Model
     public function save(array $appointment): int
     {
         $this->validate($appointment);
+        $this->enforce_new_attendant($appointment);
 
         if (empty($appointment['id'])) {
             return $this->insert($appointment);
         } else {
             return $this->update($appointment);
         }
+    }
+
+    /**
+     * Block a new distinct customer when the workspace free-plan cap is full.
+     *
+     * Existing attendants, updates, and unavailability blocks do not consume a seat.
+     */
+    protected function enforce_new_attendant(array $appointment): void
+    {
+        if (filter_var($appointment['is_unavailability'] ?? false, FILTER_VALIDATE_BOOLEAN)) {
+            return;
+        }
+
+        $customer_id = (int) ($appointment['id_users_customer'] ?? 0);
+
+        if ($customer_id <= 0) {
+            return;
+        }
+
+        if (!empty($appointment['id'])) {
+            $current = $this->db
+                ->select('id_users_customer')
+                ->get_where('appointments', ['id' => (int) $appointment['id']])
+                ->row_array();
+
+            if ($current && (int) $current['id_users_customer'] === $customer_id) {
+                return;
+            }
+        }
+
+        $already = $this->db
+            ->where('id_users_customer', $customer_id)
+            ->where('is_unavailability', 0)
+            ->count_all_results('appointments');
+
+        if ($already > 0) {
+            return;
+        }
+
+        $this->load->library('thesibook_plan');
+        $this->thesibook_plan->assert_can_add_new_attendant();
     }
 
     /**

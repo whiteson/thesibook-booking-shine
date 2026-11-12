@@ -28,7 +28,7 @@ run_sql() {
   rm -f /tmp/thesibook_migrate_local.sql
 }
 
-for sql in 001_control_plane.sql 002_plans.sql 003_billing_orders.sql 004_paypal.sql 005_paypal_details.sql 006_db_pool.sql 007_yearly_subscriptions.sql 008_small_plan_unlimited.sql; do
+for sql in 001_control_plane.sql 002_plans.sql 003_billing_orders.sql 004_paypal.sql 005_paypal_details.sql 006_db_pool.sql 007_yearly_subscriptions.sql 008_small_plan_unlimited.sql 009_password_resets.sql; do
   echo "==> ${sql}"
   run_sql "${sql}"
 done

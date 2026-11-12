@@ -32,8 +32,8 @@ export const defaultSiteSettings: SiteSettings = {
     { label: "Επικοινωνία", href: "/contact" },
   ],
   legalNav: [
-    { label: "Privacy Policy", href: "#" },
-    { label: "Terms", href: "#" },
+    { label: "Πολιτική απορρήτου", href: "/privacy" },
+    { label: "Όροι χρήσης", href: "/terms" },
   ],
   contactCtaLabel: "Ζήτησε early access",
   contactCtaHref: "/contact",
@@ -67,6 +67,26 @@ function parseNav(value: unknown): NavLink[] {
   return parsed.filter((item): item is NavLink => item !== null);
 }
 
+function withLegalHref(item: NavLink): NavLink {
+  if (item.href && item.href !== "#") return item;
+  const key = item.label.toLowerCase();
+  if (
+    key.includes("privacy") ||
+    key.includes("απορρ") ||
+    key.includes("προσωπ")
+  ) {
+    return { ...item, href: "/privacy" };
+  }
+  if (
+    key.includes("term") ||
+    key.includes("όρ") ||
+    key.includes("χρήσ")
+  ) {
+    return { ...item, href: "/terms" };
+  }
+  return { ...item, href: "/privacy" };
+}
+
 function normalizeSettings(raw: Record<string, unknown>): SiteSettings {
   const mainNav = parseNav(raw.main_nav);
   const footerNav = parseNav(raw.footer_nav);
@@ -79,7 +99,9 @@ function normalizeSettings(raw: Record<string, unknown>): SiteSettings {
     address: asString(raw.address) ?? defaultSiteSettings.address,
     mainNav: mainNav.length > 0 ? mainNav : defaultSiteSettings.mainNav,
     footerNav: footerNav.length > 0 ? footerNav : defaultSiteSettings.footerNav,
-    legalNav: legalNav.length > 0 ? legalNav : defaultSiteSettings.legalNav,
+    legalNav: (legalNav.length > 0 ? legalNav : defaultSiteSettings.legalNav).map(
+      withLegalHref,
+    ),
     contactCtaLabel:
       asString(raw.contact_cta_label) ?? defaultSiteSettings.contactCtaLabel,
     contactCtaHref:

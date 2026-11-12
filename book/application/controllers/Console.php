@@ -173,6 +173,65 @@ class Console extends EA_Controller
     }
 
     /**
+     * Resend booking confirmation mail for one appointment (uses email.php / MailHog / SMTP).
+     *
+     * Usage:
+     *
+     * THESIBOOK_TENANT=qa-free-studio php index.php console test_mail 2
+     */
+    public function test_mail(string $appointment_id = ''): void
+    {
+        $id = (int) $appointment_id;
+
+        if ($id < 1) {
+            response(PHP_EOL . '⇾ Usage: THESIBOOK_TENANT=slug php index.php console test_mail {appointment_id}' . PHP_EOL . PHP_EOL);
+
+            return;
+        }
+
+        $this->load->model('appointments_model');
+        $this->load->library('notifications');
+
+        $appointment = $this->appointments_model->find($id);
+        $service = $this->services_model->find((int) $appointment['id_services']);
+        $provider = $this->providers_model->find((int) $appointment['id_users_provider']);
+        $customer = $this->customers_model->find((int) $appointment['id_users_customer']);
+
+        $settings = [
+            'company_name' => setting('company_name'),
+            'company_link' => setting('company_link'),
+            'company_email' => setting('company_email'),
+            'company_color' => setting('company_color'),
+            'date_format' => setting('date_format'),
+            'time_format' => setting('time_format'),
+        ];
+
+        $this->notifications->notify_appointment_saved(
+            $appointment,
+            $service,
+            $provider,
+            $customer,
+            $settings,
+            true,
+        );
+
+        $host = config('smtp_host') ?: 'mail()';
+        $port = config('smtp_port') ?: '';
+        response(
+            PHP_EOL .
+                '⇾ Resent appointment #' .
+                $id .
+                ' to ' .
+                ($customer['email'] ?? '?') .
+                ' via ' .
+                $host .
+                ($port !== '' ? ':' . $port : '') .
+                PHP_EOL .
+                PHP_EOL,
+        );
+    }
+
+    /**
      * Show help information about the console capabilities.
      *
      * Use this method to see the available commands.
@@ -202,6 +261,7 @@ class Console extends EA_Controller
             '⇾ php index.php console backup',
             '⇾ php index.php console sync',
             '⇾ php index.php console cleanup    (cleans sessions, logs, cache, and customer data)',
+            '⇾ php index.php console test_mail {appointment_id}',
             '',
             '',
         ];

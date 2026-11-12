@@ -21,6 +21,7 @@
                 <th><?= lang('provider') ?></th>
                 <th><?= lang('weekday') ?></th>
                 <th><?= lang('start_time') ?></th>
+                <th><?= lang('lesson_capacity') ?></th>
                 <th><?= lang('status') ?></th>
                 <th></th>
             </tr>
@@ -64,6 +65,10 @@
                     <div class="mb-3">
                         <label for="lesson-start-time" class="form-label"><?= lang('start_time') ?></label>
                         <input type="time" id="lesson-start-time" class="form-control required">
+                    </div>
+                    <div class="mb-3">
+                        <label for="lesson-capacity" class="form-label"><?= lang('lesson_capacity') ?></label>
+                        <input type="number" id="lesson-capacity" class="form-control" min="1" max="5000" placeholder="<?= lang('lesson_capacity_hint') ?>">
                     </div>
                     <div class="form-check">
                         <input type="checkbox" id="lesson-active" class="form-check-input" checked>

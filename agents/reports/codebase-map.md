@@ -35,7 +35,7 @@ Layout chrome: `SiteHeader`, `SiteFooter` on every page.
 ## Hardcoded content inventory
 
 - **Language:** Greek throughout (marketing copy, nav, forms).
-- **Brand:** ThesiBook, email `hello@thesibook.gr`, location Athens Greece.
+- **Brand:** ThesiBook, email `info@thesibook.gr`, location Athens Greece.
 - **Nav links:** Αρχική `/`, Για επιχειρήσεις `/business`, Πώς λειτουργεί `/how-it-works`, Λειτουργίες `/features`, Επικοινωνία `/contact`.
 - **CTA:** "Ζήτησε early access" → `/contact` or `#early-access`.
 - **Logo:** `src/assets/thesibook-logo.svg.asset.json` (Lovable CDN path).

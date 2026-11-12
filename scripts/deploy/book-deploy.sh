@@ -41,6 +41,12 @@ rsync -avz --delete \
   --exclude 'storage/sessions/*' \
   --exclude 'storage/backups/*' \
   --exclude 'docker/mysql' \
+  --exclude 'config.php' \
+  --exclude 'thesibook-sso-secret.php' \
+  --exclude 'thesibook-email-config.php' \
+  --exclude 'thesibook-control-plane.php' \
+  --exclude 'tenants/*' \
+  --exclude 'vendor/' \
   "${BOOK_DIR}/" "${DEPLOY_SSH}:${BOOK_REMOTE_PATH}/"
 
 log "Remote native install (composer + optional migrate)"

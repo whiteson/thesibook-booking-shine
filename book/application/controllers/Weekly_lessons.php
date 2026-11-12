@@ -19,7 +19,7 @@ class Weekly_lessons extends EA_Controller
     {
         method('get');
 
-        session(['dest_url' => site_url('weekly_lessons')]);
+        session(['dest_url' => thesibook_append_tenant(site_url('weekly_lessons'))]);
 
         $user_id = session('user_id');
 

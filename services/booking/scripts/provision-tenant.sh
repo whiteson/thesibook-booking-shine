@@ -40,7 +40,7 @@ fi
 
 PROVISION_MODE="${EA_PROVISION_MODE:-separate}"
 MYSQL_HOST="${EA_DB_HOST:-localhost}"
-EA_BASE_URL="${EA_BASE_URL:-http://127.0.0.1:${EA_DEV_PORT:-8090}}"
+EA_BASE_URL="${EA_BASE_URL:-http://localhost/${PROJECT_SLUG:-thesibook-booking-shine}/book}"
 SLUG_UNDERSCORE="${SLUG//-/_}"
 
 require_cmd() { command -v "$1" >/dev/null 2>&1 || die "Missing: $1"; }
@@ -194,6 +194,14 @@ SQL
   else
     log "Skipping admin password sync (set EA_SYNC_ADMIN=1 to update login on existing tenant)"
   fi
+fi
+
+log "Applying database migrations for ${SLUG}"
+(cd "${BOOK_DIR}" && THESIBOOK_TENANT="${SLUG}" php index.php console migrate)
+
+if [[ "${FRESH_EA_INSTALL:-}" == "1" ]]; then
+  log "Defaulting new tenant to class-oriented booking"
+  "${MYSQL[@]}" "${DB_NAME}" -e "UPDATE ${DB_PREFIX}settings SET value='1' WHERE name='class_oriented_booking';"
 fi
 
 log "Tenant ready: ${EA_BASE_URL}?thesibook_tenant=${SLUG}"

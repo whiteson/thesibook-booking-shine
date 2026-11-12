@@ -44,7 +44,7 @@ App.Pages.WeeklyLessons = (function () {
         const $tbody = $('#weekly-lessons-table').empty();
 
         if (!lessons.length) {
-            $tbody.append(`<tr><td colspan="6" class="text-center text-muted py-4">${lang('no_records_found')}</td></tr>`);
+            $tbody.append(`<tr><td colspan="7" class="text-center text-muted py-4">${lang('weekly_lessons_empty')}</td></tr>`);
             return;
         }
 
@@ -52,6 +52,7 @@ App.Pages.WeeklyLessons = (function () {
             const providerName = `${lesson.first_name || ''} ${lesson.last_name || ''}`.trim();
             const status = Number(lesson.is_active) ? lang('active') : lang('inactive');
             const time = (lesson.start_time || '').substring(0, 5);
+            const capacity = Number(lesson.capacity) > 0 ? lesson.capacity : lang('lesson_capacity_hint');
 
             $tbody.append(`
                 <tr data-id="${lesson.id}">
@@ -59,6 +60,7 @@ App.Pages.WeeklyLessons = (function () {
                     <td>${App.Utils.String.escapeHtml(providerName)}</td>
                     <td>${weekdayLabels[lesson.weekday] || lesson.weekday}</td>
                     <td>${time}</td>
+                    <td>${App.Utils.String.escapeHtml(String(capacity))}</td>
                     <td>${status}</td>
                     <td class="text-end">
                         <button type="button" class="btn btn-sm btn-outline-primary edit-lesson me-1"><i class="fas fa-edit"></i></button>
@@ -75,6 +77,7 @@ App.Pages.WeeklyLessons = (function () {
         $('#lesson-provider').prop('selectedIndex', 0);
         $('#lesson-weekday').val('1');
         $('#lesson-start-time').val('10:00');
+        $('#lesson-capacity').val('');
         $('#lesson-active').prop('checked', true);
         modal.show();
     }
@@ -92,6 +95,7 @@ App.Pages.WeeklyLessons = (function () {
         $('#lesson-provider').val(lesson.id_users_provider);
         $('#lesson-weekday').val(lesson.weekday);
         $('#lesson-start-time').val((lesson.start_time || '').substring(0, 5));
+        $('#lesson-capacity').val(Number(lesson.capacity) > 0 ? lesson.capacity : '');
         $('#lesson-active').prop('checked', Number(lesson.is_active) === 1);
         modal.show();
     }
@@ -104,6 +108,7 @@ App.Pages.WeeklyLessons = (function () {
                 id_users_provider: $('#lesson-provider').val(),
                 weekday: $('#lesson-weekday').val(),
                 start_time: $('#lesson-start-time').val(),
+                capacity: $('#lesson-capacity').val(),
                 is_active: $('#lesson-active').is(':checked') ? 1 : 0,
             },
             csrf_token: vars('csrf_token'),
@@ -128,9 +133,10 @@ App.Pages.WeeklyLessons = (function () {
 
                 renderTable();
                 modal.hide();
+                App.Layouts.Backend.displayNotification(lang('record_saved'));
             })
             .fail((xhr) => {
-                App.Utils.UI.displayNotification(xhr.responseJSON?.message || lang('unexpected_issues'));
+                App.Layouts.Backend.displayNotification(xhr.responseJSON?.message || lang('unexpected_issues'));
             });
     }
 
@@ -150,7 +156,7 @@ App.Pages.WeeklyLessons = (function () {
                 renderTable();
             })
             .fail((xhr) => {
-                App.Utils.UI.displayNotification(xhr.responseJSON?.message || lang('unexpected_issues'));
+                App.Layouts.Backend.displayNotification(xhr.responseJSON?.message || lang('unexpected_issues'));
             });
     }
 

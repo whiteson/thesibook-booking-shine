@@ -1,0 +1,13 @@
+<?php
+/**
+ * Copy to thesibook-control-plane.php (gitignored) only if PHP cannot read
+ * frontend/.env.local or BOOKING_DB_* from the environment.
+ *
+ * @return array{host: string, user: string, password: string, database: string}
+ */
+return [
+    'host' => '127.0.0.1',
+    'user' => 'root',
+    'password' => '',
+    'database' => 'thesibook_control',
+];

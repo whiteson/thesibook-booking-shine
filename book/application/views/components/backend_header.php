@@ -57,8 +57,11 @@
                     <a class="dropdown-item" href="<?= site_url('service_categories') ?>">
                         <?= lang('categories') ?>
                     </a>
-                    <a class="dropdown-item" href="<?= site_url('weekly_lessons') ?>">
+                    <a class="dropdown-item" href="<?= thesibook_append_tenant(site_url('weekly_lessons')) ?>">
                         <?= lang('weekly_lessons') ?>
+                    </a>
+                    <a class="dropdown-item" href="<?= thesibook_append_tenant(site_url('studio_events')) ?>">
+                        <?= lang('studio_events') ?>
                     </a>
                 </div>
             </li>

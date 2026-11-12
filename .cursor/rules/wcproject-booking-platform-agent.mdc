@@ -4,6 +4,7 @@ globs:
   - book/**/*
   - scripts/install-book.sh
   - scripts/book-runner.mjs
+  - scripts/education-runner.mjs
   - scripts/book.env*
   - agents/**/book*
   - services/booking/**/*

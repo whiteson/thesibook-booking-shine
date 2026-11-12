@@ -110,7 +110,7 @@ if [[ -n "${WEBCODE_SMTP_HOST}" ]]; then
   run_wp config set WEBCODE_SMTP_HOST "${WEBCODE_SMTP_HOST}" --type=constant 2>/dev/null || true
   run_wp config set WEBCODE_SMTP_PORT "${WEBCODE_SMTP_PORT:-587}" --type=constant 2>/dev/null || true
   run_wp config set WEBCODE_SMTP_USER "${WEBCODE_SMTP_USER}" --type=constant 2>/dev/null || true
-  run_wp config set WEBCODE_SMTP_PASSWORD "${WEBCODE_SMTP_PASSWORD}" --type=constant 2>/dev/null || true
+  run_wp --quiet config set WEBCODE_SMTP_PASSWORD "${WEBCODE_SMTP_PASSWORD}" --type=constant >/dev/null 2>&1 || true
   run_wp config set WEBCODE_SMTP_ENCRYPTION "${WEBCODE_SMTP_ENCRYPTION:-tls}" --type=constant 2>/dev/null || true
 else
   run_wp config delete WEBCODE_SMTP_HOST 2>/dev/null || run_wp config set WEBCODE_SMTP_HOST '' --type=constant 2>/dev/null || true

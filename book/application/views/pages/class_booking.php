@@ -53,6 +53,15 @@
         <i class="fas fa-calendar-week me-1"></i>
         <?= lang('class_no_classes_week') ?>
     </p>
+
+    <section id="studio-events-section" class="mt-5 pt-4 border-top">
+        <h3 class="fw-light text-muted mb-1"><?= lang('upcoming_events') ?></h3>
+        <p class="small text-muted mb-3"><?= lang('upcoming_events_hint') ?></p>
+        <div id="studio-events-list" class="vstack gap-2"></div>
+        <p id="studio-events-empty" class="text-muted small mb-0" style="display:none;">
+            <?= lang('no_upcoming_events') ?>
+        </p>
+    </section>
 </div>
 
 <div class="modal fade" id="class-booking-modal" tabindex="-1" aria-hidden="true">

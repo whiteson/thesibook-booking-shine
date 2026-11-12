@@ -40,13 +40,17 @@ Components render data.
 | `.cursor/skills/wcproject-lovable-nextjs-v2/SKILL.md` | CMS + frontend migration playbook |
 | `.cursor/skills/webcode-headless-front/SKILL.md` | Block WP theme on CMS URL (mu-plugin) |
 | `.cursor/skills/wcproject-booking-platform/SKILL.md` | Booking + multi-tenant playbook |
+| `.cursor/skills/wcproject-education-slice/SKILL.md` | Weekly classes slice (E1–E4) |
 | `.cursor/rules/wcproject-lovable-nextjs-v2-agent.mdc` | Frontend/CMS agent constraints |
 | `.cursor/rules/wcproject-booking-platform-agent.mdc` | Booking agent constraints |
+| `.cursor/rules/wcproject-education-slice-agent.mdc` | Education slice constraints |
 | `agents/prompts/orchestrator.md` | Full CMS migration pipeline |
 | `agents/prompts/book-orchestrator.md` | Booking pipeline (B0–B7) |
-| `agents/knowledge/*.md` | WordPress, deploy, menus, **book-architecture** |
+| `agents/prompts/education-slice-orchestrator.md` | Weekly classes slice (E1–E4) |
+| `agents/knowledge/*.md` | WordPress, deploy, menus, **book-architecture**, **education-slice** |
 | `scripts/agent-runner.mjs` | CMS phase gates |
 | `scripts/book-runner.mjs` | Booking phase gates |
+| `scripts/education-runner.mjs` | Education slice gates |
 | `scripts/install-book.sh` | Clone EA + local Docker |
 
 ## Validation
@@ -59,6 +63,9 @@ npm run build
 
 # Booking bootstrap gate
 node scripts/book-runner.mjs --phase B0
+
+# Education slice (weekly classes) after B7
+node scripts/education-runner.mjs
 ```
 
 ## Do not

@@ -12,6 +12,7 @@ backend/wp-content/themes/webcode/node_modules
 book/config.php
 book/thesibook-sso-secret.php
 book/thesibook-email-config.php
+book/thesibook-control-plane.php
 book/vendor/
 book/node_modules/
 book/tenants/**/meta.json

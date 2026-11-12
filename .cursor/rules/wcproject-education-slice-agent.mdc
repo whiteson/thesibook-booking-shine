@@ -1,0 +1,36 @@
+---
+description: Constraints for ThesiBook education slice (weekly lessons, cap, SMTP, legal/auth)
+globs:
+  - agents/knowledge/education-slice.md
+  - agents/prompts/education-slice-orchestrator.md
+  - agents/prompts/book-weekly-lessons-agent.md
+  - agents/prompts/book-attendant-cap-agent.md
+  - agents/prompts/book-smtp-hetzner-agent.md
+  - agents/prompts/book-legal-auth-agent.md
+  - scripts/education-runner.mjs
+  - book/application/controllers/Weekly_lessons.php
+  - book/application/models/Weekly_lessons_model.php
+  - book/application/libraries/Class_schedule.php
+  - book/assets/js/pages/weekly_lessons.js
+  - frontend/src/app/api/auth/**
+  - frontend/src/lib/wordpress/settings.ts
+alwaysApply: false
+---
+
+# Education Slice (E1–E4)
+
+Use when finishing weekly classes, the free attendant cap, Hetzner SMTP, or Privacy/Terms + platform reset.
+
+## Behavior
+
+- Read `agents/knowledge/education-slice.md` before changing EA or auth.
+- Local first for E1/E2/E4. Deploy only if the user asked or `EDUCATION_DEPLOY=true`.
+- Cap must be enforced in EA on appointment create, not only on the Next.js dashboard.
+- Platform forgot-password is Next.js `cp_users` only — do not reuse EA `Recovery.php` sessions.
+
+## Do not
+
+- `php index.php console install` on a tenant with bookings
+- Rsync local `tenants/` or `thesibook-email-config.php` to Hetzner
+- Leave footer legal links as `#`
+- Print SMTP passwords

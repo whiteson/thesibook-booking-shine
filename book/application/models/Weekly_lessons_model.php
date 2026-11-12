@@ -60,13 +60,50 @@ class Weekly_lessons_model extends EA_Model
 
     public function save(array $lesson): int
     {
+        $lesson = $this->normalize($lesson);
         $this->validate($lesson);
 
         if (empty($lesson['id'])) {
+            unset($lesson['id']);
+
             return $this->insert($lesson);
         }
 
         return $this->update($lesson);
+    }
+
+    /**
+     * @param array<string, mixed> $lesson
+     *
+     * @return array<string, mixed>
+     */
+    protected function normalize(array $lesson): array
+    {
+        $allowed = [
+            'id',
+            'id_services',
+            'id_users_provider',
+            'weekday',
+            'start_time',
+            'capacity',
+            'is_active',
+        ];
+
+        $lesson = array_intersect_key($lesson, array_flip($allowed));
+        $lesson['id_services'] = (int) ($lesson['id_services'] ?? 0);
+        $lesson['id_users_provider'] = (int) ($lesson['id_users_provider'] ?? 0);
+        $lesson['weekday'] = (int) ($lesson['weekday'] ?? -1);
+        $lesson['is_active'] = !empty($lesson['is_active']) ? 1 : 0;
+        $capacity = $lesson['capacity'] ?? null;
+        $lesson['capacity'] = $capacity === null || $capacity === '' || (int) $capacity <= 0 ? null : (int) $capacity;
+
+        if (empty($lesson['id'])) {
+            unset($lesson['id']);
+        } else {
+            $lesson['id'] = (int) $lesson['id'];
+        }
+
+        return $lesson;
     }
 
     public function validate(array $lesson): void
@@ -79,6 +116,10 @@ class Weekly_lessons_model extends EA_Model
 
         if ($weekday < 0 || $weekday > 6) {
             throw new InvalidArgumentException('Invalid weekday.');
+        }
+
+        if (!preg_match('/^\d{2}:\d{2}:\d{2}$/', (string) $lesson['start_time'])) {
+            throw new InvalidArgumentException('Invalid start time.');
         }
     }
 

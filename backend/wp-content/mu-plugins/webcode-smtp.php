@@ -7,13 +7,29 @@
 
 defined('ABSPATH') || exit;
 
+add_filter(
+	'wp_mail_from',
+	static function (string $from): string {
+		if (defined('WEBCODE_SMTP_FROM') && WEBCODE_SMTP_FROM !== '') {
+			return WEBCODE_SMTP_FROM;
+		}
+		if (defined('WEBCODE_CONTACT_MAIL_TO') && WEBCODE_CONTACT_MAIL_TO !== '') {
+			return WEBCODE_CONTACT_MAIL_TO;
+		}
+		if (defined('WEBCODE_SMTP_USER') && WEBCODE_SMTP_USER !== '') {
+			return WEBCODE_SMTP_USER;
+		}
+		if ($from === '' || str_ends_with($from, '@localhost')) {
+			return 'info@thesibook.gr';
+		}
+
+		return $from;
+	}
+);
+
 add_action(
 	'phpmailer_init',
 	static function ($phpmailer): void {
-		if (defined('WEBCODE_MAILHOG') && WEBCODE_MAILHOG === true) {
-			return;
-		}
-
 		$from = '';
 		if (defined('WEBCODE_SMTP_FROM') && WEBCODE_SMTP_FROM !== '') {
 			$from = WEBCODE_SMTP_FROM;
@@ -21,10 +37,16 @@ add_action(
 			$from = WEBCODE_CONTACT_MAIL_TO;
 		} elseif (defined('WEBCODE_SMTP_USER') && WEBCODE_SMTP_USER !== '') {
 			$from = WEBCODE_SMTP_USER;
+		} else {
+			$from = 'info@thesibook.gr';
 		}
 
 		if ($from !== '') {
 			$phpmailer->setFrom($from, get_bloginfo('name') ?: 'ThesiBook', false);
+		}
+
+		if (defined('WEBCODE_MAILHOG') && WEBCODE_MAILHOG === true) {
+			return;
 		}
 
 		if (! defined('WEBCODE_SMTP_HOST') || WEBCODE_SMTP_HOST === '') {

@@ -89,7 +89,8 @@ class Class_schedule
                     'first_name' => $lesson['first_name'] ?? '',
                     'last_name' => $lesson['last_name'] ?? '',
                 ];
-                $capacity = max(1, (int) $lesson['attendants_number']);
+                $lesson_capacity = (int) ($lesson['capacity'] ?? 0);
+                $capacity = $lesson_capacity > 0 ? $lesson_capacity : max(1, (int) $lesson['attendants_number']);
 
                 $classes[] = $this->build_class_entry($date, $service, $provider, $hour, $capacity);
             }
@@ -251,5 +252,73 @@ class Class_schedule
     protected function slot_key(int $service_id, int $provider_id, string $hour): string
     {
         return $service_id . '-' . $provider_id . '-' . $hour;
+    }
+
+    /**
+     * Upcoming one-off events. These are not expanded onto the weekly grid.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function get_upcoming_events(): array
+    {
+        if (!$this->CI->db->table_exists('studio_events')) {
+            return [];
+        }
+
+        $rows = $this->CI->db
+            ->select('studio_events.*, services.name AS service_name, services.duration, services.color, services.description AS service_description, users.first_name, users.last_name')
+            ->from('studio_events')
+            ->join('services', 'services.id = studio_events.id_services', 'inner')
+            ->join('users', 'users.id = studio_events.id_users_provider', 'inner')
+            ->where('studio_events.is_active', 1)
+            ->where('studio_events.start_datetime >=', date('Y-m-d H:i:s', strtotime('-12 hours')))
+            ->order_by('studio_events.start_datetime', 'ASC')
+            ->limit(40)
+            ->get()
+            ->result_array();
+
+        $events = [];
+        $now = new DateTime();
+
+        foreach ($rows as $row) {
+            $start = DateTime::createFromFormat('Y-m-d H:i:s', (string) $row['start_datetime']);
+
+            if (!$start) {
+                continue;
+            }
+
+            $duration = max((int) $row['duration'], EVENT_MINIMUM_DURATION);
+            $end = clone $start;
+            $end->modify('+' . $duration . ' minutes');
+
+            if ($end < $now) {
+                continue;
+            }
+
+            $title = trim((string) ($row['title'] ?? ''));
+            $service = [
+                'id' => (int) $row['id_services'],
+                'name' => $title !== '' ? $title : (string) $row['service_name'],
+                'description' => (string) (($row['description'] ?? '') !== '' ? $row['description'] : ($row['service_description'] ?? '')),
+                'color' => $row['color'] ?? '#2563eb',
+                'duration' => $duration,
+            ];
+            $provider = [
+                'id' => (int) $row['id_users_provider'],
+                'first_name' => $row['first_name'] ?? '',
+                'last_name' => $row['last_name'] ?? '',
+            ];
+            $entry = $this->build_class_entry(
+                $start->format('Y-m-d'),
+                $service,
+                $provider,
+                $start->format('H:i'),
+                max(1, (int) $row['capacity']),
+            );
+            $entry['kind'] = 'event';
+            $events[] = $entry;
+        }
+
+        return $events;
     }
 }

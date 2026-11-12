@@ -57,6 +57,11 @@ export function LoginForm() {
               <Label htmlFor="password">Κωδικός</Label>
               <Input id="password" name="password" type="password" required className="mt-1.5" />
             </div>
+            <p className="text-right text-sm">
+              <Link href="/forgot-password" className="text-primary">
+                Ξέχασα τον κωδικό
+              </Link>
+            </p>
             {error ? <p className="text-sm text-destructive">{error}</p> : null}
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? "Σύνδεση…" : "Σύνδεση"}

@@ -18,8 +18,12 @@ if (is_readable($thesibookSsoSecretFile)) {
 }
 
 $tenantSlug = '';
+$cliTenant = getenv('THESIBOOK_TENANT') ?: '';
 if (!empty($_GET['thesibook_tenant']) && preg_match('/^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$/', (string) $_GET['thesibook_tenant'])) {
     $tenantSlug = (string) $_GET['thesibook_tenant'];
+    $_SESSION['thesibook_tenant'] = $tenantSlug;
+} elseif ($cliTenant !== '' && preg_match('/^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$/', $cliTenant)) {
+    $tenantSlug = $cliTenant;
     $_SESSION['thesibook_tenant'] = $tenantSlug;
 } elseif (!empty($_SESSION['thesibook_tenant']) && preg_match('/^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$/', (string) $_SESSION['thesibook_tenant'])) {
     $tenantSlug = (string) $_SESSION['thesibook_tenant'];
@@ -86,7 +90,7 @@ function thesibook_load_tenant_config(string $tenantSlug): bool
         return false;
     }
 
-    $baseUrl = $meta['base_url'] ?? getenv('EA_BASE_URL') ?: 'http://127.0.0.1:8090';
+    $baseUrl = $meta['base_url'] ?? getenv('EA_BASE_URL') ?: 'http://localhost/thesibook-booking-shine/book';
     $debug = !empty($meta['debug']) ? 'true' : 'false';
     $dbPrefix = $meta['db_prefix'] ?? 'ea_';
 
@@ -194,4 +198,108 @@ function thesibook_append_tenant(string $url): string
 function thesibook_password_reset_link(string $token): string
 {
     return thesibook_append_tenant(site_url('recovery/reset?token=' . rawurlencode($token)));
+}
+
+/**
+ * Control-plane MySQL credentials for plan checks. Never log the password.
+ *
+ * @return array{host: string, user: string, password: string, database: string}|null
+ */
+function thesibook_control_plane_config(): ?array
+{
+    static $resolved = false;
+    static $config = null;
+
+    if ($resolved) {
+        return $config;
+    }
+
+    $resolved = true;
+    $file = __DIR__ . '/thesibook-control-plane.php';
+
+    if (is_readable($file)) {
+        $loaded = require $file;
+
+        if (is_array($loaded) && !empty($loaded['database'])) {
+            $config = [
+                'host' => (string) ($loaded['host'] ?? '127.0.0.1'),
+                'user' => (string) ($loaded['user'] ?? 'root'),
+                'password' => (string) ($loaded['password'] ?? ''),
+                'database' => (string) $loaded['database'],
+            ];
+
+            return $config;
+        }
+    }
+
+    $values = [];
+    $files = [
+        dirname(__DIR__) . '/frontend/.env.local',
+        dirname(__DIR__) . '/frontend/.env',
+        dirname(__DIR__) . '/scripts/local.env',
+        dirname(__DIR__) . '/scripts/book.env',
+    ];
+
+    foreach ($files as $path) {
+        if (!is_readable($path)) {
+            continue;
+        }
+
+        $lines = file($path, FILE_IGNORE_NEW_LINES);
+
+        if ($lines === false) {
+            continue;
+        }
+
+        foreach ($lines as $line) {
+            $line = trim($line);
+
+            if ($line === '' || str_starts_with($line, '#')) {
+                continue;
+            }
+
+            if (str_starts_with($line, 'export ')) {
+                $line = trim(substr($line, 7));
+            }
+
+            $eq = strpos($line, '=');
+
+            if ($eq === false) {
+                continue;
+            }
+
+            $key = trim(substr($line, 0, $eq));
+            $value = trim(substr($line, $eq + 1));
+
+            if (
+                (str_starts_with($value, '"') && str_ends_with($value, '"'))
+                || (str_starts_with($value, "'") && str_ends_with($value, "'"))
+            ) {
+                $value = substr($value, 1, -1);
+            }
+
+            $values[$key] = $value;
+        }
+    }
+
+    foreach (['BOOKING_DB_HOST', 'BOOKING_DB_USER', 'BOOKING_DB_PASSWORD', 'BOOKING_DB_NAME'] as $key) {
+        $fromEnv = getenv($key);
+
+        if (is_string($fromEnv) && $fromEnv !== '') {
+            $values[$key] = $fromEnv;
+        }
+    }
+
+    if (empty($values['BOOKING_DB_NAME'])) {
+        return null;
+    }
+
+    $config = [
+        'host' => (string) ($values['BOOKING_DB_HOST'] ?? '127.0.0.1'),
+        'user' => (string) ($values['BOOKING_DB_USER'] ?? 'root'),
+        'password' => (string) ($values['BOOKING_DB_PASSWORD'] ?? ''),
+        'database' => (string) $values['BOOKING_DB_NAME'],
+    ];
+
+    return $config;
 }

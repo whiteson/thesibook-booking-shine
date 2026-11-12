@@ -34,9 +34,19 @@ Track modifications to upstream EA. Do not push to alextselegidis/easyappointmen
 | `application/controllers/Recovery.php` | Accept email-only password reset requests |
 | `application/config/email.php` | Send mail From info@thesibook.gr; optional `thesibook-email-config.php` SMTP |
 | `thesibook-email-config.php.example` | Production SMTP template (copy to gitignored `thesibook-email-config.php`) |
-| `thesibook-bootstrap.php` | Tenant query helpers; `thesibook_password_reset_link()` for email reset URLs; session GC before `session_start` |
+| `thesibook-wp-smtp-bridge.php` | Merge WP `WEBCODE_SMTP_*`; local fallback is MailHog `:1025`, Hetzner fallback is Exim `:25` |
+| `thesibook-bootstrap.php` | Tenant query helpers; `THESIBOOK_TENANT` env for CLI; `thesibook_password_reset_link()`; session GC before `session_start` |
+| `application/controllers/Console.php` | `test_mail` resends appointment confirmation through configured SMTP |
 | `application/libraries/Accounts.php` | Email-only password reset token lookup |
 | `assets/js/utils/url.js` | Append `thesibook_tenant` to AJAX URLs on tenant pages |
+| `application/migrations/072_create_studio_events_table.php` | One-off `studio_events` plus optional weekly-lesson `capacity` |
+| `application/models/Studio_events_model.php` | Event CRUD, separate from weekly lessons |
+| `application/controllers/Studio_events.php` | Admin events page |
+| `application/libraries/Thesibook_plan.php` | Free-plan attendant cap from `cp_workspaces` on new customers |
+| `application/models/Appointments_model.php` | Calls the cap before insert and before a customer change |
+| `application/libraries/Class_schedule.php` | Upcoming events list; lesson capacity override |
+| `application/controllers/Booking.php` | `get_events`; event slots book without becoming weekly lessons |
+| `thesibook-bootstrap.php` | `thesibook_control_plane_config()` reads `BOOKING_DB_*` for the cap |
 
 ## Ops safety (production tenants)
 

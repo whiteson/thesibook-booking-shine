@@ -46,6 +46,8 @@ services/booking/  (future) Control plane — workspace + DB provisioning
 **Orchestrator:** `agents/prompts/book-orchestrator.md`  
 **Runner:** `node scripts/book-runner.mjs`
 
+**After B7 (weekly classes):** `agents/prompts/education-slice-orchestrator.md` — `node scripts/education-runner.mjs` (E1–E4). Skill: `.cursor/skills/wcproject-education-slice/SKILL.md`.
+
 ## Subagent delegation
 
 | Phase | Subagent |

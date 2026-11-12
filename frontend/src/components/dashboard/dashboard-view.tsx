@@ -44,7 +44,7 @@ export function DashboardView() {
       setBillingNotice({
         type: "success",
         message: planName
-          ? `Η πληρωμή ολοκληρώθηκε — ενεργοποιήθηκε το πλάνο «${planName}» για 30 ημέρες.`
+          ? `Η πληρωμή ολοκληρώθηκε — ενεργοποιήθηκε το πλάνο «${planName}» για 1 έτος.`
           : "Η πληρωμή ολοκληρώθηκε — το πλάνο σας ενημερώθηκε.",
       });
     } else if (billing === "failed" || billing === "cancelled") {

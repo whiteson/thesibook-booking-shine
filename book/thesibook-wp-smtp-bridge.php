@@ -89,9 +89,32 @@ function thesibook_merge_wp_smtp_config(array $config): array
  *
  * @return array<string, mixed>
  */
+function thesibook_is_local_dev(): bool
+{
+    $server = (string) ($_SERVER['SERVER_NAME'] ?? '');
+    if (in_array($server, ['localhost', '127.0.0.1'], true)) {
+        return true;
+    }
+
+    return str_starts_with((string) FCPATH, '/Users/');
+}
+
 function thesibook_apply_konsoleh_local_smtp_fallback(array $config): array
 {
     if ($config['protocol'] === 'smtp' && !empty($config['smtp_host'])) {
+        return $config;
+    }
+
+    if (thesibook_is_local_dev()) {
+        $config['protocol'] = 'smtp';
+        $config['smtp_host'] = '127.0.0.1';
+        $config['smtp_port'] = 1025;
+        $config['smtp_user'] = '';
+        $config['smtp_pass'] = '';
+        $config['smtp_crypto'] = '';
+        $config['smtp_auth'] = false;
+        $config['delivery_mode'] = 'mailhog';
+
         return $config;
     }
 

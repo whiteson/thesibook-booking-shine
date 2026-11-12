@@ -438,6 +438,28 @@ class Booking extends EA_Controller
     }
 
     /**
+     * Upcoming one-off events, separate from the weekly class grid.
+     */
+    public function get_events(): void
+    {
+        try {
+            method('post');
+
+            if (setting('disable_booking')) {
+                abort(403);
+            }
+
+            $this->load->library('class_schedule');
+
+            json_response([
+                'events' => $this->class_schedule->get_upcoming_events(),
+            ]);
+        } catch (Throwable $e) {
+            json_exception($e);
+        }
+    }
+
+    /**
      * Register the appointment to the database.
      */
     public function register(): void
@@ -740,6 +762,31 @@ class Booking extends EA_Controller
 
         $start = new DateTime($appointment['start_datetime']);
         $end = new DateTime($appointment['end_datetime']);
+        $exclude_id = !empty($appointment['id']) ? (int) $appointment['id'] : null;
+
+        if ($this->db->table_exists('studio_events')) {
+            $event = $this->db
+                ->query(
+                    'SELECT * FROM ' . $this->db->dbprefix('studio_events') .
+                    ' WHERE id_services = ? AND id_users_provider = ? AND is_active = 1 AND DATE_FORMAT(start_datetime, \'%Y-%m-%d %H:%i\') = ? LIMIT 1',
+                    [$service_id, $provider_id, $start->format('Y-m-d H:i')],
+                )
+                ->row_array();
+
+            if (!empty($event)) {
+                $capacity = max(1, (int) ($event['capacity'] ?? 1));
+                $booked = $this->appointments_model->get_attendants_number_for_period(
+                    $start,
+                    $end,
+                    $service_id,
+                    $provider_id,
+                    $exclude_id,
+                );
+
+                return $booked < $capacity ? $provider_id : null;
+            }
+        }
+
         $weekday = (int) $start->format('w');
         $start_time = $start->format('H:i:s');
 
@@ -759,8 +806,8 @@ class Booking extends EA_Controller
         }
 
         $service = $this->services_model->find($service_id);
-        $capacity = max(1, (int) ($service['attendants_number'] ?? 1));
-        $exclude_id = !empty($appointment['id']) ? (int) $appointment['id'] : null;
+        $lesson_capacity = (int) ($lesson['capacity'] ?? 0);
+        $capacity = $lesson_capacity > 0 ? $lesson_capacity : max(1, (int) ($service['attendants_number'] ?? 1));
 
         $booked = $this->appointments_model->get_attendants_number_for_period(
             $start,

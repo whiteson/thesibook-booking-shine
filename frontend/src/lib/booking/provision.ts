@@ -97,7 +97,7 @@ export function bookingUrls(slug: string) {
   const eaBase =
     process.env.EA_BASE_URL ??
     process.env.NEXT_PUBLIC_EA_BASE_URL ??
-    "http://127.0.0.1:8090";
+    "http://localhost/thesibook-booking-shine/book";
   const q = `thesibook_tenant=${encodeURIComponent(slug)}`;
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL ??

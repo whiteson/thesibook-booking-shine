@@ -14,8 +14,8 @@ export function SiteFooter() {
             <p className="mt-4 max-w-sm text-sm text-muted-foreground">
               Η νέα πλατφόρμα κρατήσεων για εκπαιδευτικές επιχειρήσεις στην Ελλάδα.
             </p>
-            <a href="mailto:hello@thesibook.gr" className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary-soft">
-              <Mail className="h-4 w-4" />hello@thesibook.gr
+            <a href="mailto:info@thesibook.gr" className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary-soft">
+              <Mail className="h-4 w-4" />info@thesibook.gr
             </a>
           </div>
           <div>
